@@ -4,7 +4,7 @@ import { View, Text, FlatList } from 'react-native';
 
 type LogsViewProps = {
   data: { title: string; content: string; categories: string[] }[];
-}
+};
 
 const LogsView = ({ data }: LogsViewProps) => {
 

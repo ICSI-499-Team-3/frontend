@@ -5,6 +5,7 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
+import CardIcons from './CardIcons';
 
 type LogCardProps = {
   title: string;
@@ -13,16 +14,13 @@ type LogCardProps = {
 };
 
 const LogCard = ({ title, content, categories }: LogCardProps) => {
-  console.log(categories);
   return (
     <View style={[styles.paper]}>
       <View style={[styles.titleContainer]}>
-        <Text style={[{flexGrow: 1}]}>{title}</Text>
-        <View style={[styles.categoriesContainer]}>
-          {categories.map(category => <Text key={category}>{category}</Text>)}
-        </View>
+        <Text style={[styles.titleText]}>{title.length > 20 ? `${title.substring(0, 20)}...` : title}</Text>
+        <CardIcons categories={categories} />
       </View>
-      <Text>{content.length > 150 ? `${content.substring(0, 150)}...` : content}</Text>
+      <Text style={[styles.contentText]}>{content.length > 150 ? `${content.substring(0, 150)}...` : content}</Text>
     </View>
   );
 };
@@ -45,9 +43,13 @@ const styles = StyleSheet.create({
     display: 'flex', 
     flexDirection: 'row',
   },
-  categoriesContainer: {
-    display: 'flex', 
-    flexDirection: 'row',
+  titleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    flexGrow: 1,
+  },
+  contentText: {
+    paddingTop: 10,
   },
 });
 
