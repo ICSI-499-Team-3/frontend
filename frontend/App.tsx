@@ -27,6 +27,9 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import LogsView from './components/logs/LogsView';
+import { BottomNavigation } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Route } from 'react-native-tab-view';
 
 const Section: React.FC<{
   title: string;
@@ -135,10 +138,47 @@ const App = () => {
     },
   ];
 
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <LogsView data={data} />
+  const LogsRoute = () => <LogsView data={data} />;
+
+  const MeasurementsRoute = () => (
+    <SafeAreaView>
+      <Text>Measurements</Text>
     </SafeAreaView>
+  );
+
+  const RecommendationsRoute = () => (
+    <SafeAreaView>
+      <Text>Recommendations</Text>
+    </SafeAreaView>
+  );
+  
+  const ProfileRoute = () => (
+    <SafeAreaView>
+      <Text>Profile</Text>
+    </SafeAreaView>
+  );
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'logs', title: 'Logs', icon: 'edit-note' },
+    { key: 'measurements', title: 'Measurements', icon: 'event-note' },
+    { key: 'recommendations', title: 'Recommendations', icon: 'assistant' },
+    { key: 'profile', title: 'Profile', icon: 'person' },
+  ]);
+
+  const renderScene = BottomNavigation.SceneMap({
+    logs: LogsRoute,
+    measurements: MeasurementsRoute,
+    recommendations: RecommendationsRoute,
+    profile: ProfileRoute,
+  });
+
+  return (
+    <BottomNavigation
+      navigationState={{ index, routes }}
+      onIndexChange={setIndex}
+      renderScene={renderScene}
+    />
   );
 };
 
