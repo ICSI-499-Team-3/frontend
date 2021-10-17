@@ -26,7 +26,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import LogView from './components/logs/LogsView';
+import LogsView from './components/logs/LogsView';
 
 const Section: React.FC<{
   title: string;
@@ -92,9 +92,45 @@ const App = () => {
   //     </ScrollView>
   //   </SafeAreaView>
   // );
+
+  const data = [
+    {
+      title: "Title", 
+      content: "Content", 
+      categories: [
+        "cat 1", 
+        "cat 2"
+      ],
+    },
+    {
+      title: "Title", 
+      content: "Content", 
+      categories: [
+        "cat 1", 
+        "cat 2"
+      ],
+    },
+    {
+      title: "Title", 
+      content: "Content", 
+      categories: [
+        "cat 1", 
+        "cat 2"
+      ],
+    },
+    {
+      title: "Title", 
+      content: "Content", 
+      categories: [
+        "cat 1", 
+        "cat 2"
+      ],
+    },
+  ];
+
   return (
     <SafeAreaView style={backgroundStyle}>
-      <LogView />
+      <LogsView data={data} />
     </SafeAreaView>
   );
 };

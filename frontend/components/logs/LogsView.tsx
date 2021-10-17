@@ -2,42 +2,11 @@ import React from 'react';
 import LogCard from '../log_card/LogCard';
 import { View, Text, FlatList } from 'react-native';
 
-const LogView = () => {
+type LogsViewProps = {
+  data: { title: string; content: string; categories: string[] }[];
+}
 
-  const data = [
-    {
-      title: "Title", 
-      content: "Content", 
-      categories: [
-        "cat 1", 
-        "cat 2"
-      ],
-    },
-    {
-      title: "Title", 
-      content: "Content", 
-      categories: [
-        "cat 1", 
-        "cat 2"
-      ],
-    },
-    {
-      title: "Title", 
-      content: "Content", 
-      categories: [
-        "cat 1", 
-        "cat 2"
-      ],
-    },
-    {
-      title: "Title", 
-      content: "Content", 
-      categories: [
-        "cat 1", 
-        "cat 2"
-      ],
-    },
-  ];
+const LogsView = ({ data }: LogsViewProps) => {
 
   return (
     <View>
@@ -55,4 +24,4 @@ const LogView = () => {
   );
 };
 
-export default LogView;
+export default LogsView;
