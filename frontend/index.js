@@ -2,6 +2,7 @@
  * @format
  */
 
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import React from 'react';
 import { AppRegistry } from 'react-native';
 import App from './App';
@@ -11,11 +12,13 @@ import { NavigationContainer } from '@react-navigation/native';
 
 export default function Main() {
     return (
-        <NavigationContainer>
-            <PaperProvider>
-                <App />
-            </PaperProvider>
-        </NavigationContainer>
+        <GestureHandlerRootView style={{flex: 1}}>
+            <NavigationContainer>
+                <PaperProvider>
+                    <App />
+                </PaperProvider>
+            </NavigationContainer>
+        </GestureHandlerRootView> 
     );
 }
 

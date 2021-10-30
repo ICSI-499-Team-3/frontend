@@ -12,6 +12,7 @@ type LogsViewProps = {
 export type LogStackParamList = {
   LogsViewHome: undefined; 
   LogDetail: LogCardProps;
+  LogCard: undefined;
 };
 
 const LogsView = () => {

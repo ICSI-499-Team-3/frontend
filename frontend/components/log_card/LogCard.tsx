@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/core';
 import React from 'react';
 import {
   useColorScheme,
@@ -8,6 +9,9 @@ import {
 import CardIcons from '../card_icons/CardIcons';
 import { useLogNavigationContext } from '../log_view_home/LogsViewHome';
 import { LogsViewHomeProps } from '../log_view_home/LogsViewHome';
+import { LogStackParamList } from '../logs_view/LogsView';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export type LogCardProps = {
   title: string;
@@ -17,15 +21,16 @@ export type LogCardProps = {
   mood: string;
 };
 
+type LogCardNavigationProp = NativeStackNavigationProp<LogStackParamList, 'LogCard'>;
+
 const LogCard = ({ title, createdAt, content, categories, mood }: LogCardProps) => {
 
-  const navigation = useLogNavigationContext() as LogsViewHomeProps['navigation'];
+  const navigation = useNavigation<LogCardNavigationProp>();
 
   return (
-    <View 
+    <TouchableOpacity 
       style={[styles.paper]}
-      onTouchEnd={() => {
-        console.log('hi');
+      onPress={() => {
         navigation.navigate("LogDetail", {
           title: title, 
           createdAt: createdAt,
@@ -40,7 +45,7 @@ const LogCard = ({ title, createdAt, content, categories, mood }: LogCardProps) 
         <CardIcons categories={categories} />
       </View>
       <Text style={[styles.contentText]}>{content.length > 150 ? `${content.substring(0, 150)}...` : content}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

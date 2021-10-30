@@ -13,6 +13,10 @@ export const useLogNavigationContext = () => useContext(LogNavigationContext);
 
 const LogsViewHome = ({ route, navigation }: LogsViewHomeProps) => {
 
+    navigation.setOptions({
+        headerShown: false,
+    });
+
     return (
         <LogNavigationContext.Provider value={navigation}>
             <View>

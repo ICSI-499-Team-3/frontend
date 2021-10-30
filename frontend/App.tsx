@@ -31,6 +31,7 @@ import { BottomNavigation } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Route } from 'react-native-tab-view';
 
+
 const Section: React.FC<{
   title: string;
 }> = ({children, title}) => {
