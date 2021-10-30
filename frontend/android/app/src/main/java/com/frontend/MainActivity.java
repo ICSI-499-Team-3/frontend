@@ -2,6 +2,9 @@ package com.frontend;
 
 import com.facebook.react.ReactActivity;
 
+// Added for react navigation
+import android.os.Bundle;
+
 public class MainActivity extends ReactActivity {
 
   /**
@@ -11,5 +14,11 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
     return "frontend";
+  }
+
+  // Added for react navigation
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(null);
   }
 }
