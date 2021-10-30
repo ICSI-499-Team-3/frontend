@@ -30,35 +30,8 @@ import LogsView from './components/logs_view/LogsView';
 import { BottomNavigation } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Route } from 'react-native-tab-view';
-
-
-const Section: React.FC<{
-  title: string;
-}> = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -66,36 +39,6 @@ const App = () => {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
-  // return (
-  //   <SafeAreaView style={backgroundStyle}>
-  //     <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-  //     <ScrollView
-  //       contentInsetAdjustmentBehavior="automatic"
-  //       style={backgroundStyle}>
-  //       <Header />
-  //       <View
-  //         style={{
-  //           backgroundColor: isDarkMode ? Colors.black : Colors.white,
-  //         }}>
-  //         <Section title="Step One">
-  //           Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-  //           screen and then come back to see your edits.
-  //         </Section>
-  //         <Section title="See Your Changes">
-  //           <ReloadInstructions />
-  //         </Section>
-  //         <Section title="Debug">
-  //           <DebugInstructions />
-  //         </Section>
-  //         <Section title="Learn More">
-  //           Read the docs to discover what to do next:
-  //         </Section>
-  //         <LearnMoreLinks />
-  //       </View>
-  //     </ScrollView>
-  //   </SafeAreaView>
-  // );
 
   const LogsRoute = () => <LogsView />;
 
@@ -117,27 +60,49 @@ const App = () => {
     </SafeAreaView>
   );
 
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: 'logs', title: 'Logs', icon: 'edit-note' },
-    { key: 'measurements', title: 'Measurements', icon: 'event-note' },
-    { key: 'recommendations', title: 'Recommendations', icon: 'assistant' },
-    { key: 'profile', title: 'Profile', icon: 'person' },
-  ]);
-
-  const renderScene = BottomNavigation.SceneMap({
-    logs: LogsRoute,
-    measurements: MeasurementsRoute,
-    recommendations: RecommendationsRoute,
-    profile: ProfileRoute,
-  });
+  const Tab = createMaterialBottomTabNavigator();
 
   return (
-    <BottomNavigation
-      navigationState={{ index, routes }}
-      onIndexChange={setIndex}
-      renderScene={renderScene}
-    />
+    <Tab.Navigator 
+      initialRouteName="My Logs"
+    >
+      <Tab.Screen 
+        name="My Logs" 
+        component={LogsRoute} 
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="text" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name="Biometrics" 
+        component={MeasurementsRoute} 
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="chart-line-variant" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name="Recs" 
+        component={RecommendationsRoute} 
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="assistant" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name="Profile" 
+        component={ProfileRoute} 
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="account" color={color} size={26} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 

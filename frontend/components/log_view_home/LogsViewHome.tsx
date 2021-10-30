@@ -7,27 +7,17 @@ import { FAB } from 'react-native-paper';
 
 export type LogsViewHomeProps = NativeStackScreenProps<LogStackParamList, 'LogsViewHome'>;
 
-const LogNavigationContext = createContext({});
-
-export const useLogNavigationContext = () => useContext(LogNavigationContext);
-
 const LogsViewHome = ({ route, navigation }: LogsViewHomeProps) => {
 
-    navigation.setOptions({
-        headerShown: false,
-    });
-
     return (
-        <LogNavigationContext.Provider value={navigation}>
-            <View>
-                <LogsList />
-                <FAB
-                    style={styles.fab}
-                    icon="plus"
-                    onPress={() => console.log("pressed")}
-                />
-            </View>
-        </LogNavigationContext.Provider>
+        <View>
+            <LogsList />
+            <FAB
+                style={styles.fab}
+                icon="plus"
+                onPress={() => console.log("pressed")}
+            />
+        </View>
     );
 };
 

@@ -22,7 +22,13 @@ const LogsView = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <LogsStack.Navigator initialRouteName="LogsViewHome">
-        <LogsStack.Screen name="LogsViewHome" component={LogsViewHome} />
+        <LogsStack.Screen 
+          name="LogsViewHome" 
+          component={LogsViewHome} 
+          options={{
+            headerShown: false,
+          }}
+        />
         <LogsStack.Screen name="LogDetail" component={LogDetail} />
       </LogsStack.Navigator>
     </SafeAreaView>

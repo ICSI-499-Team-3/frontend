@@ -7,7 +7,6 @@ import {
   StyleSheet,
 } from 'react-native';
 import CardIcons from '../card_icons/CardIcons';
-import { useLogNavigationContext } from '../log_view_home/LogsViewHome';
 import { LogsViewHomeProps } from '../log_view_home/LogsViewHome';
 import { LogStackParamList } from '../logs_view/LogsView';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
