@@ -5,7 +5,9 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
-import CardIcons from './CardIcons';
+import CardIcons from '../card_icons/CardIcons';
+import { useLogNavigationContext } from '../log_view_home/LogsViewHome';
+import { LogsViewHomeProps } from '../log_view_home/LogsViewHome';
 
 type LogCardProps = {
   title: string;
@@ -14,8 +16,21 @@ type LogCardProps = {
 };
 
 const LogCard = ({ title, content, categories }: LogCardProps) => {
+
+  const navigation = useLogNavigationContext() as LogsViewHomeProps['navigation'];
+
   return (
-    <View style={[styles.paper]}>
+    <View 
+      style={[styles.paper]}
+      onTouchEnd={() => {
+        console.log('hi');
+        navigation.navigate("LogDetail", {
+          title: title, 
+          content: content, 
+          categories: categories,
+        });
+      }}
+    >
       <View style={[styles.titleContainer]}>
         <Text style={[styles.titleText]}>{title.length > 20 ? `${title.substring(0, 20)}...` : title}</Text>
         <CardIcons categories={categories} />
