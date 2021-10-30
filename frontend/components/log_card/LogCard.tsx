@@ -9,13 +9,15 @@ import CardIcons from '../card_icons/CardIcons';
 import { useLogNavigationContext } from '../log_view_home/LogsViewHome';
 import { LogsViewHomeProps } from '../log_view_home/LogsViewHome';
 
-type LogCardProps = {
+export type LogCardProps = {
   title: string;
+  createdAt: number;
   content: string;
   categories: string[]; 
+  mood: string;
 };
 
-const LogCard = ({ title, content, categories }: LogCardProps) => {
+const LogCard = ({ title, createdAt, content, categories, mood }: LogCardProps) => {
 
   const navigation = useLogNavigationContext() as LogsViewHomeProps['navigation'];
 
@@ -26,8 +28,10 @@ const LogCard = ({ title, content, categories }: LogCardProps) => {
         console.log('hi');
         navigation.navigate("LogDetail", {
           title: title, 
+          createdAt: createdAt,
           content: content, 
           categories: categories,
+          mood: mood,
         });
       }}
     >

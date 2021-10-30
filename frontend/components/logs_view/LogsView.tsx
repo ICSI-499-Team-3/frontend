@@ -3,6 +3,7 @@ import { Dimensions, StyleSheet, StatusBar, SafeAreaView, View } from 'react-nat
 import LogDetail from '../log_detail/LogDetail';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LogsViewHome from '../log_view_home/LogsViewHome';
+import { LogCardProps } from '../log_card/LogCard';
 
 type LogsViewProps = {
   data: { title: string; content: string; categories: string[] }[];
@@ -10,16 +11,7 @@ type LogsViewProps = {
 
 export type LogStackParamList = {
   LogsViewHome: undefined; 
-  LogCard: {
-    title: string;
-    content: string;
-    categories: string[];
-  };
-  LogDetail: {
-    title: string;
-    content: string;
-    categories: string[];
-  };
+  LogDetail: LogCardProps;
 };
 
 const LogsView = () => {
