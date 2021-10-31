@@ -1,14 +1,12 @@
 import { useNavigation } from '@react-navigation/core';
 import React from 'react';
 import {
-  useColorScheme,
   View,
   Text,
   StyleSheet,
 } from 'react-native';
 import CardIcons from '../card_icons/CardIcons';
-import { LogsViewHomeProps } from '../log_view_home/LogsViewHome';
-import { LogStackParamList } from '../logs_view/LogsView';
+import { RootStackParamList } from '../navigation_stack/NavigationStack';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -20,7 +18,7 @@ export type LogCardProps = {
   mood: string;
 };
 
-type LogCardNavigationProp = NativeStackNavigationProp<LogStackParamList, 'LogCard'>;
+type LogCardNavigationProp = NativeStackNavigationProp<RootStackParamList, 'LogCard'>;
 
 const LogCard = ({ title, createdAt, content, categories, mood }: LogCardProps) => {
 

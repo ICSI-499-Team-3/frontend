@@ -1,13 +1,9 @@
-import React, { createContext, useContext } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { LogStackParamList } from '../logs_view/LogsView';
 import LogsList from '../logs_list/LogsList';
 import { FAB } from 'react-native-paper';
 
-export type LogsViewHomeProps = NativeStackScreenProps<LogStackParamList, 'LogsViewHome'>;
-
-const LogsViewHome = ({ route, navigation }: LogsViewHomeProps) => {
+const LogsViewHome = () => {
 
     return (
         <View>

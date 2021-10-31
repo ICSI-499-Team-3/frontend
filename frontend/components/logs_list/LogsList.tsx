@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { FlatList } from 'react-native';
 import LogCard from '../log_card/LogCard';
 
 const LogsList = () => {
@@ -55,7 +56,7 @@ const LogsList = () => {
     ];
 
     return (
-        <View>
+        <SafeAreaView>
             <FlatList 
                 data={data} 
                 renderItem={({ item }) => (
@@ -68,7 +69,7 @@ const LogsList = () => {
                     />
                 )}
             />
-        </View>
+        </SafeAreaView>
     );
 };
 
