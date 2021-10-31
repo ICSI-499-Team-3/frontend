@@ -2,8 +2,15 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import LogsList from '../logs_list/LogsList';
 import { FAB } from 'react-native-paper';
+import { RootStackParamList } from '../navigation_stack/NavigationStack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/core';
+
+type LogCardNavigationProp = NativeStackNavigationProp<RootStackParamList, 'LogsViewHome'>;
 
 const LogsViewHome = () => {
+
+    const navigation = useNavigation<LogCardNavigationProp>();
 
     return (
         <View>
@@ -11,7 +18,7 @@ const LogsViewHome = () => {
             <FAB
                 style={styles.fab}
                 icon="plus"
-                onPress={() => console.log("pressed")}
+                onPress={() => navigation.navigate('CreateLog')}
             />
         </View>
     );
