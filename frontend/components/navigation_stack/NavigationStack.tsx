@@ -42,9 +42,6 @@ const NavigationStack = () => {
                 <RootStack.Screen 
                     name="CreateLog" 
                     component={CreateLog}
-                    options={{
-                        headerShown: false,
-                    }} 
                 />
             </RootStack.Group>
         </RootStack.Navigator>

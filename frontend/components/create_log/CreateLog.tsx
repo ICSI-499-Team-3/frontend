@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
-import { View, Button, StyleSheet, Text, TextInput } from 'react-native';
+import React, { useState, useLayoutEffect } from 'react';
+import { View, Button, StyleSheet, Text, TextInput, Pressable } from 'react-native';
 import { IconButton, TextInput as TextInputPaper } from 'react-native-paper';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation_stack/NavigationStack';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Chip from '../chip/Chip';
 
 type CreateLogProps = NativeStackScreenProps<RootStackParamList, 'CreateLog'>;
+
+enum dateTimePickerModes {
+    Date = "date", 
+    Time = "time",
+    DateTime = "datetime",
+};
 
 const CreateLog = ({ route, navigation }: CreateLogProps) => {
 
@@ -13,7 +21,17 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
 
     const moods = ['happy', 'sad', 'angry', 'stressed', 'anxious', 'goofy', 'spontaneous', 'excited'];
 
+    const [selectedMoods, setSelectedMoods] = useState(new Set<string>())
+
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+    const [dateTimePickerMode, setDateTimePickerMode] = useState(dateTimePickerModes.Date);
+
+    const [selectedDate, setSelectedDate] = useState(new Date());
+
+    const [selectedTime, setSelectedTime] = useState(new Date());
+
+    const [contentText, setContentText] = useState('');
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -23,72 +41,135 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
         setDatePickerVisibility(false);
     };
 
-    const handleConfirm = (date: Date) => {
-        console.warn("A date has been picked: ", date);
-        hideDatePicker();
+    const handleDateConfirmed = (date: Date) => {
+        switch (dateTimePickerMode) {
+            case dateTimePickerModes.Date:
+                setSelectedDate(date);
+                hideDatePicker();
+                break;
+            case dateTimePickerModes.Time:
+                setSelectedTime(date);
+                hideDatePicker();
+                break;
+        }
     };
 
-    return (
-        <View style={styles.container}>
-            {/* TODO: use a custom navigation header instead */}
-            <View style={styles.header}>
+    const createLog = () => {
+        const moodString = [...selectedMoods].join(', ');
+        console.log(`
+            ${titleText}, 
+            ${selectedDate}
+            ${selectedTime},
+            ${contentText},
+            ${moodString}
+        `);
+    };
+
+    const handlePickMood = (mood: string) => {
+        if (selectedMoods.has(mood)) {
+            selectedMoods.delete(mood);
+        } else {
+            selectedMoods.add(mood);
+            console.log(selectedMoods);
+        }
+        setSelectedMoods(selectedMoods);
+    };
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerLeft: () => (
                 <IconButton 
                     icon="close"
                     size={20}
                     onPress={() => navigation.goBack()}
                 />
+            ),
+            headerRight: () => (
                 <Button 
-                    onPress={() => console.log('pressed')}
+                    onPress={createLog}
                     title="Create"
                     accessibilityLabel="Create log"
                 />
-            </View>
+            ),
+            title: '',
+        });
+    }, [navigation, createLog]);
+
+    return (
+        <SafeAreaView style={styles.container}>
             <TextInputPaper
                 label="Title"
                 value={titleText}
-                onChangeText={text => setTitleText(text)}
+                onChangeText={(text) => setTitleText(text)}
             />
-            <Text>How did you feel?</Text>
             <View style={styles.moodsContainer}>
-                {moods.map(mood => (
-                    <View style={styles.moodItem}>
-                        <Text>{mood}</Text>
-                    </View>
-                ))}
+                <Text>Select mood (optional)</Text>
+                <View style={styles.moodsGrid}>
+                    {moods.map(mood => (
+                        <Chip key={mood} text={mood} onPress={() => handlePickMood(mood)} />
+                    ))}
+                </View>
             </View>
-            <Text>Pick the date and time</Text>
-            <Button title="Add date" onPress={showDatePicker} />
+            <View style={styles.dateContainer}>
+                <Button title="Pick date" onPress={() => {
+                    setDateTimePickerMode(dateTimePickerModes.Date);
+                    showDatePicker();
+                }} />
+                <Text style={styles.dateText}>{selectedDate.toLocaleDateString()}</Text>
+            </View>
+            <View style={styles.dateContainer}>
+                <Button title="Pick time" onPress={() => {
+                    setDateTimePickerMode(dateTimePickerModes.Time);
+                    showDatePicker();
+                }} />
+                <Text style={styles.dateText}>{`${selectedTime.toLocaleTimeString()}`}</Text>
+            </View>
             <DateTimePickerModal 
                 isVisible={isDatePickerVisible}
-                mode="date"
-                onConfirm={handleConfirm}
+                mode={dateTimePickerMode}
+                onConfirm={handleDateConfirmed}
                 onCancel={hideDatePicker}
             />
             <TextInput 
+                style={styles.contentInput}
                 multiline
+                placeholder="Add optional notes"
+                onChangeText={setContentText}
             />
-        </View>
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         padding: 10,
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1,
     },
     header: {
         display: 'flex', 
         flexDirection: 'row',
     },
     moodsContainer: {
+        paddingTop: 10,
+    },
+    moodsGrid: {
         display: 'flex', 
         flexDirection: 'row', 
         flexWrap: 'wrap',
         justifyContent: 'center',
     },
-    moodItem: {
-        padding: 30,
-        borderColor: 'black',
-        borderWidth: 2,
+    dateContainer: {
+        display: 'flex', 
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    dateText: {
+        marginLeft: 'auto',
+    },
+    contentInput: {
+        flexGrow: 1,
     },
 })
 
