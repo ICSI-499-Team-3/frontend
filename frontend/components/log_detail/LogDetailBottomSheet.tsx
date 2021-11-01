@@ -30,7 +30,7 @@ const LogDetailBottomSheet = () => {
     return (
         <View>
             {options.map(option => (
-                <TouchableOpacity style={styles.option}>
+                <TouchableOpacity key={option.name} style={styles.option}>
                     <Text>{option.name}</Text>
                 </TouchableOpacity>
             ))}

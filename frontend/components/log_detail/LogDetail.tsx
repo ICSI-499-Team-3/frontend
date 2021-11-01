@@ -1,13 +1,13 @@
 import React, { useMemo, useRef, useCallback, useLayoutEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { LogStackParamList } from '../logs_view/LogsView';
+import { RootStackParamList } from '../navigation_stack/NavigationStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Text } from 'react-native-paper';
 import { IconButton, Colors } from 'react-native-paper';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import LogDetailBottomSheet from './LogDetailBottomSheet';
 
-type LogDetailProps = NativeStackScreenProps<LogStackParamList, 'LogDetail'>;
+type LogDetailProps = NativeStackScreenProps<RootStackParamList, 'LogDetail'>;
 
 const LogDetail = ({ route, navigation }: LogDetailProps) => {
 
@@ -44,7 +44,7 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
                 <Text style={styles.createdAt}>{createdAt}</Text>
                 <View style={styles.categoriesContainer}>
                     {categories.map(category => (
-                        <Text>{category}</Text>
+                        <Text key={category}>{category}</Text>
                     ))}
                 </View>
                 <Text style={styles.mood}>{mood}</Text>
