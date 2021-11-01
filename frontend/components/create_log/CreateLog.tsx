@@ -19,7 +19,11 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
 
     const [titleText, setTitleText] = useState('');
 
+    const categories = ['running', 'yoga', 'going out', 'physical therapy', 'therapy', 'eating', 'spending time with friends'];
+
     const moods = ['happy', 'sad', 'angry', 'stressed', 'anxious', 'goofy', 'spontaneous', 'excited'];
+
+    const [selectedCategories, setSelectedCategories] = useState(new Set<string>());
 
     const [selectedMoods, setSelectedMoods] = useState(new Set<string>())
 
@@ -55,14 +59,25 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
     };
 
     const createLog = () => {
+        const categoryString = [...selectedCategories].join(', ');
         const moodString = [...selectedMoods].join(', ');
         console.log(`
             ${titleText}, 
             ${selectedDate}
             ${selectedTime},
             ${contentText},
+            ${categoryString},
             ${moodString}
         `);
+    };
+
+    const handlePickCategory = (category: string) => {
+        if (selectedCategories.has(category)) {
+            selectedCategories.delete(category);
+        } else {
+            selectedCategories.add(category);
+        }
+        setSelectedCategories(selectedCategories);
     };
 
     const handlePickMood = (mood: string) => {
@@ -70,7 +85,6 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
             selectedMoods.delete(mood);
         } else {
             selectedMoods.add(mood);
-            console.log(selectedMoods);
         }
         setSelectedMoods(selectedMoods);
     };
@@ -102,6 +116,14 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
                 value={titleText}
                 onChangeText={(text) => setTitleText(text)}
             />
+            <View style={styles.moodsContainer}>
+                <Text>Select categories (optional)</Text>
+                <View style={styles.moodsGrid}>
+                    {categories.map(category => (
+                        <Chip key={category} text={category} onPress={() => handlePickCategory(category)} />
+                    ))}
+                </View>
+            </View>
             <View style={styles.moodsContainer}>
                 <Text>Select mood (optional)</Text>
                 <View style={styles.moodsGrid}>
