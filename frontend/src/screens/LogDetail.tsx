@@ -1,11 +1,11 @@
 import React, { useMemo, useRef, useCallback, useLayoutEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { RootStackParamList } from '../navigation_stack/NavigationStack';
+import { RootStackParamList } from '../navigation/NavigationStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Text } from 'react-native-paper';
 import { IconButton, Colors } from 'react-native-paper';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import LogDetailBottomSheet from './LogDetailBottomSheet';
+import LogDetailBottomSheet from '../components/atoms/log_detail/LogDetailBottomSheet';
 
 type LogDetailProps = NativeStackScreenProps<RootStackParamList, 'LogDetail'>;
 
