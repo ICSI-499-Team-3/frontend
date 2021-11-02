@@ -5,8 +5,8 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
-import CardIcons from '../card_icons/CardIcons';
-import { RootStackParamList } from '../navigation_stack/NavigationStack';
+import CardIcons from '../../atoms/card_icons/CardIcons';
+import { RootStackParamList } from '../../../navigation/NavigationStack';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 

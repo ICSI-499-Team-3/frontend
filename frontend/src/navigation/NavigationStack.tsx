@@ -1,9 +1,9 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LogCardProps } from '../log_card/LogCard';
-import LogDetail from '../log_detail/LogDetail';
-import TabView from '../tab_view/TabView';
-import CreateLog from '../create_log/CreateLog';
+import { LogCardProps } from '../components/molecules/log_card/LogCard';
+import LogDetail from '../screens/LogDetail';
+import TabView from '../screens/TabView';
+import CreateLog from '../screens/CreateLog';
 
 export type RootStackParamList = {
     Tabs: undefined;

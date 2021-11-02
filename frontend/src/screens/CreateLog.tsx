@@ -3,9 +3,9 @@ import { View, Button, StyleSheet, Text, TextInput, Pressable } from 'react-nati
 import { IconButton, TextInput as TextInputPaper } from 'react-native-paper';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation_stack/NavigationStack';
+import { RootStackParamList } from '../navigation/NavigationStack';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Chip from '../chip/Chip';
+import Chip from '../components/atoms/chip/Chip';
 
 type CreateLogProps = NativeStackScreenProps<RootStackParamList, 'CreateLog'>;
 
