@@ -6,7 +6,11 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/NavigationStack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Chip from '../components/atoms/chip/Chip';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+import Log from '../types/Log';
+import LogInput from '../types/LogInput';
+import CREATE_LOG from '../mutations/CreateLog';
+import GET_ALL_LOGS from '../queries/GetAllLogs';
 
 type CreateLogProps = NativeStackScreenProps<RootStackParamList, 'CreateLog'>;
 
@@ -15,33 +19,6 @@ enum dateTimePickerModes {
     Time = "time",
     DateTime = "datetime",
 }
-
-interface Log {
-    id: string;
-    dateTimeOfActivity: number;
-    notes: string; 
-    categories: string[];
-    mood: string[];
-}
-
-interface LogInput {
-    dateTimeOfActivity: number;
-    notes: string;
-    categories: string[];
-    mood: string[];
-}
-
-const CREATE_LOG = gql`
-    mutation CreateLog($input: LogInput!) {
-        CreateLog(input: $input) {
-            id
-            dateTimeOfActivity
-            notes
-            categories
-            mood
-        }
-    }
-`;
 
 const CreateLog = ({ route, navigation }: CreateLogProps) => {
 
@@ -61,7 +38,7 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
 
     const [selectedTime, setSelectedTime] = useState(new Date());
 
-    const [selectedDateTime, setSelectedDateTime] = useState(0);
+    const [selectedDateTime, setSelectedDateTime] = useState(new Date().getTime() / 1000);
 
     const [contentText, setContentText] = useState('');
 
@@ -72,13 +49,17 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
                 notes: contentText, 
                 categories: Array.from(selectedCategories), 
                 mood: Array.from(selectedMoods),
-            },
+            }
         },
         onCompleted: (data) => {
             console.log(`completed CreateLog: ${data}`);
             navigation.goBack();
         }, 
         onError: (error) => console.log(`Error on CreateLog: ${error}`),
+        refetchQueries: [
+            GET_ALL_LOGS, 
+            'GetAllLogs',
+        ],
     });
 
     const showDatePicker = () => {
