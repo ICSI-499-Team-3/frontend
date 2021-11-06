@@ -6,6 +6,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/NavigationStack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Chip from '../components/atoms/chip/Chip';
+import { gql, useMutation } from '@apollo/client';
 
 type CreateLogProps = NativeStackScreenProps<RootStackParamList, 'CreateLog'>;
 
@@ -13,11 +14,36 @@ enum dateTimePickerModes {
     Date = "date", 
     Time = "time",
     DateTime = "datetime",
-};
+}
+
+interface Log {
+    id: string;
+    dateTimeOfActivity: number;
+    notes: string; 
+    categories: string[];
+    mood: string[];
+}
+
+interface LogInput {
+    dateTimeOfActivity: number;
+    notes: string;
+    categories: string[];
+    mood: string[];
+}
+
+const CREATE_LOG = gql`
+    mutation CreateLog($input: LogInput!) {
+        CreateLog(input: $input) {
+            id
+            dateTimeOfActivity
+            notes
+            categories
+            mood
+        }
+    }
+`;
 
 const CreateLog = ({ route, navigation }: CreateLogProps) => {
-
-    const [titleText, setTitleText] = useState('');
 
     const categories = ['running', 'yoga', 'going out', 'physical therapy', 'therapy', 'eating', 'spending time with friends'];
 
@@ -35,7 +61,25 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
 
     const [selectedTime, setSelectedTime] = useState(new Date());
 
+    const [selectedDateTime, setSelectedDateTime] = useState(0);
+
     const [contentText, setContentText] = useState('');
+
+    const [createLog] = useMutation<{ createLog: Log }, { input: LogInput }>(CREATE_LOG, {
+        variables: {
+            input: {
+                dateTimeOfActivity: selectedDateTime, 
+                notes: contentText, 
+                categories: Array.from(selectedCategories), 
+                mood: Array.from(selectedMoods),
+            },
+        },
+        onCompleted: (data) => {
+            console.log(`completed CreateLog: ${data}`);
+            navigation.goBack();
+        }, 
+        onError: (error) => console.log(`Error on CreateLog: ${error}`),
+    });
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -47,28 +91,73 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
 
     const handleDateConfirmed = (date: Date) => {
         switch (dateTimePickerMode) {
-            case dateTimePickerModes.Date:
-                setSelectedDate(date);
-                hideDatePicker();
+            case dateTimePickerModes.Date: {
+                    const dateTime = new Date(
+                        date.getFullYear(),
+                        date.getMonth(), 
+                        date.getDate(), 
+                        selectedTime.getHours(), 
+                        selectedTime.getMinutes(), 
+                        selectedTime.getSeconds(), 
+                        selectedTime.getMilliseconds()
+                    );
+                    const epoch = dateTime.getTime() / 1000;
+                    const epochDate = new Date(0);
+                    epochDate.setUTCSeconds(epoch);
+                    setSelectedDateTime(epoch);
+                    setSelectedDate(date);
+                    hideDatePicker();
+                }
                 break;
-            case dateTimePickerModes.Time:
-                setSelectedTime(date);
-                hideDatePicker();
+            case dateTimePickerModes.Time: {
+                    const dateTime = new Date(
+                        selectedDate.getFullYear(),
+                        selectedDate.getMonth(), 
+                        selectedDate.getDate(), 
+                        date.getHours(), 
+                        date.getMinutes(), 
+                        date.getSeconds(), 
+                        date.getMilliseconds()
+                    );
+                    const epoch = dateTime.getTime() / 1000;
+                    const epochDate = new Date(0);
+                    epochDate.setUTCSeconds(epoch);
+                    setSelectedDateTime(epoch);
+                    setSelectedTime(date);
+                    hideDatePicker();
+                }
                 break;
         }
     };
 
-    const createLog = () => {
+    const handleCreate = () => {
         const categoryString = [...selectedCategories].join(', ');
         const moodString = [...selectedMoods].join(', ');
         console.log(`
-            ${titleText}, 
             ${selectedDate}
             ${selectedTime},
             ${contentText},
             ${categoryString},
             ${moodString}
         `);
+
+        const y = new Date(
+            selectedDate.getFullYear(),
+            selectedDate.getMonth(), 
+            selectedDate.getDate(), 
+            selectedTime.getHours(), 
+            selectedTime.getMinutes(), 
+            selectedTime.getSeconds(), 
+            selectedTime.getMilliseconds()
+        );
+        console.log(y.toString());
+        const epoch = y.getTime() / 1000;
+        console.log(epoch);
+        const j = new Date(0);
+        j.setUTCSeconds(epoch);
+        console.log(j.toString());
+
+        createLog();
     };
 
     const handlePickCategory = (category: string) => {
@@ -100,22 +189,17 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
             ),
             headerRight: () => (
                 <Button 
-                    onPress={createLog}
+                    onPress={handleCreate}
                     title="Create"
                     accessibilityLabel="Create log"
                 />
             ),
             title: '',
         });
-    }, [navigation, createLog]);
+    }, [navigation, handleCreate]);
 
     return (
         <SafeAreaView style={styles.container}>
-            <TextInputPaper
-                label="Title"
-                value={titleText}
-                onChangeText={(text) => setTitleText(text)}
-            />
             <View style={styles.moodsContainer}>
                 <Text>Select categories (optional)</Text>
                 <View style={styles.moodsGrid}>

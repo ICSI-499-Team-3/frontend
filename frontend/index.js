@@ -12,7 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 const client = new ApolloClient({
-    uri: 'localhost:8989/graphql', 
+    uri: 'http://localhost:8989/graphql', 
     cache: new InMemoryCache(),
 });
 
