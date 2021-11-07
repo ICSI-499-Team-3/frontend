@@ -1,10 +1,12 @@
 // Template from https://github.com/venits/react-native-login-template
 
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import { Button as PaperButton } from 'react-native-paper';
 import { theme } from '../../../core/theme';
 
+
+// { style, ...props }:{style: StyleProp<ViewStyle>; children: React.ReactNode}
 export default function Button({ style, ...props }) {
     return (
         <PaperButton

@@ -1,20 +1,16 @@
 // Template from https://github.com/venits/react-native-login-template
 
 import React, { FC } from 'react';
-import { ImageBackground, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, View } from 'react-native';
 import { theme } from '../../../core/theme';
 
-export default function Background({ children, ...props }) {
+export default function Background({ children }: { children: JSX.Element[]; }) {
     return (
-        <ImageBackground
-            source={require('../../../assets/background_dot.png')}
-            resizeMode="repeat"
-            style={styles.background}
-        >
+        <View style={styles.background}>
             <KeyboardAvoidingView style={styles.container} behavior="padding">
                 {children}
             </KeyboardAvoidingView>
-        </ImageBackground>
+        </View>
     );
 }
 

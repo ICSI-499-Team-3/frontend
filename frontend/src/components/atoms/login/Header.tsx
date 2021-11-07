@@ -5,13 +5,13 @@ import {StyleSheet} from 'react-native';
 import {Text} from 'react-native-paper';
 import {theme} from '../../../core/theme';
 
-export default function Header(props) {
+export default function Header(props: { children?: React.ReactNode; }) {
     return <Text style={styles.header} {...props} />;
 }
 
 const styles = StyleSheet.create({
     header: {
-        fontSize: 21,
+        fontSize: 24,
         color: theme.colors.primary,
         // borderColor: theme.colors.text,
         // borderWidth: 1,

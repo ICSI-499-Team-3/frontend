@@ -1,10 +1,10 @@
 // Template from https://github.com/venits/react-native-login-template
 
 import React from 'react';
-import { TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { TouchableOpacity, Image, StyleSheet, GestureResponderEvent } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
-export default function BackButton({ goBack }) {
+export default function BackButton({ goBack }: { goBack: (event: GestureResponderEvent) => void; }) {
     return (
         <TouchableOpacity onPress={goBack} style={styles.container}>
             <Image
