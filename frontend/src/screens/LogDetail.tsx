@@ -11,7 +11,7 @@ type LogDetailProps = NativeStackScreenProps<RootStackParamList, 'LogDetail'>;
 
 const LogDetail = ({ route, navigation }: LogDetailProps) => {
 
-    const { title, createdAt, content, categories, mood } = route.params;
+    const { id, dateTimeOfActivity, notes, categories, mood } = route.params;
 
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
@@ -40,15 +40,14 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
     return (
         <BottomSheetModalProvider>
             <ScrollView style={styles.container}>
-                <Text style={styles.title}>{title}</Text>
-                <Text style={styles.createdAt}>{createdAt}</Text>
+                <Text style={styles.createdAt}>{dateTimeOfActivity}</Text>
                 <View style={styles.categoriesContainer}>
-                    {categories.map(category => (
+                    {categories?.map(category => (
                         <Text key={category}>{category}</Text>
                     ))}
                 </View>
                 <Text style={styles.mood}>{mood}</Text>
-                <Text>{content}</Text>
+                <Text>{notes}</Text>
             </ScrollView>
             <BottomSheetModal
                 ref={bottomSheetModalRef}

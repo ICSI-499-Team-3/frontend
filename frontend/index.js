@@ -11,8 +11,10 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
+const LOCAL_SYSTEM_IP_ADDR = '192.168.1.112'; // Habib
+
 const client = new ApolloClient({
-    uri: 'localhost:8989/graphql', 
+    uri: `http://${LOCAL_SYSTEM_IP_ADDR}:8989/graphql`,
     cache: new InMemoryCache(),
 });
 
@@ -20,13 +22,13 @@ export default function Main() {
 
     return (
         <ApolloProvider client={client}>
-            <GestureHandlerRootView style={{flex: 1}}>
+            <GestureHandlerRootView style={{ flex: 1 }}>
                 <NavigationContainer>
                     <PaperProvider>
                         <App />
                     </PaperProvider>
                 </NavigationContainer>
-            </GestureHandlerRootView> 
+            </GestureHandlerRootView>
         </ApolloProvider>
     );
 }

@@ -9,18 +9,13 @@ import CardIcons from '../../atoms/card_icons/CardIcons';
 import { RootStackParamList } from '../../../navigation/NavigationStack';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Log from '../../../types/Log';
 
-export type LogCardProps = {
-  title: string;
-  createdAt: number;
-  content: string;
-  categories: string[]; 
-  mood: string;
-};
+export type LogCardProps = Log;
 
 type LogCardNavigationProp = NativeStackNavigationProp<RootStackParamList, 'LogCard'>;
 
-const LogCard = ({ title, createdAt, content, categories, mood }: LogCardProps) => {
+const LogCard = ({ id, dateTimeOfActivity, notes, categories, mood }: LogCardProps) => {
 
   const navigation = useNavigation<LogCardNavigationProp>();
 
@@ -29,19 +24,19 @@ const LogCard = ({ title, createdAt, content, categories, mood }: LogCardProps) 
       style={[styles.paper]}
       onPress={() => {
         navigation.navigate("LogDetail", {
-          title: title, 
-          createdAt: createdAt,
-          content: content, 
+          id: id,
+          dateTimeOfActivity: dateTimeOfActivity,
+          notes: notes, 
           categories: categories,
           mood: mood,
         });
       }}
     >
       <View style={[styles.titleContainer]}>
-        <Text style={[styles.titleText]}>{title.length > 20 ? `${title.substring(0, 20)}...` : title}</Text>
-        <CardIcons categories={categories} />
+        <Text style={[styles.titleText]}>{notes ? (notes.length > 20 ? `${notes.substring(0, 20)}...` : notes) : ''}</Text>
+        <CardIcons categories={categories ? categories : []} />
       </View>
-      <Text style={[styles.contentText]}>{content.length > 150 ? `${content.substring(0, 150)}...` : content}</Text>
+      <Text style={[styles.contentText]}>{notes ? (notes.length > 150 ? `${notes.substring(0, 150)}...` : notes) : ''}</Text>
     </TouchableOpacity>
   );
 };
