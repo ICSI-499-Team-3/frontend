@@ -4,6 +4,10 @@ import { LogCardProps } from '../components/molecules/log_card/LogCard';
 import LogDetail from '../screens/LogDetail';
 import TabView from '../screens/TabView';
 import CreateLog from '../screens/CreateLog';
+import StartScreen from '../screens/StartScreen';
+import LoginScreen from '../screens/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen';
+import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 
 export type RootStackParamList = {
     Tabs: undefined;
@@ -11,6 +15,10 @@ export type RootStackParamList = {
     LogDetail: LogCardProps;
     LogCard: undefined;
     CreateLog: undefined;
+    StartScreen: undefined;
+    LoginScreen: undefined;
+    RegisterScreen: undefined;
+    ResetPasswordScreen: undefined;
 };
 
 const NavigationStack = () => {
@@ -18,10 +26,16 @@ const NavigationStack = () => {
     const RootStack = createNativeStackNavigator<RootStackParamList>();
 
     return (
-        <RootStack.Navigator initialRouteName="Tabs">
+        <RootStack.Navigator initialRouteName="StartScreen">
+            <RootStack.Group screenOptions={{ headerShown: false }}>
+                <RootStack.Screen name="StartScreen" component={StartScreen} />
+                <RootStack.Screen name="LoginScreen" component={LoginScreen} />
+                <RootStack.Screen name="RegisterScreen" component={RegisterScreen} />
+                <RootStack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} />
+            </RootStack.Group>
             <RootStack.Group>
-                { /* TABS */ }
-                <RootStack.Screen 
+                { /* TABS */}
+                <RootStack.Screen
                     name="Tabs"
                     component={TabView}
                     options={{
@@ -29,18 +43,18 @@ const NavigationStack = () => {
                     }}
                 />
 
-                { /* LOGS SCREENS */ }
+                { /* LOGS SCREENS */}
                 <RootStack.Screen name="LogDetail" component={LogDetail} />
 
-                { /* MEASUREMENTS SCREENS */ }
+                { /* MEASUREMENTS SCREENS */}
 
-                { /* RECOMMENDATIONS SCREENS */ }
+                { /* RECOMMENDATIONS SCREENS */}
 
-                { /* PROFILE SCREENS */ }
+                { /* PROFILE SCREENS */}
             </RootStack.Group>
             <RootStack.Group screenOptions={{ presentation: 'modal' }}>
-                <RootStack.Screen 
-                    name="CreateLog" 
+                <RootStack.Screen
+                    name="CreateLog"
                     component={CreateLog}
                 />
             </RootStack.Group>
