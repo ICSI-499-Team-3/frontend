@@ -12,7 +12,7 @@ import { emailValidator } from '../helpers/emailValidator';
 import { passwordValidator } from '../helpers/passwordValidator';
 import { nameValidator } from '../helpers/nameValidator';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/NavigationStack';
+import { RootStackParamList } from '../navigation/AppStack';
 
 type RegiserScreenProps = NativeStackScreenProps<RootStackParamList, 'RegisterScreen'>;
 

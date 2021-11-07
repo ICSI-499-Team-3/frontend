@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import NavigationStack from './src/navigation/NavigationStack';
+import NavigationStack from './src/navigation/AppStack';
 
 const App = () => {
 

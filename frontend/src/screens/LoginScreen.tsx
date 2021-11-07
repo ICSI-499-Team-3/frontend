@@ -13,7 +13,7 @@ import { theme } from '../core/theme';
 import { emailValidator } from '../helpers/emailValidator';
 import { passwordValidator } from '../helpers/passwordValidator';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/NavigationStack';
+import { RootStackParamList } from '../navigation/AppStack';
 
 type LoginScreenProps = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 

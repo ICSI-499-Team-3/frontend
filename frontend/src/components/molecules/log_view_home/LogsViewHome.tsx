@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import LogsList from '../logs_list/LogsList';
 import { FAB } from 'react-native-paper';
-import { RootStackParamList } from '../../../navigation/NavigationStack';
+import { RootStackParamList } from '../../../navigation/AppStack';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/core';
 
