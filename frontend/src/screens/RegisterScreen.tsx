@@ -12,14 +12,46 @@ import { emailValidator } from '../helpers/emailValidator';
 import { passwordValidator } from '../helpers/passwordValidator';
 import { nameValidator } from '../helpers/nameValidator';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { AppStackParamList } from '../navigation/AppStack';
+import { AuthStackParamList } from '../navigation/AuthStack';
+import { useMutation } from '@apollo/client';
+import User from '../types/User';
+import UserInput from '../types/UserInput';
+import CREATE_USER from '../mutations/CreateUser';
+import Toast from 'react-native-toast-message';
 
-type RegiserScreenProps = NativeStackScreenProps<AppStackParamList, 'RegisterScreen'>;
+type RegiserScreenProps = NativeStackScreenProps<AuthStackParamList, 'RegisterScreen'>;
 
 export default function RegisterScreen({ navigation }: RegiserScreenProps) {
     const [name, setName] = useState({ value: '', error: '' });
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
+
+    const successToast = () => {
+        Toast.show({
+            text1: 'Account Created!',
+            text2: 'Please log in',
+        });
+    };
+
+    const [createUser] = useMutation<{ createUser: User; }, { input: UserInput; }>(CREATE_USER, {
+        variables: {
+            input: {
+                name: name.value,
+                email: email.value,
+                password: password.value,
+            }
+        },
+        onCompleted: (data) => {
+            console.log(`completed Created User: ${data}`);
+            navigation.goBack();
+            successToast();
+        },
+        onError: (error) => {
+            console.log(`Error on CreateUser: ${error.message}`);
+            const errorMessage = error.message.split(':')[1];
+            setEmail({ ...email, error: errorMessage });
+        },
+    });
 
     const onSignUpPressed = () => {
         const nameError = nameValidator(name.value);
@@ -31,10 +63,8 @@ export default function RegisterScreen({ navigation }: RegiserScreenProps) {
             setPassword({ ...password, error: passwordError });
             return;
         }
-        navigation.reset({
-            index: 0,
-            routes: [{ name: 'Tabs' }],
-        });
+
+        createUser();
     };
 
     return (

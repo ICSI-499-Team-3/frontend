@@ -6,6 +6,7 @@ import Button from '../components/atoms/login/Button';
 import Paragraph from '../components/atoms/login/Paragraph';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthStackParamList } from '../navigation/AuthStack';
+import Toast from 'react-native-toast-message'
 
 type StartScreenProps = NativeStackScreenProps<AuthStackParamList, 'StartScreen'>;
 
