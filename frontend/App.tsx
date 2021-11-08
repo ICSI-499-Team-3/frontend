@@ -9,12 +9,22 @@
  */
 
 import React from 'react';
-import NavigationStack from './src/navigation/AppStack';
+import { Loading } from './src/components/atoms/login/Loading';
+import { useAuth } from './src/contexts/Auth';
+import AppStack from './src/navigation/AppStack';
+import AuthStack from './src/navigation/AuthStack';
 
 const App = () => {
 
+  const {authData, loading} = useAuth();
+
+  if(loading) {
+    return <Loading/>
+  }
   return (
-    <NavigationStack />
+    <>
+      {authData ? <AppStack /> : <AuthStack />}
+    </>
   );
 };
 

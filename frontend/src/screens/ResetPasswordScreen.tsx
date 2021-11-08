@@ -7,9 +7,9 @@ import TextInput from '../components/atoms/login/TextInput';
 import Button from '../components/atoms/login/Button';
 import { emailValidator } from '../helpers/emailValidator';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/AppStack';
+import { AppStackParamList } from '../navigation/AppStack';
 
-type ResetPasswordScreenProps = NativeStackScreenProps<RootStackParamList, 'ResetPasswordScreen'>;
+type ResetPasswordScreenProps = NativeStackScreenProps<AppStackParamList, 'ResetPasswordScreen'>;
 
 export default function ResetPasswordScreen({ navigation }: ResetPasswordScreenProps) {
     const [email, setEmail] = useState({ value: '', error: '' });

@@ -6,14 +6,14 @@ import {
   StyleSheet,
 } from 'react-native';
 import CardIcons from '../../atoms/card_icons/CardIcons';
-import { RootStackParamList } from '../../../navigation/AppStack';
+import { AppStackParamList } from '../../../navigation/AppStack';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Log from '../../../types/Log';
 
 export type LogCardProps = Log;
 
-type LogCardNavigationProp = NativeStackNavigationProp<RootStackParamList, 'LogCard'>;
+type LogCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'LogCard'>;
 
 const LogCard = ({ id, dateTimeOfActivity, notes, categories, mood }: LogCardProps) => {
 

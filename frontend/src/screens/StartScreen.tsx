@@ -5,9 +5,9 @@ import Header from '../components/atoms/login/Header';
 import Button from '../components/atoms/login/Button';
 import Paragraph from '../components/atoms/login/Paragraph';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/AppStack';
+import { AuthStackParamList } from '../navigation/AuthStack';
 
-type StartScreenProps = NativeStackScreenProps<RootStackParamList, 'StartScreen'>;
+type StartScreenProps = NativeStackScreenProps<AuthStackParamList, 'StartScreen'>;
 
 export default function StartScreen({ navigation }: StartScreenProps) {
     return (

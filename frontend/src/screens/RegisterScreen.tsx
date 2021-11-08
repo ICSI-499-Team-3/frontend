@@ -12,9 +12,9 @@ import { emailValidator } from '../helpers/emailValidator';
 import { passwordValidator } from '../helpers/passwordValidator';
 import { nameValidator } from '../helpers/nameValidator';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/AppStack';
+import { AppStackParamList } from '../navigation/AppStack';
 
-type RegiserScreenProps = NativeStackScreenProps<RootStackParamList, 'RegisterScreen'>;
+type RegiserScreenProps = NativeStackScreenProps<AppStackParamList, 'RegisterScreen'>;
 
 export default function RegisterScreen({ navigation }: RegiserScreenProps) {
     const [name, setName] = useState({ value: '', error: '' });

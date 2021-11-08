@@ -3,7 +3,7 @@ import { View, Button, StyleSheet, Text, TextInput, Pressable } from 'react-nati
 import { IconButton, TextInput as TextInputPaper } from 'react-native-paper';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/AppStack';
+import { AppStackParamList } from '../navigation/AppStack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Chip from '../components/atoms/chip/Chip';
 import { useMutation } from '@apollo/client';
@@ -12,7 +12,7 @@ import LogInput from '../types/LogInput';
 import CREATE_LOG from '../mutations/CreateLog';
 import GET_ALL_LOGS from '../queries/GetAllLogs';
 
-type CreateLogProps = NativeStackScreenProps<RootStackParamList, 'CreateLog'>;
+type CreateLogProps = NativeStackScreenProps<AppStackParamList, 'CreateLog'>;
 
 enum dateTimePickerModes {
     Date = "date", 
