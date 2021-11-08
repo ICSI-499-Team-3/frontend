@@ -39,6 +39,7 @@ const AuthProvider: React.FC = ({ children }) => {
                 setAuthData(_authData);
             }
         } catch (error) {
+            console.log(error);
         } finally {
             //loading finished
             setLoading(false);
@@ -47,7 +48,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
     const signIn = async (email: string, password: string) => {
         console.log('In async sign-in');
-        
+
         //call the service passing credential (email and password).
         //In a real App this data will be provided by the user from some InputText components.
         const _authData = await authService.signIn(
@@ -55,13 +56,13 @@ const AuthProvider: React.FC = ({ children }) => {
             password,
         );
 
-        
+
         console.log('setting authdata');
         //Set the data in the context, so the App can be notified
         //and send the user to the AuthStack
         setAuthData(_authData);
         console.log('authdata set');
-        
+
         console.log('seting asyncStorage');
         //Persist the data in the Async Storage
         //to be recovered in the next user session.
