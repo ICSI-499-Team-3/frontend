@@ -24,9 +24,6 @@ const NavigationStack = () => {
                 <RootStack.Screen 
                     name="Tabs"
                     component={TabView}
-                    options={{
-                        headerShown: false,
-                    }}
                 />
 
                 { /* LOGS SCREENS */ }
