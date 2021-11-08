@@ -6,16 +6,18 @@ import LogDetail from '../screens/LogDetail';
 import TabView from '../screens/TabView';
 import CreateLog from '../screens/CreateLog';
 import MetricDetail from '../screens/MetricDetail';
+import CreateMetric from '../screens/CreateMetric';
 
 export type RootStackParamList = {
-    Tabs: undefined;
+    CreateLog: undefined;
+    CreateMetric: undefined;
     LogsViewHome: undefined;
     LogDetail: LogCardProps;
     LogCard: undefined;
-    CreateLog: undefined;
     MetricView: undefined;
     MetricCard: undefined;
     MetricDetail: MetricCardProps;
+    Tabs: undefined;
 };
 
 const NavigationStack = () => {
@@ -45,6 +47,10 @@ const NavigationStack = () => {
                 <RootStack.Screen 
                     name="CreateLog" 
                     component={CreateLog}
+                />
+                <RootStack.Screen 
+                    name="CreateMetric"
+                    component={CreateMetric}
                 />
             </RootStack.Group>
         </RootStack.Navigator>
