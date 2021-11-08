@@ -1,9 +1,11 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LogCardProps } from '../components/molecules/log_card/LogCard';
+import { MetricCardProps } from '../components/molecules/metric_card/MetricCard';
 import LogDetail from '../screens/LogDetail';
 import TabView from '../screens/TabView';
 import CreateLog from '../screens/CreateLog';
+import MetricDetail from '../screens/MetricDetail';
 
 export type RootStackParamList = {
     Tabs: undefined;
@@ -11,6 +13,8 @@ export type RootStackParamList = {
     LogDetail: LogCardProps;
     LogCard: undefined;
     CreateLog: undefined;
+    MetricCard: undefined;
+    MetricDetail: MetricCardProps;
 };
 
 const NavigationStack = () => {
@@ -33,6 +37,7 @@ const NavigationStack = () => {
                 <RootStack.Screen name="LogDetail" component={LogDetail} />
 
                 { /* MEASUREMENTS SCREENS */ }
+                <RootStack.Screen name="MetricDetail" component={MetricDetail} />
 
                 { /* RECOMMENDATIONS SCREENS */ }
 
