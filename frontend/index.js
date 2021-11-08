@@ -4,7 +4,7 @@
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import React from 'react';
-import { AppRegistry } from 'react-native';
+import { AppRegistry, Platform } from 'react-native';
 import App from './App';
 import { name as appName } from './app.json';
 import { Provider as PaperProvider } from 'react-native-paper';
@@ -12,9 +12,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 const LOCAL_SYSTEM_IP_ADDR = '192.168.1.112'; // Habib
+const HOST = Platform.OS === 'ios' ? 'localhost' : LOCAL_SYSTEM_IP_ADDR;
 
 const client = new ApolloClient({
-    uri: `http://${LOCAL_SYSTEM_IP_ADDR}:8989/graphql`,
+    uri: `http://${HOST}:8989/graphql`,
     cache: new InMemoryCache(),
 });
 
