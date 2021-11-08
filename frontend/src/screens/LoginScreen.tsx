@@ -15,15 +15,36 @@ import { passwordValidator } from '../helpers/passwordValidator';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthStackParamList } from '../navigation/AuthStack';
 import { useAuth } from '../contexts/Auth';
+import User from '../types/User';
+import GET_USER_BY_EMAIL_AND_PASSWORD from '../queries/GetUserByEmailAndPassword';
+import { useLazyQuery } from '@apollo/client';
+import UserLoginInput from '../types/UserLoginInput';
+import Toast from 'react-native-toast-message';
+import UserData from '../types/UserData';
 
 type LoginScreenProps = NativeStackScreenProps<AuthStackParamList, 'LoginScreen'>;
 
 export default function LoginScreen({ navigation }: LoginScreenProps) {
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
-    
-    const [loading, isLoading] = useState(false);
+    const [loginPressed, setLoginPressed] = useState(false);
+
     const auth = useAuth();
+
+    const [getUser, { loading: queryLoading, error, data }] = useLazyQuery<UserData, { input: UserLoginInput; }>(
+        GET_USER_BY_EMAIL_AND_PASSWORD, {
+        fetchPolicy: "network-only",
+        pollInterval: 0
+    });
+
+    const errorToast = () => {
+        setLoginPressed(false);
+        Toast.show({
+            text1: 'Incorrect email or password!',
+            text2: "Please try again"
+        });
+    };
+
 
     const onLoginPressed = async () => {
         const emailError = emailValidator(email.value);
@@ -33,28 +54,43 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
             setPassword({ ...password, error: passwordError });
             return;
         }
-        // navigation.reset({
-        //     index: 0,
-        //     routes: [{ name: 'Tabs' }],
-        // });
 
-        console.log(email, password);
+        setLoginPressed(true);
 
-        isLoading(true);
-
-        try {
-            await auth.signIn(email.value, password.value);
-
-        } catch (error) {
-            console.log(error);
-            isLoading(false);
-        }
+        getUser({
+            variables: {
+                input: {
+                    email: email.value,
+                    password: password.value
+                }
+            }
+        });
     };
+
+    if (data) {
+        const userData: User = data?.GetUserByEmailAndPassword;
+
+        if (loginPressed && userData === null) {
+            console.log("loginPressed before: ", loginPressed);
+            setLoginPressed(false);
+            errorToast();
+            console.log("loginPressed after: ", loginPressed);
+        }
+        else if (userData !== null) {
+            auth.signIn(userData);
+        }
+    }
+
+    // TODO: This needs to be caught
+    if (error) {
+        console.log(error)
+    }
 
     return (
         <Background>
             <BackButton goBack={navigation.goBack} />
-            {loading ? (<ActivityIndicator color={'#000'} animating={true} size='small' />
+            {queryLoading ? (
+                <ActivityIndicator color={'#000'} animating={true} size='small' />
             ) : (<>
                 <Logo />
                 <Header>Welcome back!</Header>

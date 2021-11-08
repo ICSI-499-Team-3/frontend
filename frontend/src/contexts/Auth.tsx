@@ -3,12 +3,16 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { AuthData, authService } from '../services/authService';
+import { useLazyQuery } from '@apollo/client';
+import GET_USER_BY_EMAIL_AND_PASSWORD from '../queries/GetUserByEmailAndPassword';
+import UserData from '../types/UserData';
+import UserLoginInput from '../types/UserLoginInput';
+import User from '../types/User';
 
 type AuthContextData = {
-    authData?: AuthData;
+    authData?: User;
     loading: boolean;
-    signIn(email: string, password: string): Promise<void>;
+    signIn(userData: User): Promise<void>;
     signOut(): void;
 };
 
@@ -17,11 +21,17 @@ type AuthContextData = {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
-    const [authData, setAuthData] = useState<AuthData>();
+    const [authData, setAuthData] = useState<User>();
 
     //the AuthContext start with loading equals true
     //and stay like this, until the data be load from Async Storage
-    const [loading, setLoading] = useState(true);
+    const [loadingStorage, setLoadingStorage] = useState(true);
+
+    const [getUser, { loading, error, data }] = useLazyQuery<UserData, { input: UserLoginInput; }>(
+        GET_USER_BY_EMAIL_AND_PASSWORD, {
+        fetchPolicy: "network-only"
+    }
+    );
 
     useEffect(() => {
         //Every time the App is opened, this provider is rendered
@@ -35,39 +45,25 @@ const AuthProvider: React.FC = ({ children }) => {
             const authDataSerialized = await AsyncStorage.getItem('@AuthData');
             if (authDataSerialized) {
                 //If there are data, it's converted to an Object and the state is updated.
-                const _authData: AuthData = JSON.parse(authDataSerialized);
+                const _authData: User = JSON.parse(authDataSerialized);
                 setAuthData(_authData);
             }
         } catch (error) {
             console.log(error);
         } finally {
             //loading finished
-            setLoading(false);
+            setLoadingStorage(false);
         }
     }
 
-    const signIn = async (email: string, password: string) => {
-        console.log('In async sign-in');
-
-        //call the service passing credential (email and password).
-        //In a real App this data will be provided by the user from some InputText components.
-        const _authData = await authService.signIn(
-            email,
-            password,
-        );
-
-
-        console.log('setting authdata');
+    const signIn = async (userData: User) => {
         //Set the data in the context, so the App can be notified
         //and send the user to the AuthStack
-        setAuthData(_authData);
-        console.log('authdata set');
+        setAuthData(userData);
 
-        console.log('seting asyncStorage');
         //Persist the data in the Async Storage
         //to be recovered in the next user session.
-        AsyncStorage.setItem('@AuthData', JSON.stringify(_authData));
-        console.log('asyncStorage set');
+        AsyncStorage.setItem('@AuthData', JSON.stringify(userData));
     };
 
     const signOut = async () => {
@@ -83,7 +79,7 @@ const AuthProvider: React.FC = ({ children }) => {
     return (
         //This component will be used to encapsulate the whole App,
         //so all components will have access to the Context
-        <AuthContext.Provider value={{ authData, loading, signIn, signOut }}>
+        <AuthContext.Provider value={{ authData, loading: loadingStorage, signIn, signOut }}>
             {children}
         </AuthContext.Provider>
     );
