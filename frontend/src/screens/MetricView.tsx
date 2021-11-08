@@ -19,7 +19,7 @@ const MetricView = () => {
                 style={styles.fab}
                 label="New Metric"
                 icon="plus"
-                onPress={() => navigation.navigate('CreateLog')}
+                onPress={() => navigation.navigate('CreateMetric')}
             />
         </View>
     );
