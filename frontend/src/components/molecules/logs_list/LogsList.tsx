@@ -21,20 +21,18 @@ const LogsList = () => {
 	const logs = data?.GetAllLogs.map(x => x).reverse();
     
 	return (
-        <SafeAreaView>
-            <FlatList 
-                data={logs} 
-                renderItem={({ item }) => (
-                    <LogCard 
-						id={item.id}
-                        dateTimeOfActivity={item.dateTimeOfActivity}
-                        notes={item.notes}
-                        categories={item.categories}
-                        mood={item.mood}
-                    />
-                )}
-            />
-        </SafeAreaView>
+        <FlatList 
+            data={logs} 
+            renderItem={({ item }) => (
+                <LogCard 
+                    id={item.id}
+                    dateTimeOfActivity={item.dateTimeOfActivity}
+                    notes={item.notes}
+                    categories={item.categories}
+                    mood={item.mood}
+                />
+            )}
+        />
     );
 };
 
