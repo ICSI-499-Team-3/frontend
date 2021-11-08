@@ -13,6 +13,7 @@ export type RootStackParamList = {
     LogDetail: LogCardProps;
     LogCard: undefined;
     CreateLog: undefined;
+    MetricView: undefined;
     MetricCard: undefined;
     MetricDetail: MetricCardProps;
 };
