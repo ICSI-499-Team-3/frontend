@@ -10,12 +10,14 @@ export type MetricCardProps = Metric;
 
 type MetricCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'MetricCard'>;
 
-const MetricCard = ({ title, xUnits, yUnits, data }: MetricCardProps) => {
+const MetricCard = ({ id, userId, title, xUnits, yUnits, data }: MetricCardProps) => {
 
     const navigation = useNavigation<MetricCardNavigationProp>();
 
     const handlePress = () => {
         navigation.navigate("MetricDetail", {
+            id: id, 
+            userId: userId,
             title: title, 
             xUnits: xUnits, 
             yUnits: yUnits, 
