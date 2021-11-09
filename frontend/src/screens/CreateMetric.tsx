@@ -2,9 +2,9 @@ import React, { useState, useLayoutEffect } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { IconButton, TextInput } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/NavigationStack';
+import { AppStackParamList } from '../navigation/AppStack';
 
-type CreateMetricProps = NativeStackScreenProps<RootStackParamList, 'CreateMetric'>;
+type CreateMetricProps = NativeStackScreenProps<AppStackParamList, 'CreateMetric'>;
 
 const CreateMetric = ({ route, navigation }: CreateMetricProps) => {
 

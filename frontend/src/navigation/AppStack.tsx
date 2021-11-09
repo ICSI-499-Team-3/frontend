@@ -8,14 +8,15 @@ import CreateLog from '../screens/CreateLog';
 import MetricDetail from '../screens/MetricDetail';
 
 export type AppStackParamList = {
-    Tabs: undefined;
+    CreateLog: undefined;
+    CreateMetric: undefined;
     LogsViewHome: undefined;
     LogDetail: LogCardProps;
     LogCard: undefined;
-    CreateLog: undefined;
     MetricView: undefined;
     MetricCard: undefined;
     MetricDetail: MetricCardProps;
+    Tabs: undefined;
 };
 
 const AppStack = () => {
