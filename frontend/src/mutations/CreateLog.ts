@@ -4,6 +4,7 @@ const CREATE_LOG = gql`
     mutation CreateLog($input: LogInput!) {
         CreateLog(input: $input) {
             id
+            userId
             dateTimeOfActivity
             notes
             categories

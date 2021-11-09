@@ -1,16 +1,26 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { FlatList, Text } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import LogCard from '../log_card/LogCard';
 import { useQuery } from '@apollo/client';
 import LogData from '../../../types/LogData';
-import GET_ALL_LOGS from '../../../queries/GetAllLogs';
+import GET_LOGS_BY_USER_ID from '../../../queries/GetLogsByUserId';
+import { useAuth } from '../../../contexts/Auth';
 
 const LogsList = () => {
 
-    const { loading, error, data } = useQuery<LogData>(GET_ALL_LOGS);
+    const { authData } = useAuth();
 
-	if (loading) return <Text>{'\n\n\nLoading...'}</Text>
+    const { loading, error, data } = useQuery<LogData>(GET_LOGS_BY_USER_ID, {
+        variables: {
+            userId: authData!.id,
+        },
+    });
+
+	if (loading) return (
+        <SafeAreaView style={styles.container}>
+			<Text>Loading...</Text>
+		</SafeAreaView>
+    );
 
 	if (error) return (
 		<SafeAreaView>
@@ -18,10 +28,19 @@ const LogsList = () => {
 		</SafeAreaView>
 	);
 
-	const logs = data?.GetAllLogs.map(x => x).reverse();
-    
+    if (data?.GetLogsByUserId.length === 0) {
+        return (
+            <View style={styles.container}>
+                <Text>No logs yet! Create one by tapping the floating action button.</Text>
+            </View>
+        );
+    }
+    // copy log list and reverse
+	const logs = data?.GetLogsByUserId.map(x => x).reverse();
+
 	return (
         <FlatList 
+            style={styles.container}
             data={logs} 
             renderItem={({ item }) => (
                 <LogCard 
@@ -35,5 +54,11 @@ const LogsList = () => {
         />
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        height: '100%',
+    },
+});
 
 export default LogsList;

@@ -10,7 +10,8 @@ import { useMutation } from '@apollo/client';
 import Log from '../types/Log';
 import LogInput from '../types/LogInput';
 import CREATE_LOG from '../mutations/CreateLog';
-import GET_ALL_LOGS from '../queries/GetAllLogs';
+import GET_LOGS_BY_USER_ID from '../queries/GetLogsByUserId';
+import { useAuth } from '../contexts/Auth';
 
 type CreateLogProps = NativeStackScreenProps<AppStackParamList, 'CreateLog'>;
 
@@ -42,9 +43,12 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
 
     const [contentText, setContentText] = useState('');
 
+    const { authData } = useAuth();
+
     const [createLog] = useMutation<{ createLog: Log }, { input: LogInput }>(CREATE_LOG, {
         variables: {
             input: {
+                userId: authData!.id,
                 dateTimeOfActivity: selectedDateTime, 
                 notes: contentText, 
                 categories: Array.from(selectedCategories), 
@@ -57,8 +61,8 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
         }, 
         onError: (error) => console.log(`Error on CreateLog: ${error}`),
         refetchQueries: [
-            GET_ALL_LOGS, 
-            'GetAllLogs',
+            GET_LOGS_BY_USER_ID, 
+            'GetLogsByUserId',
         ],
     });
 

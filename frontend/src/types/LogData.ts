@@ -1,7 +1,7 @@
 import Log from './Log';
 
 interface LogData {
-    GetAllLogs: Log[];
+    GetLogsByUserId: Log[];
 }
 
 export default LogData;

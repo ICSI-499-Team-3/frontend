@@ -1,4 +1,5 @@
 interface LogInput {
+    userId: string;
     dateTimeOfActivity: number;
     notes: string;
     categories: string[];
