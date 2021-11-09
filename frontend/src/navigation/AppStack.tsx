@@ -6,6 +6,7 @@ import LogDetail from '../screens/LogDetail';
 import TabView from '../screens/TabView';
 import CreateLog from '../screens/CreateLog';
 import MetricDetail from '../screens/MetricDetail';
+import CreateMetric from '../screens/CreateMetric';
 
 export type AppStackParamList = {
     CreateLog: undefined;
@@ -46,6 +47,10 @@ const AppStack = () => {
                 <Stack.Screen
                     name="CreateLog"
                     component={CreateLog}
+                />
+                <Stack.Screen
+                    name="CreateMetric"
+                    component={CreateMetric}
                 />
             </Stack.Group>
         </Stack.Navigator>
