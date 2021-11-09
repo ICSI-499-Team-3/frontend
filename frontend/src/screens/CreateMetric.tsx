@@ -6,6 +6,7 @@ import { AppStackParamList } from '../navigation/AppStack';
 import { useAuth } from '../contexts/Auth';
 import { useMutation } from '@apollo/client';
 import CREATE_METRIC from '../mutations/CreateMetric';
+import GET_METRICS_BY_USER_ID from '../queries/GetMetricsByUserId';
 import Metric from '../types/Metric';
 import MetricInput from '../types/MetricInput';
 
@@ -36,6 +37,10 @@ const CreateMetric = ({ route, navigation }: CreateMetricProps) => {
             navigation.goBack();
         }, 
         onError: (error) => console.log(`Error on CreateMetric: ${error}`),
+        refetchQueries: [
+            GET_METRICS_BY_USER_ID, 
+            'GetMetricsByUserId',
+        ],
     });
 
     useLayoutEffect(() => {
