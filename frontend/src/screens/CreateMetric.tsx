@@ -13,7 +13,7 @@ type CreateMetricProps = NativeStackScreenProps<AppStackParamList, 'CreateMetric
 
 const CreateMetric = ({ route, navigation }: CreateMetricProps) => {
 
-    const defaultYUnits = 'Time';
+    const defaultXUnits = 'Time';
 
     const [name, setName] = useState('');
     const [units, setUnits] = useState('');
@@ -27,8 +27,8 @@ const CreateMetric = ({ route, navigation }: CreateMetricProps) => {
             input: {
                 userId: authData!.id, 
                 title: name, 
-                xUnits: units, 
-                yUnits: defaultYUnits,
+                xUnits: defaultXUnits, 
+                yUnits: units,
             },
         },
         onCompleted: (data) => {
