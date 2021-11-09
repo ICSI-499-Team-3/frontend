@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { FlatList } from "react-native";
 import MetricCard from "../metric_card/MetricCard";
 import { useAuth } from '../../../contexts/Auth';
@@ -32,6 +32,7 @@ const MetricList = () => {
     if (data) {
         return (
             <FlatList
+                style={styles.container}
                 data={data.GetMetricsByUserId}
                 numColumns={2}
                 renderItem={({ item }) => (
@@ -48,5 +49,11 @@ const MetricList = () => {
         );
     }
 };
+
+const styles = StyleSheet.create({
+    container: {
+        height: '100%',
+    },
+});
 
 export default MetricList;
