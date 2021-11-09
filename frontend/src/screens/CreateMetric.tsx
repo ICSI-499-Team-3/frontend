@@ -3,15 +3,40 @@ import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { IconButton, TextInput } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../navigation/AppStack';
+import { useAuth } from '../contexts/Auth';
+import { useMutation } from '@apollo/client';
+import CREATE_METRIC from '../mutations/CreateMetric';
+import Metric from '../types/Metric';
+import MetricInput from '../types/MetricInput';
 
 type CreateMetricProps = NativeStackScreenProps<AppStackParamList, 'CreateMetric'>;
 
 const CreateMetric = ({ route, navigation }: CreateMetricProps) => {
 
+    const defaultYUnits = 'Time';
+
     const [name, setName] = useState('');
     const [units, setUnits] = useState('');
 
     const [doneButtonIsDisabled, setDoneButtonIsDisabled] = useState(true);
+
+    const { authData, loading } = useAuth();
+
+    const [createMetric] = useMutation<{ createMetric: Metric }, { input: MetricInput }>(CREATE_METRIC, {
+        variables: {
+            input: {
+                userId: authData!.id, 
+                title: name, 
+                xUnits: units, 
+                yUnits: defaultYUnits,
+            },
+        },
+        onCompleted: (data) => {
+            console.log(`completed CreateMetric: ${data}`);
+            navigation.goBack();
+        }, 
+        onError: (error) => console.log(`Error on CreateMetric: ${error}`),
+    });
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -36,7 +61,7 @@ const CreateMetric = ({ route, navigation }: CreateMetricProps) => {
     }, [navigation, name]);
 
     const handleDonePressed = () => {
-        console.log(name);
+        createMetric();
     };
 
     return (
