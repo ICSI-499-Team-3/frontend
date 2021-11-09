@@ -2,11 +2,11 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { FAB } from 'react-native-paper';
 import MetricList from "../components/molecules/metric_list/MetricList";
-import { RootStackParamList } from '../navigation/NavigationStack';
+import { AppStackParamList } from '../navigation/AppStack';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/core';
 
-type MetricViewNavigationProp = NativeStackNavigationProp<RootStackParamList, 'MetricView'>;
+type MetricViewNavigationProp = NativeStackNavigationProp<AppStackParamList, 'MetricView'>;
 
 const MetricView = () => {
 

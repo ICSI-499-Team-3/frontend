@@ -1,11 +1,11 @@
 import React, { useLayoutEffect } from 'react';
-import { RootStackParamList } from '../navigation/NavigationStack';
+import { AppStackParamList } from '../navigation/AppStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Text, View, StyleSheet } from 'react-native';
 import { VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from 'victory-native';
 import { IconButton } from 'react-native-paper';
 
-type MetricDetailProps = NativeStackScreenProps<RootStackParamList, 'MetricDetail'>;
+type MetricDetailProps = NativeStackScreenProps<AppStackParamList, 'MetricDetail'>;
 
 const MetricDetail = ({ route, navigation }: MetricDetailProps) => {
 

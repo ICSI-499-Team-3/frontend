@@ -1,14 +1,14 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../navigation/NavigationStack';
+import { AppStackParamList } from '../../../navigation/AppStack';
 import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from 'victory-native';
 import Metric from '../../../types/Metric';
 
 export type MetricCardProps = Metric;
 
-type MetricCardNavigationProp = NativeStackNavigationProp<RootStackParamList, 'MetricCard'>;
+type MetricCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'MetricCard'>;
 
 const MetricCard = ({ title, xUnits, yUnits, data }: MetricCardProps) => {
 
