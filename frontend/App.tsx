@@ -9,12 +9,42 @@
  */
 
 import React from 'react';
-import NavigationStack from './src/navigation/NavigationStack';
+import { Loading } from './src/components/atoms/login/Loading';
+import { useAuth } from './src/contexts/Auth';
+import AppStack from './src/navigation/AppStack';
+import AuthStack from './src/navigation/AuthStack';
+import Toast, { BaseToast, BaseToastProps } from 'react-native-toast-message';
+import { theme } from './src/core/theme';
 
 const App = () => {
 
+  const { authData, loading } = useAuth();
+
+  const toastConfig = {
+    success: (props: BaseToastProps) => (
+      <BaseToast
+        {...props}
+        style={{
+          borderLeftColor: theme.colors.primary,
+        }}
+        text1Style={{
+          fontSize: 16,
+        }}
+        text2Style={{
+          fontSize: 16,
+        }}
+      />
+    )
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
   return (
-    <NavigationStack />
+    <>
+      {authData ? <AppStack /> : <AuthStack />}
+      <Toast config={toastConfig} />
+    </>
   );
 };
 

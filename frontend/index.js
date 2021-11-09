@@ -10,6 +10,7 @@ import { name as appName } from './app.json';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { AuthProvider } from './src/contexts/Auth';
 
 const LOCAL_SYSTEM_IP_ADDR = '192.168.1.112'; // Habib
 const HOST = Platform.OS === 'ios' ? 'localhost' : LOCAL_SYSTEM_IP_ADDR;
@@ -26,7 +27,9 @@ export default function Main() {
             <GestureHandlerRootView style={{ flex: 1 }}>
                 <NavigationContainer>
                     <PaperProvider>
-                        <App />
+                        <AuthProvider>
+                            <App />
+                        </AuthProvider>
                     </PaperProvider>
                 </NavigationContainer>
             </GestureHandlerRootView>
