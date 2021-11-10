@@ -1,0 +1,12 @@
+// Template from https://github.com/venits/react-native-login-template
+
+export function emailValidator(email: string) {
+    const re = /\S+@\S+\.\S+/;
+    if (!email) {
+        return "Email can't be empty.";
+    }
+    if (!re.test(email)) {
+        return 'Ooops! We need a valid email address.';
+    }
+    return '';
+}

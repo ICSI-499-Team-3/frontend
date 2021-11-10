@@ -4,6 +4,8 @@ import { Text } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import LogsView from './LogsView';
+import MetricView from './MetricView';
+import ProfileScreen from './ProfileScreen';
 
 const TabView = () => {
 
@@ -11,58 +13,50 @@ const TabView = () => {
 
     const LogsRoute = () => <LogsView />;
 
-    const MeasurementsRoute = () => (
-      <SafeAreaView>
-        <Text>Measurements</Text>
-      </SafeAreaView>
-    );
+    const MeasurementsRoute = () => <MetricView />;
   
     const RecommendationsRoute = () => (
-      <SafeAreaView>
-        <Text>Recommendations</Text>
-      </SafeAreaView>
-    );
-    
-    const ProfileRoute = () => (
-      <SafeAreaView>
-        <Text>Profile</Text>
-      </SafeAreaView>
+        <SafeAreaView>
+            <Text>Recommendations</Text>
+        </SafeAreaView>
     );
 
+    const ProfileRoute = () => <ProfileScreen />;
+
     return (
-        <Tab.Navigator 
+        <Tab.Navigator
             initialRouteName="My Logs"
         >
-            <Tab.Screen 
-                name="My Logs" 
-                component={LogsRoute} 
+            <Tab.Screen
+                name="My Logs"
+                component={LogsRoute}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons name="text" color={color} size={26} />
                     ),
                 }}
             />
-            <Tab.Screen 
-                name="Biometrics" 
-                component={MeasurementsRoute} 
+            <Tab.Screen
+                name="Biometrics"
+                component={MeasurementsRoute}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons name="chart-line-variant" color={color} size={26} />
                     ),
                 }}
             />
-            <Tab.Screen 
-                name="Recs" 
-                component={RecommendationsRoute} 
+            <Tab.Screen
+                name="Recs"
+                component={RecommendationsRoute}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons name="assistant" color={color} size={26} />
                     ),
                 }}
             />
-            <Tab.Screen 
-                name="Profile" 
-                component={ProfileRoute} 
+            <Tab.Screen
+                name="Profile"
+                component={ProfileRoute}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons name="account" color={color} size={26} />

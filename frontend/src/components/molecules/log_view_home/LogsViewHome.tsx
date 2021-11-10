@@ -2,11 +2,11 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import LogsList from '../logs_list/LogsList';
 import { FAB } from 'react-native-paper';
-import { RootStackParamList } from '../../../navigation/NavigationStack';
+import { AppStackParamList } from '../../../navigation/AppStack';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/core';
 
-type LogCardNavigationProp = NativeStackNavigationProp<RootStackParamList, 'LogsViewHome'>;
+type LogCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'LogsViewHome'>;
 
 const LogsViewHome = () => {
 
@@ -31,6 +31,6 @@ const styles = StyleSheet.create({
       right: 0,
       bottom: 0,
     },
-  });
+});
 
 export default LogsViewHome;
