@@ -5,6 +5,7 @@ import { MetricCardProps } from '../components/molecules/metric_card/MetricCard'
 import LogDetail from '../screens/LogDetail';
 import TabView from '../screens/TabView';
 import CreateLog from '../screens/CreateLog';
+import LogShare from '../screens/LogShare';
 import MetricDetail from '../screens/MetricDetail';
 import CreateMetric from '../screens/CreateMetric';
 
@@ -13,6 +14,7 @@ export type AppStackParamList = {
     CreateMetric: undefined;
     LogsViewHome: undefined;
     LogDetail: LogCardProps;
+    LogShare: undefined;
     LogCard: undefined;
     MetricView: undefined;
     MetricCard: undefined;
@@ -35,6 +37,7 @@ const AppStack = () => {
 
                 { /* LOGS SCREENS */}
                 <Stack.Screen name="LogDetail" component={LogDetail} />
+                <Stack.Screen name="LogShare" component={LogShare} />
 
                 { /* MEASUREMENTS SCREENS */}
                 <Stack.Screen name="MetricDetail" component={MetricDetail} />
