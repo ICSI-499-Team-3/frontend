@@ -4,13 +4,15 @@ import { LogCardProps } from '../components/molecules/log_card/LogCard';
 import LogDetail from '../screens/LogDetail';
 import TabView from '../screens/TabView';
 import CreateLog from '../screens/CreateLog';
+import LogShare from '../screens/LogShare';
 
 export type RootStackParamList = {
     Tabs: undefined;
     LogsViewHome: undefined;
-    LogDetail: LogCardProps;
-    LogCard: undefined;
+    LogDetail: LogCardProps; // with LogCardProps param, it has to adhere to the structure of LogCardProps type
+    LogCard: undefined; // with undefined, it doesnt expect any parameters 
     CreateLog: undefined;
+    LogShare: undefined;
 };
 
 const NavigationStack = () => {
@@ -31,6 +33,7 @@ const NavigationStack = () => {
 
                 { /* LOGS SCREENS */ }
                 <RootStack.Screen name="LogDetail" component={LogDetail} />
+                <RootStack.Screen name="LogShare" component={LogShare} />
 
                 { /* MEASUREMENTS SCREENS */ }
 

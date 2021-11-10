@@ -1,12 +1,18 @@
-import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { FlatList } from 'react-native';
+import React, { useState } from 'react';
 import LogCard from '../log_card/LogCard';
+import { FlatList, SafeAreaView, StyleSheet, TouchableOpacity } from "react-native";
 
 const LogsList = () => {
 
-    const data = [
+  const [timesPressed, setTimesPressed] = useState(0);
+
+  const onPress = () => {
+    setTimesPressed(timesPressed + 1);
+  };
+
+    const DATA = [
         {
+          
           title: "Ran well today!", 
           createdAt: 1635610022,
           content: "Content", 
@@ -55,10 +61,11 @@ const LogsList = () => {
         },
     ];
 
+
     return (
         <SafeAreaView>
             <FlatList 
-                data={data} 
+                data={DATA} 
                 renderItem={({ item }) => (
                     <LogCard 
                         title={item.title} 
@@ -70,7 +77,8 @@ const LogsList = () => {
                 )}
             />
         </SafeAreaView>
-    );
+    ); 
 };
+
 
 export default LogsList;

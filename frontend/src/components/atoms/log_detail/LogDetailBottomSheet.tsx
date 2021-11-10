@@ -1,36 +1,65 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { RootStackParamList } from '../../../navigation/NavigationStack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/core';
+
+type LogCardNavigationProp = NativeStackNavigationProp<RootStackParamList, 'LogShare'>;
+
+const LogDetailBottomSheet = () => {
+
+const navigation = useNavigation<LogCardNavigationProp>();
 
 const options = [
     {
         name: "Delete",
+        onPress: () => {
+          console.log('pressed!');
+        },
     },
     {
         name: "Share", 
+        onPress: () => {
+            navigation.navigate('LogShare')
+            console.log('pressed!');
+        },
     },
     {
         name: "Label",
+        onPress: () => {
+            console.log('pressed!');
+        },
     },
     {
-        name: "Share to Reddit", 
+        name: "Share to Reddit",
+        onPress: () => {
+            console.log('pressed!');
+        }, 
     },
     {
         name: "Share to Facebook", 
+        onPress: () => {
+            console.log('pressed!');
+        },
     },
     {
-        name: "Share to Twitter", 
+        name: "Share to Twitter",
+        onClick: () => {
+            console.log('clicked');
+        }, 
     },
     {
         name: "Edit",
+        onClick: () => {
+            console.log('clicked');
+        },
     },
 ];
-
-const LogDetailBottomSheet = () => {
     return (
         <View>
             {options.map(option => (
-                <TouchableOpacity key={option.name} style={styles.option}>
+                <TouchableOpacity onPress={option.onPress} key={option.name} style={styles.option}>
                     <Text>{option.name}</Text>
                 </TouchableOpacity>
             ))}
