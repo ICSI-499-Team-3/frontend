@@ -2,7 +2,7 @@
 import { useNavigation } from '@react-navigation/core';
 import React from 'react';
 import {View, Text, StyleSheet,} from 'react-native';
-import { RootStackParamList } from '../../../navigation/NavigationStack';
+import { AppStackParamList } from '../../../navigation/AppStack';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Alert } from 'react-native'
@@ -12,7 +12,7 @@ export type RecCardProps = {
     content: string;
   };
 
-  type RecCardNavigationProp = NativeStackNavigationProp<RootStackParamList, 'RecCard'>;
+  type RecCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'RecCard'>;
 
   const RecCard = ({ title, content }: RecCardProps) => {
 

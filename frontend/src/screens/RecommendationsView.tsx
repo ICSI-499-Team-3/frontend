@@ -2,11 +2,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import RecList from '../components/molecules/Rec_List/RecList';
-import { RootStackParamList } from '../navigation/NavigationStack';
+import { AppStackParamList } from '../navigation/AppStack';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/core';
 
-type LogCardNavigationProp = NativeStackNavigationProp<RootStackParamList, 'RecommendationsView'>;
+type LogCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'RecommendationsView'>;
 
 const RecommendationsView = () => {
 

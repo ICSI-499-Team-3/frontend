@@ -1,13 +1,13 @@
 //Emma
 import React, { useMemo, useRef, useCallback, useLayoutEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { RootStackParamList } from '../navigation/NavigationStack';
+import { AppStackParamList } from '../navigation/AppStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Text } from 'react-native-paper';
 import { IconButton, Colors } from 'react-native-paper';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
-type RecDetailProps = NativeStackScreenProps<RootStackParamList, 'RecDetail'>;
+type RecDetailProps = NativeStackScreenProps<AppStackParamList, 'RecDetail'>;
 
 const RecDetail = ({ route, navigation }: RecDetailProps) => {
 
