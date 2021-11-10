@@ -15,10 +15,16 @@ import { AuthProvider } from './src/contexts/Auth';
 //const LOCAL_SYSTEM_IP_ADDR = '192.168.1.112'; // Habib
 //const HOST = Platform.OS === 'ios' ? 'localhost' : LOCAL_SYSTEM_IP_ADDR;
 
+<<<<<<< HEAD
 const LOCAL_SYSTEM_IP_ADDR = '169.226.242.255' // Lauren
 const HOST = Platform.OS === 'ios' ? 'localhost' : LOCAL_SYSTEM_IP_ADDR;
 
 console.log(`http://${HOST}:8989/graphql`);
+=======
+const LOCAL_SYSTEM_IP_ADDR = '169.226.216.137';
+const HOST = Platform.OS === 'ios' ? 'localhost' : LOCAL_SYSTEM_IP_ADDR;
+
+>>>>>>> e8440135edeafdcf4215d1cf5a3ef736f1683ba2
 
 const client = new ApolloClient({
     uri: `http://${HOST}:8989/graphql`,

@@ -4,6 +4,7 @@ import { Text } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import LogsView from './LogsView';
+import RecommendationsView from './RecommendationsView'; //emma
 import MetricView from './MetricView';
 import ProfileScreen from './ProfileScreen';
 
@@ -15,11 +16,8 @@ const TabView = () => {
 
     const MeasurementsRoute = () => <MetricView />;
   
-    const RecommendationsRoute = () => (
-        <SafeAreaView>
-            <Text>Recommendations</Text>
-        </SafeAreaView>
-    );
+    //emma
+    const RecommendationsRoute = () => <RecommendationsView />;
 
     const ProfileRoute = () => <ProfileScreen />;
 

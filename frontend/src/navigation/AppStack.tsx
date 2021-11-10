@@ -8,6 +8,8 @@ import CreateLog from '../screens/CreateLog';
 import LogShare from '../screens/LogShare';
 import MetricDetail from '../screens/MetricDetail';
 import CreateMetric from '../screens/CreateMetric';
+import { RecCardProps } from '../components/molecules/Rec_Card/RecCard'; //emma
+import RecDetail from '../screens/RecDetail'; //emma
 
 export type AppStackParamList = {
     CreateLog: undefined;
@@ -20,6 +22,10 @@ export type AppStackParamList = {
     MetricCard: undefined;
     MetricDetail: MetricCardProps;
     Tabs: undefined;
+    //emma
+    RecommendationsView: undefined;
+    RecCard: undefined;
+    RecDetail: RecCardProps;
 };
 
 const AppStack = () => {
@@ -42,7 +48,10 @@ const AppStack = () => {
                 { /* MEASUREMENTS SCREENS */}
                 <Stack.Screen name="MetricDetail" component={MetricDetail} />
 
-                { /* RECOMMENDATIONS SCREENS */}
+                { /* RECOMMENDATIONS SCREENS */} 
+                <Stack.Screen name="RecommendationsView" component={LogDetail} /> 
+                <Stack.Screen name="RecDetail" component={RecDetail} />
+
 
                 { /* PROFILE SCREENS */}
             </Stack.Group>
