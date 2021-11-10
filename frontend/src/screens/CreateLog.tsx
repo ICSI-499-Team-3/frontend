@@ -169,8 +169,7 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
                 <IconButton 
                     icon="close"
                     size={20}
-                    onPress={() => navigation.goBack()}
-                />
+                    onPress={() => navigation.goBack()} hasTVPreferredFocus={undefined} tvParallaxProperties={undefined}                />
             ),
             headerRight: () => (
                 <Button 

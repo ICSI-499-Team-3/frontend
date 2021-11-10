@@ -31,8 +31,7 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
                 <IconButton 
                     icon="dots-vertical"
                     size={20}
-                    onPress={handlePresentModalPress}
-                />
+                    onPress={handlePresentModalPress} hasTVPreferredFocus={undefined} tvParallaxProperties={undefined}                />
             ),
         });
     }, [navigation]);
