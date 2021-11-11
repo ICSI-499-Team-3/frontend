@@ -12,12 +12,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { AuthProvider } from './src/contexts/Auth';
 
-//const LOCAL_SYSTEM_IP_ADDR = '192.168.1.112'; // Habib
-//const HOST = Platform.OS === 'ios' ? 'localhost' : LOCAL_SYSTEM_IP_ADDR;
+// const LOCAL_SYSTEM_IP_ADDR = '192.168.1.112'; // Habib
+// const LOCAL_SYSTEM_IP_ADDR = '169.226.242.255' // Lauren
+// const LOCAL_SYSTEM_IP_ADDR = '169.226.216.137'; // Emma
 
-const LOCAL_SYSTEM_IP_ADDR = '169.226.216.137';
+const LOCAL_SYSTEM_IP_ADDR = '169.226.242.255' // Lauren
 const HOST = Platform.OS === 'ios' ? 'localhost' : LOCAL_SYSTEM_IP_ADDR;
 
+console.log(`http://${HOST}:8989/graphql`);
 
 const client = new ApolloClient({
     uri: `http://${HOST}:8989/graphql`,
