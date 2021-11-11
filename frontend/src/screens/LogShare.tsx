@@ -1,8 +1,5 @@
 import React from 'react';
 import { Share, View, Button } from 'react-native';
-import { FAB } from 'react-native-paper';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/core';
 // documentation: https://reactnative.dev/docs/share
 
 const LogShare = () => {
