@@ -8,10 +8,12 @@ import CreateLog from '../screens/CreateLog';
 import LogShare from '../screens/LogShare';
 import MetricDetail from '../screens/MetricDetail';
 import CreateMetric from '../screens/CreateMetric';
-import { RecCardProps } from '../components/molecules/Rec_Card/RecCard'; //emma
-import RecDetail from '../screens/RecDetail'; //emma
+import { RecCardProps } from '../components/molecules/Rec_Card/RecCard'; 
+import RecDetail from '../screens/RecDetail'; 
+import AddLabel from '../screens/AddLabel';
 
 export type AppStackParamList = {
+    AddLabel: undefined;
     CreateLog: undefined;
     CreateMetric: undefined;
     LogsViewHome: undefined;
@@ -44,6 +46,7 @@ const AppStack = () => {
                 { /* LOGS SCREENS */}
                 <Stack.Screen name="LogDetail" component={LogDetail} />
                 <Stack.Screen name="LogShare" component={LogShare} />
+                <Stack.Screen name="AddLabel" component={AddLabel} />
 
                 { /* MEASUREMENTS SCREENS */}
                 <Stack.Screen name="MetricDetail" component={MetricDetail} />

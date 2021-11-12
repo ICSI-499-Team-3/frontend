@@ -1,5 +1,5 @@
-import React from 'react';
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { FlatList, SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import LogCard from '../log_card/LogCard';
 import { useQuery } from '@apollo/client';
 import LogData from '../../../types/LogData';
@@ -35,21 +35,28 @@ const LogsList = () => {
             </View>
         );
     }
+    
     // copy log list and reverse
 	const logs = data?.GetLogsByUserId.map(x => x).reverse();
+
+    const pressHandler = () => {
+        console.log("it do be workin");
+    }
 
 	return (
         <FlatList 
             style={styles.container}
-            data={logs} 
+            data={logs}
             renderItem={({ item }) => (
-                <LogCard 
-                    id={item.id}
-                    dateTimeOfActivity={item.dateTimeOfActivity}
-                    notes={item.notes}
-                    categories={item.categories}
-                    mood={item.mood}
-                />
+                <TouchableOpacity onLongPress={() => pressHandler()}>
+                    <LogCard 
+                        id={item.id}
+                        dateTimeOfActivity={item.dateTimeOfActivity}
+                        notes={item.notes}
+                        categories={item.categories}
+                        mood={item.mood}
+                    />
+                </TouchableOpacity>
             )}
         />
     );
@@ -59,6 +66,13 @@ const styles = StyleSheet.create({
     container: {
         height: '100%',
     },
+    icon: {
+        backgroundColor: "#00c2ff",
+        alignSelf: 'flex-end',
+        marginTop: -5,
+        position: 'absolute'
+    }
 });
 
 export default LogsList;
+

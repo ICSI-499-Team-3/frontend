@@ -11,6 +11,7 @@ import User from '../types/User';
 
 type AuthContextData = {
     authData?: User;
+    authUData?: UserData; // added for share to users screen
     loading: boolean;
     signIn(userData: User): Promise<void>;
     signOut(): void;
