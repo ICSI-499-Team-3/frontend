@@ -28,6 +28,7 @@ export type AppStackParamList = {
     RecommendationsView: undefined;
     RecCard: undefined;
     RecDetail: RecCardProps;
+    LogLabel: undefined;
 };
 
 const AppStack = () => {
