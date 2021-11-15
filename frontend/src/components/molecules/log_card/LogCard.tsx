@@ -15,7 +15,7 @@ export type LogCardProps = Log;
 
 type LogCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'LogCard'>;
 
-const LogCard = ({ id, dateTimeOfActivity, notes, categories, mood }: LogCardProps) => {
+const LogCard = ({ id, dateTimeOfActivity, notes, categories, mood}: LogCardProps) => {
 
   const navigation = useNavigation<LogCardNavigationProp>();
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { RootStackParamList } from '../../../navigation/NavigationStack';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/core';
+import { AppStackParamList } from '../navigation/AppStack';
 
-type LogCardNavigationProp = NativeStackNavigationProp<RootStackParamList, 'LogShare'>;
+type LogCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'LogShare'>;
 
 const LogDetailBottomSheet = () => {
 
@@ -15,6 +15,7 @@ const options = [
     {
         name: "Delete",
         onPress: () => {
+          navigation.navigate('LogDelete')
           console.log('pressed!');
         },
     },
@@ -28,10 +29,11 @@ const options = [
     {
         name: "Label",
         onPress: () => {
+            navigation.navigate('LogLabel')
             console.log('pressed!');
         },
     },
-    {
+    /*{
         name: "Share to Reddit",
         onPress: () => {
             console.log('pressed!');
@@ -48,7 +50,7 @@ const options = [
         onClick: () => {
             console.log('clicked');
         }, 
-    },
+    },*/
     {
         name: "Edit",
         onClick: () => {
