@@ -5,13 +5,13 @@ import MetricCard from "../metric_card/MetricCard";
 import { useAuth } from '../../../contexts/Auth';
 import { useQuery } from '@apollo/client';
 import GET_METRICS_BY_USER_ID from '../../../queries/GetMetricsByUserId';
-import MetricData from '../../../types/MetricData';
+import GetMetricsByUserIdData from '../../../types/GetMetricsByUserIdData';
 
 const MetricList = () => {
 
     const { authData } = useAuth();
 
-    const { loading, error, data } = useQuery<MetricData>(GET_METRICS_BY_USER_ID, {
+    const { loading, error, data } = useQuery<GetMetricsByUserIdData>(GET_METRICS_BY_USER_ID, {
         variables: {
             userId: authData!.id,
         },

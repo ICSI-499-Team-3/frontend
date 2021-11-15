@@ -8,7 +8,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../navigation/AppStack';
 import { Picker } from '@react-native-picker/picker';
 import GET_METRICS_BY_USER_ID from '../queries/GetMetricsByUserId';
-import MetricData from '../types/MetricData';
+import GetMetricsByUserIdData from '../types/GetMetricsByUserIdData';
 import Measurement from '../types/Measurement';
 import MeasurementInput from '../types/MeasurementInput';
 import CREATE_MEASUREMENT from '../mutations/CreateMeasurement';
@@ -26,7 +26,7 @@ const CreateMeasurement = ({ route, navigation }: CreateMeasurementProps) => {
 
     const { authData } = useAuth();
 
-    const { loading, error, data } = useQuery<MetricData>(GET_METRICS_BY_USER_ID, {
+    const { loading, error, data } = useQuery<GetMetricsByUserIdData>(GET_METRICS_BY_USER_ID, {
         variables: {
             userId: authData!.id,
         },
