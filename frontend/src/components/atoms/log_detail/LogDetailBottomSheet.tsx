@@ -35,8 +35,9 @@ const options = [
     },
     {
         name: "Edit",
-        onClick: () => {
-            console.log('clicked');
+        onPress: () => {
+            navigation.navigate('LogEdit')
+            console.log('pressed!');
         },
     },
 ];

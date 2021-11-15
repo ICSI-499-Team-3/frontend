@@ -11,7 +11,7 @@ import { RecCardProps } from '../components/molecules/Rec_Card/RecCard'; //emma
 import RecDetail from '../screens/RecDetail'; //emma
 import LogShare from '../screens/LogShare';
 import LogDelete from '../screens/LogDelete';
-import LogsView from '../screens/LogsView';
+import LogEdit from '../screens/LogEdit';
 
 export type AppStackParamList = {
     CreateLog: undefined;
@@ -29,6 +29,7 @@ export type AppStackParamList = {
     RecCard: undefined;
     RecDetail: RecCardProps;
     LogDelete: undefined;
+    LogEdit: undefined;
     
 };
 
@@ -49,7 +50,8 @@ const AppStack = () => {
                 <Stack.Screen name="LogDetail" component={LogDetail} />
                 <Stack.Screen name="LogShare" component={LogShare} />
                 <Stack.Screen name="LogDelete" component={LogDelete} />
-                <Stack.Screen name="LogsView" component={LogsView} />
+                <Stack.Screen name="LogEdit" component={LogEdit} />
+
 
                 { /* MEASUREMENTS SCREENS */}
                 <Stack.Screen name="MetricDetail" component={MetricDetail} />
