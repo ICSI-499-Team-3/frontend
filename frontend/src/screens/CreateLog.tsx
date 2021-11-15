@@ -208,6 +208,6 @@ const styles = StyleSheet.create({
     contentInput: {
         flexGrow: 1,
     },
-})
+});
 
 export default CreateLog;

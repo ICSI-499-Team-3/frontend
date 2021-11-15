@@ -1,23 +1,31 @@
 import React, { useLayoutEffect } from 'react';
-import { AppStackParamList } from '../navigation/AppStack';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Text, View, StyleSheet } from 'react-native';
 import { VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from 'victory-native';
 import { IconButton } from 'react-native-paper';
+import { AppStackParamList } from '../navigation/AppStack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type MetricDetailProps = NativeStackScreenProps<AppStackParamList, 'MetricDetail'>;
 
 const MetricDetail = ({ route, navigation }: MetricDetailProps) => {
 
+    const { id, userId, title, xUnits, yUnits, data } = route.params;
+
+    const editPressHandler = () => {
+        navigation.navigate("MeasurementsList", route.params);
+    };
+
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
-                <MetricDetailOptions />
+                <MetricDetailOptions 
+                    sharePressHandler={() => {}}
+                    deletePressHander={() => {}}
+                    editPressHandler={editPressHandler}
+                />
             ),
         });
     }, [navigation]);
-
-    const { title, xUnits, yUnits, data } = route.params;
 
     return (
         <View style={styles.container}>
@@ -26,17 +34,26 @@ const MetricDetail = ({ route, navigation }: MetricDetailProps) => {
                 theme={VictoryTheme.material}
             >
                 <VictoryLine data={data} />
-                {/* <VictoryAxis style={{
-                    axis: { stroke: 'transparent' }, 
-                    ticks: { stroke: 'transparent' }, 
-                    tickLabels: { fill: 'transparent' },
-                }} /> */}
+                <VictoryAxis 
+                    dependentAxis
+                    label={yUnits}
+                />
+                <VictoryAxis 
+                    label={xUnits}
+                />
             </VictoryChart>
         </View>
     );
 };
 
-const MetricDetailOptions = () => {
+type MetricDetailOptionsProps = {
+    sharePressHandler: () => void;
+    deletePressHander: () => void;
+    editPressHandler: () => void;
+};
+
+const MetricDetailOptions = ({ sharePressHandler, deletePressHander, editPressHandler }: MetricDetailOptionsProps) => {
+
     return (
         <View style={styles.optionsContainer}>
             <IconButton 
@@ -52,7 +69,7 @@ const MetricDetailOptions = () => {
             <IconButton 
                 icon="pencil-outline"
                 size={20}
-                onPress={() => console.log('clicked')}
+                onPress={editPressHandler}
             />
         </View>
     );
@@ -72,6 +89,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row', 
         alignItems: 'flex-end',
     },
+    fab: {
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 0,
+    },
 });
+
 
 export default MetricDetail;

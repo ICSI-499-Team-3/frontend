@@ -12,6 +12,7 @@ const GET_METRICS_BY_USER_ID = gql`
                 id
                 x
                 y
+                dateTimeMeasured
             }
         }
     }

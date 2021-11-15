@@ -8,12 +8,15 @@ import CreateLog from '../screens/CreateLog';
 import LogShare from '../screens/LogShare';
 import MetricDetail from '../screens/MetricDetail';
 import CreateMetric from '../screens/CreateMetric';
+import MeasurementsList, { MeasurementsListNavigationProps } from '../components/molecules/measurements_list/MeasurementsList';
+import CreateMeasurement, { CreateMeasurementNavigationProps } from '../screens/CreateMeasurement';
 import { RecCardProps } from '../components/molecules/Rec_Card/RecCard'; //emma
 import RecDetail from '../screens/RecDetail'; //emma
 
 export type AppStackParamList = {
     CreateLog: undefined;
     CreateMetric: undefined;
+    CreateMeasurement: CreateMeasurementNavigationProps;
     LogsViewHome: undefined;
     LogDetail: LogCardProps;
     LogShare: undefined;
@@ -21,6 +24,8 @@ export type AppStackParamList = {
     MetricView: undefined;
     MetricCard: undefined;
     MetricDetail: MetricCardProps;
+    MetricDetailOptions: undefined;
+    MeasurementsList: MeasurementsListNavigationProps;
     Tabs: undefined;
     //emma
     RecommendationsView: undefined;
@@ -48,6 +53,7 @@ const AppStack = () => {
 
                 { /* MEASUREMENTS SCREENS */}
                 <Stack.Screen name="MetricDetail" component={MetricDetail} />
+                <Stack.Screen name="MeasurementsList" component={MeasurementsList} />
 
                 { /* RECOMMENDATIONS SCREENS */} 
                 <Stack.Screen name="RecommendationsView" component={LogDetail} /> 
@@ -64,6 +70,10 @@ const AppStack = () => {
                 <Stack.Screen
                     name="CreateMetric"
                     component={CreateMetric}
+                />
+                <Stack.Screen
+                    name="CreateMeasurement"
+                    component={CreateMeasurement}
                 />
             </Stack.Group>
         </Stack.Navigator>
