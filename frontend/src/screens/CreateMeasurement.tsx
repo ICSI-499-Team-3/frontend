@@ -9,9 +9,10 @@ import { AppStackParamList } from '../navigation/AppStack';
 import { Picker } from '@react-native-picker/picker';
 import GET_METRICS_BY_USER_ID from '../queries/GetMetricsByUserId';
 import GetMetricsByUserIdData from '../types/GetMetricsByUserIdData';
-import Measurement from '../types/Measurement';
 import MeasurementInput from '../types/MeasurementInput';
 import CREATE_MEASUREMENT from '../mutations/CreateMeasurement';
+import GET_METRIC_BY_ID from '../queries/GetMetricById';
+import CreateMeasurementData from '../types/CreateMeasurementData';
 
 type CreateMeasurementProps = NativeStackScreenProps<AppStackParamList, 'CreateMeasurement'>;
 
@@ -26,7 +27,7 @@ const CreateMeasurement = ({ route, navigation }: CreateMeasurementProps) => {
 
     const { authData } = useAuth();
 
-    const { loading, error, data } = useQuery<GetMetricsByUserIdData>(GET_METRICS_BY_USER_ID, {
+    const { loading, error, data } = useQuery<GetMetricsByUserIdData, { userId: string; }>(GET_METRICS_BY_USER_ID, {
         variables: {
             userId: authData!.id,
         },
@@ -44,7 +45,7 @@ const CreateMeasurement = ({ route, navigation }: CreateMeasurementProps) => {
 
     const [selectedCategory, setSelectedCategory] = useState(title);
 
-    const [createMeasurement] = useMutation<{ createMeasurement: Measurement }, { input: MeasurementInput }>(CREATE_MEASUREMENT, {
+    const [createMeasurement] = useMutation<CreateMeasurementData, { input: MeasurementInput }>(CREATE_MEASUREMENT, {
         variables: {
             input: {
                 metricId: metricId,
@@ -56,28 +57,21 @@ const CreateMeasurement = ({ route, navigation }: CreateMeasurementProps) => {
         onCompleted: (data) => {
             console.log(`completed CreateMetric: ${data}`);
 
-            // pop to top until you fix measurementsList and metricDetail not getting updated when you
-            // add new measurement, likely have to 
-            // switch MetricDetail and MeasurementsList to query rather than accept props.
-            // i think the reason why this and MetricDetail don't get updated is because
-            // the props are only passed when someone navigates to either of those components
-            navigation.popToTop();
-
-            // navigation.goBack();
+            navigation.goBack();
         }, 
         onError: (error) => console.log(`Error on CreateMetric: ${error}`),
         update: (cache, { data }) => {
-            const existingData = cache.readQuery<any>({ query: GET_METRICS_BY_USER_ID, variables: { userId: authData!.id, } });
+            const existingData = cache.readQuery<GetMetricsByUserIdData, { userId: string; }>({ query: GET_METRICS_BY_USER_ID, variables: { userId: authData!.id, } });
             const result = data?.CreateMeasurement;
             if (result) {
-                const copiedExistingData = JSON.parse(JSON.stringify(existingData));
+                const copiedExistingData: GetMetricsByUserIdData = JSON.parse(JSON.stringify(existingData));
                 for (let i = 0; i < copiedExistingData.GetMetricsByUserId.length; i++) {
                     let metric = copiedExistingData.GetMetricsByUserId[i];
                     if (metric.id === metricId) {
                         metric.data.push(result);
                     }
                 }
-                cache.writeQuery({
+                cache.writeQuery<GetMetricsByUserIdData, { userId: string; }>({
                     query: GET_METRICS_BY_USER_ID, 
                     variables: {
                         userId: authData!.id,
@@ -86,19 +80,22 @@ const CreateMeasurement = ({ route, navigation }: CreateMeasurementProps) => {
                 });
             }
         },
-        // refetchQueries: [ // refetch queries does the same cache update, doing it manually just optimizes bandwidth
-        //     GET_METRICS_BY_USER_ID, 
-        //     'GetMetricsByUserId',
-        // ],
-        // refetchQueries: [
-        //     { 
-        //         query: GET_METRICS_BY_USER_ID, 
-        //         fetchPolicy: 'network-only',
-        //         variables: {
-        //             userId: authData!.id,
-        //         },
-        //     },
-        // ],
+        refetchQueries: [
+            // refetch queries does the same cache update, doing it manually just optimizes bandwidth, 
+            // also too lazy to update manually two different queries
+            {
+                query: GET_METRIC_BY_ID,
+                variables: {
+                    metricId: metricId,
+                },
+            },
+            // { 
+            //     query: GET_METRICS_BY_USER_ID, 
+            //     variables: {
+            //         userId: authData!.id,
+            //     },
+            // },
+        ],
     });
 
     const handleDonePressed = () => {

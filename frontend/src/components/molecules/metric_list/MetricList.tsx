@@ -11,7 +11,7 @@ const MetricList = () => {
 
     const { authData } = useAuth();
 
-    const { loading, error, data } = useQuery<GetMetricsByUserIdData>(GET_METRICS_BY_USER_ID, {
+    const { loading, error, data } = useQuery<GetMetricsByUserIdData, { userId: string; }>(GET_METRICS_BY_USER_ID, {
         variables: {
             userId: authData!.id,
         },

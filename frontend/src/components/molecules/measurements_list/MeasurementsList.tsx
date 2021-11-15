@@ -1,45 +1,73 @@
 import React from 'react';
+import { useQuery } from '@apollo/client';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { FAB, Divider } from 'react-native-paper';
-import Metric from '../../../types/Metric';
 import { AppStackParamList } from '../../../navigation/AppStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Measurement from '../../../types/Measurement';
+import GET_METRIC_BY_ID from '../../../queries/GetMetricById';
+import GetMetricByIdData from '../../../types/GetMetricByIdData';
 
-export type MeasurementsListNavigationProps = Metric;
+export type MeasurementsListNavigationProps = {
+    metricId: string;
+};
 
 type MeasurementsListProps = NativeStackScreenProps<AppStackParamList, 'MeasurementsList'>;
 
 const MeasurementsList = ({ route, navigation }: MeasurementsListProps) => {
 
-    const { id, userId, title, xUnits, yUnits, data } = route.params;
+    const { metricId } = route.params;
 
-    return (
-        <View style={styles.container}>
-            <FlatList
-                data={data}
-                renderItem={({ item }) => (
-                    <View>
-                        <MeasurementsListItem 
-                            id={item.id}
-                            x={item.x}
-                            y={item.y}
-                            dateTimeMeasured={item.dateTimeMeasured}
-                        />
-                        <Divider />
-                    </View>
-                )}
-            />
-            <FAB
-                style={styles.fab}
-                icon="plus"
-                onPress={() => navigation.navigate('CreateMeasurement', {
-                    metricId: id,
-                    title: title, 
-                })}
-            />
-        </View>
-    );
+    const { loading, error, data } = useQuery<GetMetricByIdData, { metricId: string; }>(GET_METRIC_BY_ID, {
+        variables: {
+            metricId: metricId,
+        },
+    });
+
+    if (loading) {
+        return (
+            <Text>Loading...</Text>
+        );
+    }
+
+    if (error) {
+        return (
+            <Text>{`${error}`}</Text>
+        );
+    }
+ 
+    if (data) {
+
+        const { id, title } = data.GetMetricById;
+        const reversedData = data.GetMetricById.data.map(item => item).reverse();
+
+        return (
+            <View style={styles.container}>
+                <FlatList
+                    data={reversedData}
+                    renderItem={({ item }) => (
+                        <View>
+                            <MeasurementsListItem 
+                                id={item.id}
+                                x={item.x}
+                                y={item.y}
+                                dateTimeMeasured={item.dateTimeMeasured}
+                            />
+                            <Divider />
+                        </View>
+                    )}
+                />
+                <FAB
+                    style={styles.fab}
+                    icon="plus"
+                    onPress={() => navigation.navigate('CreateMeasurement', {
+                        metricId: id,
+                        title: title, 
+                    })}
+                />
+            </View>
+        );
+    }
 };
 
 type MeasurementsListItemProps = Measurement;

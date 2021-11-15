@@ -1,15 +1,28 @@
 import React, { useLayoutEffect } from 'react';
+import { useQuery } from '@apollo/client';
 import { Text, View, StyleSheet } from 'react-native';
 import { VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from 'victory-native';
 import { IconButton } from 'react-native-paper';
 import { AppStackParamList } from '../navigation/AppStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import GET_METRIC_BY_ID from '../queries/GetMetricById';
+import GetMetricByIdData from '../types/GetMetricByIdData';
 
 type MetricDetailProps = NativeStackScreenProps<AppStackParamList, 'MetricDetail'>;
 
+export type MetricDetailNavigationProps = {
+    metricId: string;
+};
+
 const MetricDetail = ({ route, navigation }: MetricDetailProps) => {
 
-    const { id, userId, title, xUnits, yUnits, data } = route.params;
+    const { metricId } = route.params;
+
+    const { loading, error, data } = useQuery<GetMetricByIdData, { metricId: string; }>(GET_METRIC_BY_ID, {
+        variables: {
+            metricId: metricId,
+        },
+    });
 
     const editPressHandler = () => {
         navigation.navigate("MeasurementsList", route.params);
@@ -27,23 +40,40 @@ const MetricDetail = ({ route, navigation }: MetricDetailProps) => {
         });
     }, [navigation]);
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.titleText}>{title}</Text>
-            <VictoryChart 
-                theme={VictoryTheme.material}
-            >
-                <VictoryLine data={data} />
-                <VictoryAxis 
-                    dependentAxis
-                    label={yUnits}
-                />
-                <VictoryAxis 
-                    label={xUnits}
-                />
-            </VictoryChart>
-        </View>
-    );
+    if (loading) {
+        return (
+            <Text>Loading...</Text>
+        );
+    }
+
+    if (error) {
+        return (
+            <Text>{`${error}`}</Text>
+        );
+    }
+
+    if (data) {
+
+        const { title, xUnits, yUnits } = data.GetMetricById;
+
+        return (
+            <View style={styles.container}>
+                <Text style={styles.titleText}>{title}</Text>
+                <VictoryChart 
+                    theme={VictoryTheme.material}
+                >
+                    <VictoryLine data={data.GetMetricById.data} />
+                    <VictoryAxis 
+                        dependentAxis
+                        label={yUnits}
+                    />
+                    <VictoryAxis 
+                        label={xUnits}
+                    />
+                </VictoryChart>
+            </View>
+        );
+    }
 };
 
 type MetricDetailOptionsProps = {
