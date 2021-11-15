@@ -33,24 +33,6 @@ const options = [
             console.log('pressed!');
         },
     },
-    /*{
-        name: "Share to Reddit",
-        onPress: () => {
-            console.log('pressed!');
-        }, 
-    },
-    {
-        name: "Share to Facebook", 
-        onPress: () => {
-            console.log('pressed!');
-        },
-    },
-    {
-        name: "Share to Twitter",
-        onClick: () => {
-            console.log('clicked');
-        }, 
-    },*/
     {
         name: "Edit",
         onClick: () => {

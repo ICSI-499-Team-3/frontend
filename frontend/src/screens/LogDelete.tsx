@@ -7,30 +7,33 @@ import { useAuth } from '../contexts/Auth';
 import { useMutation } from '@apollo/client';
 import DELETE_LOG from '../queries/DeleteLog';
 import GET_ALL_LOGS from '../queries/GetAllLogs';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { AppStackParamList } from '../navigation/AppStack';
 
-
-
-//change getLogsbyUserID: Backend
+type LogCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'Tabs'>;
 
 const LogDelete = () => {
+
+    const navigation = useNavigation<LogCardNavigationProp>();
    
     const { authData } = useAuth();
 
     const [toDelete] = useMutation<LogData>(DELETE_LOG,
         {
-            update(cache, { data }) {
+            update(cache, {}) {
                 const existingLogs: any = cache.readQuery({ 
                     query: GET_ALL_LOGS
               });
-                 const newLogs = existingLogs!.GetLogsByUserId.filter((t:any) => (t.id!== authData!.id));
+                 const newLogs = existingLogs!.deleteLog.filter((t:any) => (t.id !== authData!.id));
                  cache.writeQuery({
                     query: GET_ALL_LOGS,
-                    data: {GetLogsByUserId: newLogs}
+                    data: {deleteLog: newLogs}
                   });
           }
          });
 
-    const deleteLog = (notes: any) => {
+    const deleteLog = () => {
         Alert.alert(
             'Delete Log',
             'Are you sure want to delete this log?',
@@ -48,14 +51,18 @@ const LogDelete = () => {
     }
         
     const deleteLogDetail = () => {
-        Alert.alert('Deleted')
-        
-        //const data = useMutation<LogData>(GET_ALL_LOGS);
-        
-        //LogsList.splice()
-        //const filteredData = data?.GetLogsByUserId.filter((item: { id: any; }) => item.id !== id);
-    };
 
+        Alert.alert(
+            'Deleted',
+            'This log has been deleted.',
+            [
+                {text: 'OK', onPress: () => navigation.navigate('Tabs')},
+        
+            ],
+                { cancelable: false }
+        );
+    };
+    
     return (
         <TouchableOpacity>
             <View style={{ marginTop: 50 }}>
