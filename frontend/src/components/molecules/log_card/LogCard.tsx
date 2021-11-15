@@ -19,6 +19,9 @@ const LogCard = ({ id, dateTimeOfActivity, notes, categories, mood}: LogCardProp
 
   const navigation = useNavigation<LogCardNavigationProp>();
 
+  const date = new Date(0);
+  date.setUTCSeconds(dateTimeOfActivity);
+
   return (
     <TouchableOpacity 
       style={[styles.paper]}
@@ -33,7 +36,7 @@ const LogCard = ({ id, dateTimeOfActivity, notes, categories, mood}: LogCardProp
       }}
     >
       <View style={[styles.titleContainer]}>
-        <Text style={[styles.titleText]}>{notes ? (notes.length > 20 ? `${notes.substring(0, 20)}...` : notes) : ''}</Text>
+      <Text style={[styles.dateText]}>{date.toDateString()}</Text>
         <CardIcons categories={categories ? categories : []} />
       </View>
       <Text style={[styles.contentText]}>{notes ? (notes.length > 150 ? `${notes.substring(0, 150)}...` : notes) : ''}</Text>
@@ -66,6 +69,12 @@ const styles = StyleSheet.create({
   },
   contentText: {
     paddingTop: 10,
+  },
+  dateText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    flexGrow: 1,
+
   },
 });
 

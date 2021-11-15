@@ -5,32 +5,29 @@ import { Alert } from 'react-native'
 import LogData from '../types/LogData';
 import { useAuth } from '../contexts/Auth';
 import { useMutation } from '@apollo/client';
-import DELETE_LOG from '../queries/DeleteLog';
+import GET_LOGS_BY_USER_ID_DELETE from '../queries/GetLogsByUserIdDelete';
 import GET_ALL_LOGS from '../queries/GetAllLogs';
 
 
-
-//change getLogsbyUserID: Backend
-
 const LogDelete = () => {
    
-    const { authData } = useAuth();
+    const { logData } = useAuth();
 
-    const [toDelete] = useMutation<LogData>(DELETE_LOG,
+    const [toDelete] = useMutation<LogData>(GET_LOGS_BY_USER_ID_DELETE,
         {
             update(cache, { data }) {
                 const existingLogs: any = cache.readQuery({ 
                     query: GET_ALL_LOGS
               });
-                 const newLogs = existingLogs!.GetLogsByUserId.filter((t:any) => (t.id!== authData!.id));
+                 const newLogs = existingLogs!.getLogsByUserIdDelete.filter((t:any) => (t.id !== logData!.id));
                  cache.writeQuery({
                     query: GET_ALL_LOGS,
-                    data: {GetLogsByUserId: newLogs}
+                    data: {getLogsByUserIdDelete: newLogs}
                   });
           }
          });
 
-    const deleteLog = (notes: any) => {
+    const deleteLog = () => {
         Alert.alert(
             'Delete Log',
             'Are you sure want to delete this log?',
@@ -43,7 +40,7 @@ const LogDelete = () => {
         );
 
         toDelete({
-            variables: { id: authData!.id },
+            variables: { id: logData!.id },
         });
     }
         

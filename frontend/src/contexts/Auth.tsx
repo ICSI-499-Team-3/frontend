@@ -8,11 +8,11 @@ import GET_USER_BY_EMAIL_AND_PASSWORD from '../queries/GetUserByEmailAndPassword
 import UserData from '../types/UserData';
 import UserLoginInput from '../types/UserLoginInput';
 import User from '../types/User';
-//import Log from '../types/Log';
+import Log from '../types/Log';
 
 type AuthContextData = {
     authData?: User;
-    //logData?: Log;
+    logData?: Log;
     loading: boolean;
     signIn(userData: User): Promise<void>;
     signOut(): void;
@@ -97,6 +97,18 @@ function useAuth(): AuthContextData {
     }
 
     return context;
+}
+
+function deleteLogFromHome(): AuthContextData {
+
+    const context = useContext(AuthContext);
+
+    if (!context) {
+        throw new Error('useAuth must be used within an AuthProvider');
+    }
+
+    return context;
+
 }
 
 export { AuthContext, AuthProvider, useAuth };
