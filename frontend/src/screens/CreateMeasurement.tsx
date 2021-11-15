@@ -1,5 +1,5 @@
-import React, { useState, useLayoutEffect } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View, SafeAreaView } from 'react-native';
+import React, { useState, useLayoutEffect, useEffect } from 'react';
+import { Alert, Button, StyleSheet, Text, TouchableOpacity, View, SafeAreaView } from 'react-native';
 import { useAuth } from '../contexts/Auth';
 import { useQuery, useMutation } from '@apollo/client';
 import { IconButton, TextInput } from 'react-native-paper';
@@ -9,21 +9,36 @@ import { AppStackParamList } from '../navigation/AppStack';
 import { Picker } from '@react-native-picker/picker';
 import GET_METRICS_BY_USER_ID from '../queries/GetMetricsByUserId';
 import GetMetricsByUserIdData from '../types/GetMetricsByUserIdData';
-import MeasurementInput from '../types/MeasurementInput';
+import CreateMeasurementInput from '../types/CreateMeasurementInput';
 import CREATE_MEASUREMENT from '../mutations/CreateMeasurement';
 import GET_METRIC_BY_ID from '../queries/GetMetricById';
 import CreateMeasurementData from '../types/CreateMeasurementData';
+import Measurement from '../types/Measurement';
+import UpdateMeasurementInput from '../types/UpdateMeasurementInput';
+import UPDATE_MEASUREMENT from '../mutations/UpdateMeasurement';
+import UpdateMeasurementData from '../types/UpdateMeasurementData';
 
 type CreateMeasurementProps = NativeStackScreenProps<AppStackParamList, 'CreateMeasurement'>;
 
+export enum CreateMeasurementMode {
+    Create, Update,
+};
+
 export type CreateMeasurementNavigationProps = { 
     metricId: string; 
-    title: string; 
+    mode: CreateMeasurementMode;
+    title: string;
+    
+    // data is Measurement if mode = Update, otherwise undefined
+    measurementData?: Measurement;
 };
 
 const CreateMeasurement = ({ route, navigation }: CreateMeasurementProps) => {
 
-    const { metricId, title } = route.params;
+    const { metricId, mode, title, measurementData } = route.params;
+
+    const dateTimeMeasured = new Date(0);
+    dateTimeMeasured.setUTCSeconds(measurementData ? measurementData.dateTimeMeasured : 0);
 
     const { authData } = useAuth();
 
@@ -33,11 +48,11 @@ const CreateMeasurement = ({ route, navigation }: CreateMeasurementProps) => {
         },
     });
 
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState(measurementData ? measurementData.y : '');
 
-    const [selectedDate, setSelectedDate] = useState(new Date());
-    const [selectedTime, setSelectedTime] = useState(new Date());
-    const [selectedDateTime, setSelectedDateTime] = useState(new Date().getTime() / 1000);
+    const [selectedDate, setSelectedDate] = useState(measurementData ? dateTimeMeasured : new Date());
+    const [selectedTime, setSelectedTime] = useState(measurementData ? dateTimeMeasured : new Date());
+    const [selectedDateTime, setSelectedDateTime] = useState(measurementData ? measurementData.dateTimeMeasured : new Date().getTime() / 1000);
     const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
     const [dateTimePickerMode, setDateTimePickerMode] = useState(dateTimePickerModes.Date);
 
@@ -45,7 +60,7 @@ const CreateMeasurement = ({ route, navigation }: CreateMeasurementProps) => {
 
     const [selectedCategory, setSelectedCategory] = useState(title);
 
-    const [createMeasurement] = useMutation<CreateMeasurementData, { input: MeasurementInput }>(CREATE_MEASUREMENT, {
+    const [createMeasurement] = useMutation<CreateMeasurementData, { input: CreateMeasurementInput }>(CREATE_MEASUREMENT, {
         variables: {
             input: {
                 metricId: metricId,
@@ -98,8 +113,86 @@ const CreateMeasurement = ({ route, navigation }: CreateMeasurementProps) => {
         ],
     });
 
+    const [updateMeasurement] = useMutation<UpdateMeasurementData, { input: UpdateMeasurementInput }>(UPDATE_MEASUREMENT, {
+        variables: {
+            input: {
+                id: measurementData!.id,
+                metricId: metricId,
+                x: selectedDateTime.toString(), 
+                y: value, 
+                dateTimeMeasured: selectedDateTime,
+            },
+        },
+        onCompleted: (data) => {
+            console.log(`completed UpdateMetric: ${data}`);
+
+            navigation.goBack();
+        }, 
+        onError: (error) => console.log(`Error on UpdateMetric: ${error}`),
+        update: (cache, { data }) => {
+            const existingData = cache.readQuery<GetMetricsByUserIdData, { userId: string; }>({ query: GET_METRICS_BY_USER_ID, variables: { userId: authData!.id, } });
+            const result = data?.UpdateMeasurement;
+            if (result) {
+                const copiedExistingData: GetMetricsByUserIdData = JSON.parse(JSON.stringify(existingData));
+                for (let i = 0; i < copiedExistingData.GetMetricsByUserId.length; i++) {
+                    let metric = copiedExistingData.GetMetricsByUserId[i];
+                    if (metric.id === metricId) {
+                        metric.data.push(result);
+                    }
+                }
+                cache.writeQuery<GetMetricsByUserIdData, { userId: string; }>({
+                    query: GET_METRICS_BY_USER_ID, 
+                    variables: {
+                        userId: authData!.id,
+                    },
+                    data: copiedExistingData,
+                });
+            }
+        },
+        refetchQueries: [
+            // refetch queries does the same cache update, doing it manually just optimizes bandwidth, 
+            // also too lazy to update manually two different queries
+            {
+                query: GET_METRIC_BY_ID,
+                variables: {
+                    metricId: metricId,
+                },
+            },
+            // { 
+            //     query: GET_METRICS_BY_USER_ID, 
+            //     variables: {
+            //         userId: authData!.id,
+            //     },
+            // },
+        ],
+    });
+
+    const handleUpdate = () => {
+        if (value !== measurementData?.y || selectedDateTime !== measurementData?.dateTimeMeasured) {
+            Alert.alert(
+                'Alert', 
+                'Are you sure you\'d like to commit your changes?', 
+                [
+                    {
+                        'text': "Cancel", 
+                        onPress: () => console.log('do nothing'), 
+                        style: 'cancel', 
+                    }, 
+                    {
+                        text: 'Ok', 
+                        onPress: () => updateMeasurement(),
+                    },
+                ],
+            );
+        }
+    };
+
     const handleDonePressed = () => {
-        createMeasurement();
+        if (mode === CreateMeasurementMode.Create) {
+            createMeasurement();
+        } else {
+            handleUpdate();
+        }
     };
 
     useLayoutEffect(() => {
@@ -122,7 +215,7 @@ const CreateMeasurement = ({ route, navigation }: CreateMeasurementProps) => {
             ),
             title: '',
         });
-    }, [navigation, value]);
+    }, [navigation, value, selectedDateTime]);
 
     if (loading) return (
         <SafeAreaView>
@@ -163,19 +256,24 @@ const CreateMeasurement = ({ route, navigation }: CreateMeasurementProps) => {
                 setIsDatePickerVisible={setIsDatePickerVisible}
                 dateTimePickerMode={dateTimePickerMode}
                 setDateTimePickerMode={setDateTimePickerMode}
+                onConfirm={(selectedDateTime: number) => {
+                    if (selectedDateTime !== measurementData?.dateTimeMeasured && mode === CreateMeasurementMode.Update) {
+                        setDoneButtonIsDisabled(false);
+                    } else {
+                        setDoneButtonIsDisabled(true);
+                    }
+                }}
             />
             <View style={styles.settingContainer}>
                 <Text style={styles.label}>Selected Metric</Text>
                 <Text style={styles.settingValueText}>{selectedCategory}</Text>
             </View>
-            <Picker 
-                selectedValue={selectedCategory}
-                onValueChange={(itemValue, itemIndex) => setSelectedCategory(itemValue)}
-            >
-                {data?.GetMetricsByUserId.map(metric => (
-                    <Picker.Item key={metric.id} label={metric.title} value={metric.title} />
-                ))}
-            </Picker>
+            <ConditionalPicker 
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
+                data={data!}
+                mode={mode}
+            />
             <TextInput 
                 label="Value"
                 value={value}
@@ -190,6 +288,30 @@ const CreateMeasurement = ({ route, navigation }: CreateMeasurementProps) => {
             />
         </View>
     );
+};
+
+type ConditionalPickerProps = {
+    selectedCategory: string;
+    setSelectedCategory: Function;
+    data: GetMetricsByUserIdData;
+    mode: CreateMeasurementMode;
+};
+
+const ConditionalPicker = ({ selectedCategory, setSelectedCategory, data, mode }: ConditionalPickerProps) => {
+    if (mode === CreateMeasurementMode.Create) {
+        return (
+            <Picker 
+                selectedValue={selectedCategory}
+                onValueChange={(itemValue, itemIndex) => setSelectedCategory(itemValue)}
+            >
+                {data.GetMetricsByUserId.map(metric => (
+                    <Picker.Item key={metric.id} label={metric.title} value={metric.title} />
+                ))}
+            </Picker>
+        );
+    }
+
+    return <View></View>;
 };
 
 const styles = StyleSheet.create({

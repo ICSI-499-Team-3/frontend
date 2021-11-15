@@ -1,12 +1,13 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { FAB, Divider } from 'react-native-paper';
 import { AppStackParamList } from '../../../navigation/AppStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Measurement from '../../../types/Measurement';
 import GET_METRIC_BY_ID from '../../../queries/GetMetricById';
 import GetMetricByIdData from '../../../types/GetMetricByIdData';
+import { CreateMeasurementMode } from '../../../screens/CreateMeasurement';
 
 export type MeasurementsListNavigationProps = {
     metricId: string;
@@ -39,14 +40,21 @@ const MeasurementsList = ({ route, navigation }: MeasurementsListProps) => {
     if (data) {
 
         const { id, title } = data.GetMetricById;
-        const reversedData = data.GetMetricById.data.map(item => item).reverse();
+        const reversedData = data.GetMetricById.data.map(item => item).sort((a, b) => a.dateTimeMeasured - b.dateTimeMeasured).reverse();
 
         return (
             <View style={styles.container}>
                 <FlatList
                     data={reversedData}
                     renderItem={({ item }) => (
-                        <View>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('CreateMeasurement', {
+                                metricId: id, 
+                                title: title, 
+                                mode: CreateMeasurementMode.Update, 
+                                measurementData: item,
+                            })}
+                        >
                             <MeasurementsListItem 
                                 id={item.id}
                                 x={item.x}
@@ -54,7 +62,7 @@ const MeasurementsList = ({ route, navigation }: MeasurementsListProps) => {
                                 dateTimeMeasured={item.dateTimeMeasured}
                             />
                             <Divider />
-                        </View>
+                        </TouchableOpacity>
                     )}
                 />
                 <FAB
@@ -63,6 +71,7 @@ const MeasurementsList = ({ route, navigation }: MeasurementsListProps) => {
                     onPress={() => navigation.navigate('CreateMeasurement', {
                         metricId: id,
                         title: title, 
+                        mode: CreateMeasurementMode.Create,
                     })}
                 />
             </View>

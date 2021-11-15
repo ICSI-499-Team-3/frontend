@@ -1,8 +1,8 @@
-interface MeasurementInput {
+interface CreateMeasurementInput {
     metricId: string;
     x: string;
     y: string;
     dateTimeMeasured: number;
 }
 
-export default MeasurementInput;
+export default CreateMeasurementInput;

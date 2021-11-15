@@ -1,7 +1,7 @@
 import Measurement from './Measurement';
 
-interface GetMeasurementsByMetricIdData {
+interface CreateMeasurement {
     CreateMeasurement: Measurement;
 }
 
-export default GetMeasurementsByMetricIdData;
+export default CreateMeasurement;

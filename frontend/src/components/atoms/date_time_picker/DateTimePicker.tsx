@@ -19,6 +19,7 @@ type DateTimePickerProps = {
     dateTimePickerMode: dateTimePickerModes;
     setDateTimePickerMode: Function;
 
+    onConfirm?: Function; // for checking if selectedDateTime is different than dateTimeMeasured in update mode for CreateMeasurement
 };
 
 const DateTimePicker = (props: DateTimePickerProps) => {
@@ -42,6 +43,10 @@ const DateTimePicker = (props: DateTimePickerProps) => {
                     props.setSelectedDateTime(epoch);
                     props.setSelectedDate(date);
                     props.setIsDatePickerVisible(false);
+
+                    if (props.onConfirm) {
+                        props.onConfirm(epoch);
+                    }
                 }
                 break;
             case dateTimePickerModes.Time: 
@@ -61,6 +66,10 @@ const DateTimePicker = (props: DateTimePickerProps) => {
                     props.setSelectedDateTime(epoch);
                     props.setSelectedTime(date);
                     props.setIsDatePickerVisible(false);
+
+                    if (props.onConfirm) {
+                        props.onConfirm(epoch);
+                    }
                 }
                 break;
         }

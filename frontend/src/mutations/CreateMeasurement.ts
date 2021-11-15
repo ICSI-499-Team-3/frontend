@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 const CREATE_MEASUREMENT = gql`
-    mutation CreateMeasurement($input: MeasurementInput!) {
+    mutation CreateMeasurement($input: CreateMeasurementInput!) {
         CreateMeasurement(input: $input) {
             id
             x

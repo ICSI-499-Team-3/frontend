@@ -56,13 +56,15 @@ const MetricDetail = ({ route, navigation }: MetricDetailProps) => {
 
         const { title, xUnits, yUnits } = data.GetMetricById;
 
+        const sortedData = data.GetMetricById.data.map(item => item).sort((a, b) => a.dateTimeMeasured - b.dateTimeMeasured);
+
         return (
             <View style={styles.container}>
                 <Text style={styles.titleText}>{title}</Text>
                 <VictoryChart 
                     theme={VictoryTheme.material}
                 >
-                    <VictoryLine data={data.GetMetricById.data} />
+                    <VictoryLine data={sortedData} />
                     <VictoryAxis 
                         dependentAxis
                         label={yUnits}
