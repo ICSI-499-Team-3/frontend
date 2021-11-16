@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
-const GET_METRICS_BY_USER_ID = gql`
-    query GetMetricsByUserId($userId: String!) {
-        GetMetricsByUserId(userId: $userId) {
+const GET_METRIC_BY_ID = gql`
+    query GetMetricById($metricId: String!) {
+        GetMetricById(metricId: $metricId) {
             id
             userId
             title
@@ -18,4 +18,4 @@ const GET_METRICS_BY_USER_ID = gql`
     }
 `;
 
-export default GET_METRICS_BY_USER_ID;
+export default GET_METRIC_BY_ID;

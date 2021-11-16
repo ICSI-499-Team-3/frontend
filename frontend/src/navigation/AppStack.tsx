@@ -1,12 +1,11 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LogCardProps } from '../components/molecules/log_card/LogCard';
-import { MetricCardProps } from '../components/molecules/metric_card/MetricCard';
 import LogDetail from '../screens/LogDetail';
 import TabView from '../screens/TabView';
 import CreateLog from '../screens/CreateLog';
 import LogShare from '../screens/LogShare';
-import MetricDetail from '../screens/MetricDetail';
+import MetricDetail, { MetricDetailNavigationProps } from '../screens/MetricDetail';
 import CreateMetric from '../screens/CreateMetric';
 import { RecCardProps } from '../components/molecules/Rec_Card/RecCard'; 
 import RecDetail from '../screens/RecDetail'; 
@@ -16,13 +15,17 @@ export type AppStackParamList = {
     AddLabel: undefined;
     CreateLog: undefined;
     CreateMetric: undefined;
+    CreateMeasurement: CreateMeasurementNavigationProps;
     LogsViewHome: undefined;
     LogDetail: LogCardProps;
     LogShare: undefined;
     LogCard: undefined;
     MetricView: undefined;
     MetricCard: undefined;
-    MetricDetail: MetricCardProps;
+    MetricDetail: MetricDetailNavigationProps;
+    MetricDetailOptions: undefined;
+    MeasurementsList: MeasurementsListNavigationProps;
+    MeasurementsListItem: undefined;
     Tabs: undefined;
     //emma
     RecommendationsView: undefined;
@@ -51,6 +54,7 @@ const AppStack = () => {
 
                 { /* MEASUREMENTS SCREENS */}
                 <Stack.Screen name="MetricDetail" component={MetricDetail} />
+                <Stack.Screen name="MeasurementsList" component={MeasurementsList} />
 
                 { /* RECOMMENDATIONS SCREENS */} 
                 <Stack.Screen name="RecommendationsView" component={LogDetail} /> 
@@ -67,6 +71,10 @@ const AppStack = () => {
                 <Stack.Screen
                     name="CreateMetric"
                     component={CreateMetric}
+                />
+                <Stack.Screen
+                    name="CreateMeasurement"
+                    component={CreateMeasurement}
                 />
             </Stack.Group>
         </Stack.Navigator>

@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { View, Button, StyleSheet, Text, TextInput, Pressable } from 'react-native';
 import { IconButton, TextInput as TextInputPaper } from 'react-native-paper';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import DateTimePicker, { dateTimePickerModes } from '../components/atoms/date_time_picker/DateTimePicker';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../navigation/AppStack';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -15,12 +15,6 @@ import { useAuth } from '../contexts/Auth';
 
 type CreateLogProps = NativeStackScreenProps<AppStackParamList, 'CreateLog'>;
 
-enum dateTimePickerModes {
-    Date = "date", 
-    Time = "time",
-    DateTime = "datetime",
-}
-
 const CreateLog = ({ route, navigation }: CreateLogProps) => {
 
     const categories = ['running', 'yoga', 'going out', 'physical therapy', 'therapy', 'eating', 'spending time with friends'];
@@ -29,19 +23,15 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
 
     const [selectedCategories, setSelectedCategories] = useState(new Set<string>());
 
-    const [selectedMoods, setSelectedMoods] = useState(new Set<string>())
-
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-    const [dateTimePickerMode, setDateTimePickerMode] = useState(dateTimePickerModes.Date);
-
-    const [selectedDate, setSelectedDate] = useState(new Date());
-
-    const [selectedTime, setSelectedTime] = useState(new Date());
-
-    const [selectedDateTime, setSelectedDateTime] = useState(new Date().getTime() / 1000);
+    const [selectedMoods, setSelectedMoods] = useState(new Set<string>());
 
     const [contentText, setContentText] = useState('');
+
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedTime, setSelectedTime] = useState(new Date());
+    const [selectedDateTime, setSelectedDateTime] = useState(new Date().getTime() / 1000);
+    const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
+    const [dateTimePickerMode, setDateTimePickerMode] = useState(dateTimePickerModes.Date);
 
     const { authData } = useAuth();
 
@@ -65,55 +55,6 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
             'GetLogsByUserId',
         ],
     });
-
-    const showDatePicker = () => {
-        setDatePickerVisibility(true);
-    };
-
-    const hideDatePicker = () => {
-        setDatePickerVisibility(false);
-    };
-
-    const handleDateConfirmed = (date: Date) => {
-        switch (dateTimePickerMode) {
-            case dateTimePickerModes.Date: {
-                    const dateTime = new Date(
-                        date.getFullYear(),
-                        date.getMonth(), 
-                        date.getDate(), 
-                        selectedTime.getHours(), 
-                        selectedTime.getMinutes(), 
-                        selectedTime.getSeconds(), 
-                        selectedTime.getMilliseconds()
-                    );
-                    const epoch = dateTime.getTime() / 1000;
-                    const epochDate = new Date(0);
-                    epochDate.setUTCSeconds(epoch);
-                    setSelectedDateTime(epoch);
-                    setSelectedDate(date);
-                    hideDatePicker();
-                }
-                break;
-            case dateTimePickerModes.Time: {
-                    const dateTime = new Date(
-                        selectedDate.getFullYear(),
-                        selectedDate.getMonth(), 
-                        selectedDate.getDate(), 
-                        date.getHours(), 
-                        date.getMinutes(), 
-                        date.getSeconds(), 
-                        date.getMilliseconds()
-                    );
-                    const epoch = dateTime.getTime() / 1000;
-                    const epochDate = new Date(0);
-                    epochDate.setUTCSeconds(epoch);
-                    setSelectedDateTime(epoch);
-                    setSelectedTime(date);
-                    hideDatePicker();
-                }
-                break;
-        }
-    };
 
     const handleCreate = () => {
         const categoryString = [...selectedCategories].join(', ');
@@ -203,22 +144,28 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
             <View style={styles.dateContainer}>
                 <Button title="Pick date" onPress={() => {
                     setDateTimePickerMode(dateTimePickerModes.Date);
-                    showDatePicker();
+                    setIsDatePickerVisible(true);
                 }} />
                 <Text style={styles.dateText}>{selectedDate.toLocaleDateString()}</Text>
             </View>
             <View style={styles.dateContainer}>
                 <Button title="Pick time" onPress={() => {
                     setDateTimePickerMode(dateTimePickerModes.Time);
-                    showDatePicker();
+                    setIsDatePickerVisible(true);
                 }} />
                 <Text style={styles.dateText}>{`${selectedTime.toLocaleTimeString()}`}</Text>
             </View>
-            <DateTimePickerModal 
-                isVisible={isDatePickerVisible}
-                mode={dateTimePickerMode}
-                onConfirm={handleDateConfirmed}
-                onCancel={hideDatePicker}
+            <DateTimePicker 
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+                selectedTime={selectedTime}
+                setSelectedTime={setSelectedTime}
+                selectedDateTime={selectedDateTime}
+                setSelectedDateTime={setSelectedDateTime}
+                isDatePickerVisible={isDatePickerVisible}
+                setIsDatePickerVisible={setIsDatePickerVisible}
+                dateTimePickerMode={dateTimePickerMode}
+                setDateTimePickerMode={setDateTimePickerMode}
             />
             <TextInput 
                 style={styles.contentInput}
@@ -261,6 +208,6 @@ const styles = StyleSheet.create({
     contentInput: {
         flexGrow: 1,
     },
-})
+});
 
 export default CreateLog;

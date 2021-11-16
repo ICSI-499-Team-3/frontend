@@ -16,12 +16,7 @@ const MetricCard = ({ id, userId, title, xUnits, yUnits, data }: MetricCardProps
 
     const handlePress = () => {
         navigation.navigate("MetricDetail", {
-            id: id, 
-            userId: userId,
-            title: title, 
-            xUnits: xUnits, 
-            yUnits: yUnits, 
-            data: data,
+            metricId: id,
         });
     };
 
