@@ -72,3 +72,5 @@ const LogDelete = () => {
       ); 
 };
 
+export default LogDelete;
+
