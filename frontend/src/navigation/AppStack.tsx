@@ -4,14 +4,16 @@ import { LogCardProps } from '../components/molecules/log_card/LogCard';
 import LogDetail from '../screens/LogDetail';
 import TabView from '../screens/TabView';
 import CreateLog from '../screens/CreateLog';
-import LogShare from '../screens/LogShare';
 import MetricDetail, { MetricDetailNavigationProps } from '../screens/MetricDetail';
 import CreateMetric from '../screens/CreateMetric';
-import { RecCardProps } from '../components/molecules/Rec_Card/RecCard'; 
-import RecDetail from '../screens/RecDetail'; 
-import AddLabel from '../screens/AddLabel';
+import { RecCardProps } from '../components/molecules/Rec_Card/RecCard'; //emma
+import RecDetail from '../screens/RecDetail'; //emma
+import LogShare from '../screens/LogShare';
+import LogDelete from '../screens/LogDelete';
+import LogEdit from '../screens/LogEdit';
 import CreateMeasurement, { CreateMeasurementNavigationProps } from '../screens/CreateMeasurement';
 import MeasurementsList, { MeasurementsListNavigationProps } from '../components/molecules/measurements_list/MeasurementsList';
+import AddLabel from '../screens/AddLabel';
 
 export type AppStackParamList = {
     AddLabel: undefined;
@@ -20,7 +22,6 @@ export type AppStackParamList = {
     CreateMeasurement: CreateMeasurementNavigationProps;
     LogsViewHome: undefined;
     LogDetail: LogCardProps;
-    LogShare: undefined;
     LogCard: undefined;
     MetricView: undefined;
     MetricCard: undefined;
@@ -29,11 +30,14 @@ export type AppStackParamList = {
     MeasurementsList: MeasurementsListNavigationProps;
     MeasurementsListItem: undefined;
     Tabs: undefined;
-    //emma
+    LogShare: undefined;
+    LogsView: undefined;
     RecommendationsView: undefined;
     RecCard: undefined;
     RecDetail: RecCardProps;
-    LogLabel: undefined;
+    LogDelete: undefined;
+    LogEdit: undefined;
+    
 };
 
 const AppStack = () => {
@@ -53,6 +57,9 @@ const AppStack = () => {
                 <Stack.Screen name="LogDetail" component={LogDetail} />
                 <Stack.Screen name="LogShare" component={LogShare} />
                 <Stack.Screen name="AddLabel" component={AddLabel} />
+                <Stack.Screen name="LogDelete" component={LogDelete} />
+                <Stack.Screen name="LogEdit" component={LogEdit} />
+
 
                 { /* MEASUREMENTS SCREENS */}
                 <Stack.Screen name="MetricDetail" component={MetricDetail} />
