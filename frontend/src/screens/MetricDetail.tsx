@@ -1,12 +1,15 @@
 import React, { useLayoutEffect } from 'react';
-import { useQuery } from '@apollo/client';
-import { Text, View, StyleSheet } from 'react-native';
+import { useQuery, useMutation } from '@apollo/client';
+import { Alert, Text, View, StyleSheet } from 'react-native';
 import { VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from 'victory-native';
 import { IconButton } from 'react-native-paper';
 import { AppStackParamList } from '../navigation/AppStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import GET_METRIC_BY_ID from '../queries/GetMetricById';
 import GetMetricByIdData from '../types/GetMetricByIdData';
+import DELETE_METRIC from '../mutations/DeleteMetric';
+import DeletMetricData from '../types/DeleteMetricData';
+import GET_METRICS_BY_USER_ID from '../queries/GetMetricsByUserId';
 
 type MetricDetailProps = NativeStackScreenProps<AppStackParamList, 'MetricDetail'>;
 
@@ -18,11 +21,40 @@ const MetricDetail = ({ route, navigation }: MetricDetailProps) => {
 
     const { metricId } = route.params;
 
+    const [deleteMetric] = useMutation<DeletMetricData, { metricId: string; }>(DELETE_METRIC, {
+        variables: {
+            metricId: metricId,
+        },
+        refetchQueries: [
+            GET_METRICS_BY_USER_ID, 
+            "GetMetricsByUserId",
+        ],
+        onCompleted: () => navigation.goBack(),
+    });
+
     const { loading, error, data } = useQuery<GetMetricByIdData, { metricId: string; }>(GET_METRIC_BY_ID, {
         variables: {
             metricId: metricId,
         },
     });
+
+    const deletePressHander = () => {
+        Alert.alert(
+            'Alert', 
+            'Are you sure you\'d like to delete this metric?', 
+            [
+                {
+                    'text': "Cancel", 
+                    onPress: () => console.log('do nothing'), 
+                    style: 'cancel', 
+                }, 
+                {
+                    text: 'Ok', 
+                    onPress: () => deleteMetric(),
+                },
+            ],
+        );
+    };
 
     const editPressHandler = () => {
         navigation.navigate("MeasurementsList", route.params);
@@ -33,7 +65,7 @@ const MetricDetail = ({ route, navigation }: MetricDetailProps) => {
             headerRight: () => (
                 <MetricDetailOptions 
                     sharePressHandler={() => {}}
-                    deletePressHander={() => {}}
+                    deletePressHander={deletePressHander}
                     editPressHandler={editPressHandler}
                 />
             ),
@@ -96,7 +128,7 @@ const MetricDetailOptions = ({ sharePressHandler, deletePressHander, editPressHa
             <IconButton 
                 icon="delete-outline"
                 size={20}
-                onPress={() => console.log('clicked')}
+                onPress={deletePressHander}
             />
             <IconButton 
                 icon="pencil-outline"
