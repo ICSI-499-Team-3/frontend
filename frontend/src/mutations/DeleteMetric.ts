@@ -1,13 +1,13 @@
 import { gql } from '@apollo/client';
 
-const GET_METRICS_BY_USER_ID = gql`
-    query GetMetricsByUserId($userId: String!) {
-        GetMetricsByUserId(userId: $userId) {
+const DELETE_METRIC = gql`
+    mutation DeleteMetric($metricId: String!) {
+        DeleteMetric(metricId: $metricId) {
             id
             userId
             title
             xUnits
-            yUnits 
+            yUnits
             data {
                 id
                 x
@@ -18,4 +18,4 @@ const GET_METRICS_BY_USER_ID = gql`
     }
 `;
 
-export default GET_METRICS_BY_USER_ID;
+export default DELETE_METRIC;

@@ -3,6 +3,8 @@ import React from 'react';
 import { Share, View, Button, SafeAreaView, Text, StyleSheet, FlatList } from 'react-native';
 import { useAuth } from '../contexts/Auth';
 import GET_USER_BY_EMAIL from '../queries/GetUserByEmail';
+import { Searchbar} from 'react-native-paper';
+import GET_USER_BY_EMAIL_FOR_SHARE from '../queries/GetUserByEmailForShare';
 import UserData from '../types/UserData';
 // documentation: https://reactnative.dev/docs/share
 
@@ -69,10 +71,37 @@ const LogShare = () => {
         // dismissed
       }
   };
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  const onChangeSearch = (query: React.SetStateAction<string>) => setSearchQuery(query);
+
+  const { authUData } = useAuth();
+
+  const { loading, error, data } = useQuery<UserData>(GET_USER_BY_EMAIL_FOR_SHARE, {
+      variables: {
+          email: String //authUData!.email,
+      },
+  });
+
+  if (loading) return null;
+  /*
+  if (error) return `Error! ${error}`;
+  */
+
+  /*if (error) return (
+		<SafeAreaView>
+			<Text>{`${error}\n\n\n\n\n\n\n`}</Text>
+		</SafeAreaView>
+	);
+
+  const usersByEmail = data?.GetUserByEmailForShare.map((x: any) => x);
+
   return (
-    <View style={{ marginTop: 50 }}>
-      <Button onPress={onShare} title="Share" />
-    </View>
+    <Searchbar
+      placeholder="Type in users email to share to..."
+      onChangeText={onChangeSearch}
+      value={searchQuery}
+    />
   );
 };
 */
