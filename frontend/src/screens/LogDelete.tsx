@@ -11,16 +11,13 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../navigation/AppStack';
 
-<<<<<<< HEAD
 type LogCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'Tabs'>;
-=======
->>>>>>> 7b5407b5f9a9d6ca03a652f55d1554a1e571f022
 
 const LogDelete = () => {
 
     const navigation = useNavigation<LogCardNavigationProp>();
    
-    const { logData } = useAuth();
+    const { authData } = useAuth();
 
     const [toDelete] = useMutation<LogData>(GET_LOGS_BY_USER_ID_DELETE,
         {
@@ -28,17 +25,10 @@ const LogDelete = () => {
                 const existingLogs: any = cache.readQuery({ 
                     query: GET_ALL_LOGS
               });
-<<<<<<< HEAD
-                 const newLogs = existingLogs!.deleteLog.filter((t:any) => (t.id !== authData!.id));
-                 cache.writeQuery({
-                    query: GET_ALL_LOGS,
-                    data: {deleteLog: newLogs}
-=======
-                 const newLogs = existingLogs!.getLogsByUserIdDelete.filter((t:any) => (t.id !== logData!.id));
+                 const newLogs = existingLogs!.getLogsByUserIdDelete.filter((t:any) => (t.id !== authData!.id));
                  cache.writeQuery({
                     query: GET_ALL_LOGS,
                     data: {getLogsByUserIdDelete: newLogs}
->>>>>>> 7b5407b5f9a9d6ca03a652f55d1554a1e571f022
                   });
           }
          });
@@ -56,7 +46,7 @@ const LogDelete = () => {
         );
 
         toDelete({
-            variables: { id: logData!.id },
+            variables: { id: authData!.id },
         });
     }
         
