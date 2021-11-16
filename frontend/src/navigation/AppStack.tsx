@@ -10,6 +10,8 @@ import CreateMetric from '../screens/CreateMetric';
 import { RecCardProps } from '../components/molecules/Rec_Card/RecCard'; 
 import RecDetail from '../screens/RecDetail'; 
 import AddLabel from '../screens/AddLabel';
+import CreateMeasurement, { CreateMeasurementNavigationProps } from '../screens/CreateMeasurement';
+import MeasurementsList, { MeasurementsListNavigationProps } from '../components/molecules/measurements_list/MeasurementsList';
 
 export type AppStackParamList = {
     AddLabel: undefined;
