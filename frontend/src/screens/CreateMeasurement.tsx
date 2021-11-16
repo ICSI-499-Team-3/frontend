@@ -116,7 +116,7 @@ const CreateMeasurement = ({ route, navigation }: CreateMeasurementProps) => {
     const [updateMeasurement] = useMutation<UpdateMeasurementData, { input: UpdateMeasurementInput }>(UPDATE_MEASUREMENT, {
         variables: {
             input: {
-                id: measurementData!.id,
+                id: measurementData?.id ?? '',
                 metricId: metricId,
                 x: selectedDateTime.toString(), 
                 y: value, 

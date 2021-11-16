@@ -25,6 +25,7 @@ export type AppStackParamList = {
     MetricDetail: MetricDetailNavigationProps;
     MetricDetailOptions: undefined;
     MeasurementsList: MeasurementsListNavigationProps;
+    MeasurementsListItem: undefined;
     Tabs: undefined;
     //emma
     RecommendationsView: undefined;
