@@ -6,16 +6,21 @@ import { Text } from 'react-native-paper';
 import { IconButton, Colors } from 'react-native-paper';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import LogDetailBottomSheet from '../components/atoms/log_detail/LogDetailBottomSheet';
+import CardIcons from '../components/atoms/card_icons/CardIcons';
+
 
 type LogDetailProps = NativeStackScreenProps<AppStackParamList, 'LogDetail'>;
 
 const LogDetail = ({ route, navigation }: LogDetailProps) => {
 
-    const { id, dateTimeOfActivity, notes, categories, mood } = route.params;
+    const { id, dateTimeOfActivity, notes, categories, mood} = route.params;
 
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
     const snapPoints = useMemo(() => ['25%', '50%'], []);
+
+    const date = new Date(0);
+    date.setUTCSeconds(dateTimeOfActivity);
 
     const handlePresentModalPress = useCallback(() => {
         bottomSheetModalRef.current?.present();
@@ -39,14 +44,20 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
     return (
         <BottomSheetModalProvider>
             <ScrollView style={styles.container}>
-                <Text style={styles.createdAt}>{dateTimeOfActivity}</Text>
+                <Text style={styles.createdAt}>{date.toDateString()}</Text>
+                <Text>Time - {date.getHours()}:{date.getMinutes()}</Text>
                 <View style={styles.categoriesContainer}>
                     {categories?.map(category => (
-                        <Text key={category}>{category}</Text>
+                        <Text 
+                        style={styles.MoodText}
+                        key={category}>Activity: {category}     </Text>
                     ))}
                 </View>
+                <Text style={styles.MoodText}>Mood: </Text>
                 <Text style={styles.mood}>{mood}</Text>
-                <Text>{notes}</Text>
+                <Text style={styles.NotesText}>Notes: </Text>
+                <Text style={styles.notes}>{notes} </Text>
+               
             </ScrollView>
             <BottomSheetModal
                 ref={bottomSheetModalRef}
@@ -63,7 +74,7 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
 const styles = StyleSheet.create({
     container: {
         padding: 10,
-        //backgroundColor: 'black',
+        backgroundColor: 'white',
     },
     title: {
         fontSize: 24,
@@ -71,16 +82,40 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
     },
     createdAt: {
-        paddingBottom: 10,
+        fontSize: 24,
+        fontWeight: 'bold',
+        paddingBottom: 5,
     },
     categoriesContainer: {
         display: 'flex',
         flexDirection: 'row',
-        paddingBottom: 10,
+        paddingTop: 20,
+        paddingBottom: 15,
     },
     mood: {
+        fontSize: 20,
+        paddingTop: 10,
         paddingBottom: 10,
     },
+    notes: {
+        fontSize: 20,
+        paddingTop: 10,
+    },
+    NotesText:{
+        fontSize: 15,
+        paddingTop: 50,
+        fontWeight: 'bold',
+    },
+    MoodText:{
+        fontSize: 15,
+        paddingTop: 15,
+        fontWeight: 'bold',
+    },
+    ActivityText:{
+        fontSize: 15,
+        fontWeight: 'bold',
+    },
+
 });
 
 export default LogDetail;

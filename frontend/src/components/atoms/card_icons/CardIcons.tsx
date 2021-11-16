@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type CardIconsProps = {
@@ -11,8 +11,6 @@ const CardIcons = ({ categories }: CardIconsProps) => {
     return (
         <View style={[styles.categoriesContainer]}>
             {categories.slice(0, 3).map(category => <Icon key={category} name={'run'} size={20} />)}
-            {categories.slice(0, 3).map(category => <Icon key={category} name={'swim'} size={20} />)}
-            {categories.slice(0, 3).map(category => <Icon key={category} name={'yoga'} size={20} />)}
         </View>
     );
 };

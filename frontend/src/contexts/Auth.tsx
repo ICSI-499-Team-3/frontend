@@ -8,9 +8,11 @@ import GET_USER_BY_EMAIL_AND_PASSWORD from '../queries/GetUserByEmailAndPassword
 import UserData from '../types/UserData';
 import UserLoginInput from '../types/UserLoginInput';
 import User from '../types/User';
+//import Log from '../types/Log';
 
 type AuthContextData = {
     authData?: User;
+    authUData?: UserData; // added for share to users screen
     loading: boolean;
     signIn(userData: User): Promise<void>;
     signOut(): void;
