@@ -1,6 +1,4 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import LogsView from './LogsView';

@@ -14,6 +14,7 @@ import LogEdit from '../screens/LogEdit';
 import CreateMeasurement, { CreateMeasurementNavigationProps } from '../screens/CreateMeasurement';
 import MeasurementsList, { MeasurementsListNavigationProps } from '../components/molecules/measurements_list/MeasurementsList';
 import AddLabel from '../screens/AddLabel';
+import UpdateUserName from '../screens/UpdateUserName';
 
 export type AppStackParamList = {
     AddLabel: undefined;
@@ -37,7 +38,8 @@ export type AppStackParamList = {
     RecDetail: RecCardProps;
     LogDelete: undefined;
     LogEdit: undefined;
-    
+    UpdateUserName: undefined;
+    ProfileScreen: undefined;
 };
 
 const AppStack = () => {
@@ -65,12 +67,15 @@ const AppStack = () => {
                 <Stack.Screen name="MetricDetail" component={MetricDetail} />
                 <Stack.Screen name="MeasurementsList" component={MeasurementsList} />
 
-                { /* RECOMMENDATIONS SCREENS */} 
-                <Stack.Screen name="RecommendationsView" component={LogDetail} /> 
+                { /* RECOMMENDATIONS SCREENS */}
+                <Stack.Screen name="RecommendationsView" component={LogDetail} />
                 <Stack.Screen name="RecDetail" component={RecDetail} />
 
 
                 { /* PROFILE SCREENS */}
+                <Stack.Group screenOptions={{ headerShown: false }}>
+                    <Stack.Screen name="UpdateUserName" component={UpdateUserName} />
+                </Stack.Group>
             </Stack.Group>
             <Stack.Group screenOptions={{ presentation: 'modal' }}>
                 <Stack.Screen

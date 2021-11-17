@@ -77,7 +77,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
             console.log("loginPressed after: ", loginPressed);
         }
         else if (userData !== null) {
-            auth.signIn(userData);
+            auth.updateAuthData(userData);
         }
     }
 

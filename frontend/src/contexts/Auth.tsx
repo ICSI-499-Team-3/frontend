@@ -3,10 +3,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { useLazyQuery } from '@apollo/client';
-import GET_USER_BY_EMAIL_AND_PASSWORD from '../queries/GetUserByEmailAndPassword';
 import UserData from '../types/UserData';
-import UserLoginInput from '../types/UserLoginInput';
 import User from '../types/User';
 //import Log from '../types/Log';
 
@@ -14,7 +11,7 @@ type AuthContextData = {
     authData?: User;
     authUData?: UserData; // added for share to users screen
     loading: boolean;
-    signIn(userData: User): Promise<void>;
+    updateAuthData(userData: User): Promise<void>;
     signOut(): void;
 };
 
@@ -52,7 +49,7 @@ const AuthProvider: React.FC = ({ children }) => {
         }
     }
 
-    const signIn = async (userData: User) => {
+    const updateAuthData = async (userData: User) => {
         //Set the data in the context, so the App can be notified
         //and send the user to the AuthStack
         setAuthData(userData);
@@ -75,7 +72,7 @@ const AuthProvider: React.FC = ({ children }) => {
     return (
         //This component will be used to encapsulate the whole App,
         //so all components will have access to the Context
-        <AuthContext.Provider value={{ authData, loading: loadingStorage, signIn, signOut }}>
+        <AuthContext.Provider value={{ authData, loading: loadingStorage, updateAuthData, signOut }}>
             {children}
         </AuthContext.Provider>
     );

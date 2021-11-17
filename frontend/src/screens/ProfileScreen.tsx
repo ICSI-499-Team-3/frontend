@@ -5,10 +5,15 @@ import { Text } from "react-native-paper";
 import { useAuth } from "../contexts/Auth";
 import { theme } from "../core/theme";
 import { ListItem } from "react-native-elements";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { AppStackParamList } from "../navigation/AppStack";
+import { useNavigation } from "@react-navigation/native";
 
+type ProfileScreenProps = NativeStackNavigationProp<AppStackParamList, 'ProfileScreen'>;
 
 const ProfileScreen = () => {
     const auth = useAuth();
+    const navigation = useNavigation<ProfileScreenProps>();
 
     const logOut = async () => {
         await auth.signOut();
@@ -21,7 +26,7 @@ const ProfileScreen = () => {
                     text: "Cancel",
                     style: "cancel"
                 },
-                { text: "Yes", onPress: () => logOut }
+                { text: "Yes", onPress: () => logOut() }
             ]);
     };
 
@@ -29,36 +34,36 @@ const ProfileScreen = () => {
         <ScrollView style={styles.container}>
             <Text style={styles.greeting}>Hello {auth.authData?.name}!</Text>
             <View>
-                <ListItem containerStyle={styles.listItemContainer}>
+                <ListItem containerStyle={styles.listItemContainer} onPress={() => navigation.navigate("UpdateUserName")}>
                     <ListItem.Content>
                         <ListItem.Title style={styles.listItemTitle}>Update name</ListItem.Title>
                     </ListItem.Content>
-                    <ListItem.Chevron style={styles.test} />
+                    <ListItem.Chevron />
                 </ListItem>
                 <ListItem containerStyle={styles.listItemContainer}>
                     <ListItem.Content>
                         <ListItem.Title style={styles.listItemTitle}>Update email</ListItem.Title>
                         <ListItem.Subtitle>{auth.authData?.email}</ListItem.Subtitle>
                     </ListItem.Content>
-                    <ListItem.Chevron style={styles.test} />
+                    <ListItem.Chevron />
                 </ListItem>
                 <ListItem containerStyle={styles.listItemContainer}>
                     <ListItem.Content>
                         <ListItem.Title style={styles.listItemTitle}>Update password</ListItem.Title>
                     </ListItem.Content>
-                    <ListItem.Chevron style={styles.test} />
+                    <ListItem.Chevron />
                 </ListItem>
                 <ListItem containerStyle={styles.listItemContainer}>
                     <ListItem.Content>
                         <ListItem.Title style={styles.listItemTitle}>Pre-existing conditions</ListItem.Title>
                     </ListItem.Content>
-                    <ListItem.Chevron style={styles.test} />
+                    <ListItem.Chevron />
                 </ListItem>
-                <ListItem containerStyle={styles.listItemContainer} onPress={logOutAlert}>
+                <ListItem containerStyle={styles.listItemContainer} onPress={() => logOutAlert()}>
                     <ListItem.Content>
                         <ListItem.Title style={styles.listItemTitle}>Log out</ListItem.Title>
                     </ListItem.Content>
-                    <ListItem.Chevron style={styles.test} />
+                    <ListItem.Chevron />
                 </ListItem>
             </View>
         </ScrollView>
