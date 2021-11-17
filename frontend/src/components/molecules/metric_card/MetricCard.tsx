@@ -20,8 +20,9 @@ const MetricCard = ({ id, userId, title, xUnits, yUnits, data }: MetricCardProps
         });
     };
 
-    // regex to test if strings contains only digits
-    const regex = /^\d+$/;
+    // regex for validating that a string is a number
+    // const regex = /^\d+$/;
+    const regex = /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/;
     let numbersOnly = true;
     for (let i = 0; i < data.length; i++) {
         if (!regex.test(data[i].y.trim())) {
