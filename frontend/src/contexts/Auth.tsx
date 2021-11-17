@@ -29,12 +29,6 @@ const AuthProvider: React.FC = ({ children }) => {
     //and stay like this, until the data be load from Async Storage
     const [loadingStorage, setLoadingStorage] = useState(true);
 
-    const [getUser, { loading, error, data }] = useLazyQuery<UserData, { input: UserLoginInput; }>(
-        GET_USER_BY_EMAIL_AND_PASSWORD, {
-        fetchPolicy: "network-only"
-    }
-    );
-
     useEffect(() => {
         //Every time the App is opened, this provider is rendered
         //and call de loadStorage function.
