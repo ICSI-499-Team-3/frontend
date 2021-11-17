@@ -3,8 +3,8 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import UserData from '../types/UserData';
-import User from '../types/User';
+import UserData from '../graphql/types/UserData';
+import User from '../graphql/types/User';
 //import Log from '../types/Log';
 
 type AuthContextData = {

@@ -5,10 +5,10 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../navigation/AppStack';
 import { useAuth } from '../contexts/Auth';
 import { useMutation } from '@apollo/client';
-import CREATE_METRIC from '../mutations/CreateMetric';
-import GET_METRICS_BY_USER_ID from '../queries/GetMetricsByUserId';
-import Metric from '../types/Metric';
-import MetricInput from '../types/MetricInput';
+import CREATE_METRIC from '../graphql/mutations/CreateMetric';
+import GET_METRICS_BY_USER_ID from '../graphql/queries/GetMetricsByUserId';
+import Metric from '../graphql/types/Metric';
+import MetricInput from '../graphql/types/MetricInput';
 
 type CreateMetricProps = NativeStackScreenProps<AppStackParamList, 'CreateMetric'>;
 

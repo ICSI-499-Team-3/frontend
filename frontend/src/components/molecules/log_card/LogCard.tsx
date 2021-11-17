@@ -9,7 +9,7 @@ import CardIcons from '../../atoms/card_icons/CardIcons';
 import { AppStackParamList } from '../../../navigation/AppStack';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Log from '../../../types/Log';
+import Log from '../../../graphql/types/Log';
 
 export type LogCardProps = Log;
 

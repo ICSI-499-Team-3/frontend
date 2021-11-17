@@ -4,7 +4,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../../../navigation/AppStack';
 import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { VictoryLine, VictoryChart, VictoryTheme, VictoryAxis, VictoryBar } from 'victory-native';
-import Metric from '../../../types/Metric';
+import Metric from '../../../graphql/types/Metric';
 
 export type MetricCardProps = Metric;
 

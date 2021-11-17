@@ -4,14 +4,14 @@ import { FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native
 import { FAB, Divider, IconButton } from 'react-native-paper';
 import { AppStackParamList } from '../../../navigation/AppStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import Measurement from '../../../types/Measurement';
-import GET_METRIC_BY_ID from '../../../queries/GetMetricById';
-import GetMetricByIdData from '../../../types/GetMetricByIdData';
+import Measurement from '../../../graphql/types/Measurement';
+import GET_METRIC_BY_ID from '../../../graphql/queries/GetMetricById';
+import GetMetricByIdData from '../../../graphql/types/GetMetricByIdData';
 import { CreateMeasurementMode } from '../../../screens/CreateMeasurement';
 import { useNavigation } from '@react-navigation/core';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import DELETE_MEASUREMENT from '../../../mutations/DeleteMeasurement';
-import DeleteMeasurementData from '../../../types/DeleteMeasurementData';
+import DELETE_MEASUREMENT from '../../../graphql/mutations/DeleteMeasurement';
+import DeleteMeasurementData from '../../../graphql/types/DeleteMeasurementData';
 
 export type MeasurementsListNavigationProps = {
     metricId: string;

@@ -3,8 +3,8 @@ import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { Searchbar, Text } from 'react-native-paper';
 import { useAuth } from '../contexts/Auth';
-import GET_USER_BY_EMAIL_FOR_SHARE from '../queries/GetUserByEmailForShare';
-import UserData from '../types/UserData';
+import GET_USER_BY_EMAIL_FOR_SHARE from '../graphql/queries/GetUserByEmailForShare';
+import UserData from '../graphql/types/UserData';
 // documentation: https://reactnative.dev/docs/share
 
 const LogShare = () => {

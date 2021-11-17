@@ -4,8 +4,8 @@ import { FlatList } from "react-native";
 import MetricCard from "../metric_card/MetricCard";
 import { useAuth } from '../../../contexts/Auth';
 import { useQuery } from '@apollo/client';
-import GET_METRICS_BY_USER_ID from '../../../queries/GetMetricsByUserId';
-import GetMetricsByUserIdData from '../../../types/GetMetricsByUserIdData';
+import GET_METRICS_BY_USER_ID from '../../../graphql/queries/GetMetricsByUserId';
+import GetMetricsByUserIdData from '../../../graphql/types/GetMetricsByUserIdData';
 
 const MetricList = () => {
 

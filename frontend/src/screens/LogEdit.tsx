@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { View, Button, TouchableOpacity, Text, TextInput, StyleSheet} from 'react-native';
 import { useMutation } from '@apollo/client';
 import { Alert } from 'react-native'
-import Log from '../types/Log';
-import LogInput from '../types/LogInput';
-import CREATE_LOG from '../mutations/CreateLog';
-import GET_LOGS_BY_USER_ID from '../queries/GetLogsByUserId';
-import NotesInput from '../types/NotesInput';
-import LOG_EDIT from '../mutations/LogEdit';
+import Log from '../graphql/types/Log';
+import LogInput from '../graphql/types/LogInput';
+import CREATE_LOG from '../graphql/mutations/CreateLog';
+import GET_LOGS_BY_USER_ID from '../graphql/queries/GetLogsByUserId';
+import NotesInput from '../graphql/types/NotesInput';
+import LOG_EDIT from '../graphql/mutations/LogEdit';
 
 
 const LogEdit = () => {

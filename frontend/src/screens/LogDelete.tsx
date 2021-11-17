@@ -2,11 +2,11 @@ import React from 'react';
 import { View, Button, TouchableOpacity} from 'react-native';
 import { Alert } from 'react-native'
 //import LogsList from '../components/molecules/logs_list/LogsList'
-import LogData from '../types/LogData';
+import LogData from '../graphql/types/LogData';
 import { useAuth } from '../contexts/Auth';
 import { useMutation } from '@apollo/client';
-import GET_LOGS_BY_USER_ID_DELETE from '../queries/GetLogsByUserIdDelete';
-import GET_ALL_LOGS from '../queries/GetAllLogs';
+import GET_LOGS_BY_USER_ID_DELETE from '../graphql/queries/GetLogsByUserIdDelete';
+import GET_ALL_LOGS from '../graphql/queries/GetAllLogs';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../navigation/AppStack';

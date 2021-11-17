@@ -7,10 +7,10 @@ import { AppStackParamList } from '../navigation/AppStack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Chip from '../components/atoms/chip/Chip';
 import { useMutation } from '@apollo/client';
-import Log from '../types/Log';
-import LogInput from '../types/LogInput';
-import CREATE_LOG from '../mutations/CreateLog';
-import GET_LOGS_BY_USER_ID from '../queries/GetLogsByUserId';
+import Log from '../graphql/types/Log';
+import LogInput from '../graphql/types/LogInput';
+import CREATE_LOG from '../graphql/mutations/CreateLog';
+import GET_LOGS_BY_USER_ID from '../graphql/queries/GetLogsByUserId';
 import { useAuth } from '../contexts/Auth';
 
 type CreateLogProps = NativeStackScreenProps<AppStackParamList, 'CreateLog'>;

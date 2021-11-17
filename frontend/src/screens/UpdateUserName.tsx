@@ -9,8 +9,8 @@ import { AppStackParamList } from "../navigation/AppStack";
 import TextInput from "../components/atoms/login/TextInput";
 import Button from "../components/atoms/login/Button";
 import { useMutation } from "@apollo/client";
-import User from "../types/User";
-import UPDATE_USER_NAME from "../mutations/UpdateUserName";
+import User from "../graphql/types/User";
+import UPDATE_USER_NAME from "../graphql/mutations/UpdateUserName";
 import Toast from "react-native-toast-message";
 
 type UpdateUserNameProps = NativeStackScreenProps<AppStackParamList, 'UpdateUserName'>;

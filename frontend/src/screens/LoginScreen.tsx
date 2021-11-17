@@ -15,12 +15,12 @@ import { singlePasswordValidator } from '../helpers/passwordValidator';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthStackParamList } from '../navigation/AuthStack';
 import { useAuth } from '../contexts/Auth';
-import User from '../types/User';
-import GET_USER_BY_EMAIL_AND_PASSWORD from '../queries/GetUserByEmailAndPassword';
+import User from '../graphql/types/User';
+import GET_USER_BY_EMAIL_AND_PASSWORD from '../graphql/queries/GetUserByEmailAndPassword';
 import { useLazyQuery } from '@apollo/client';
-import UserLoginInput from '../types/UserLoginInput';
+import UserLoginInput from '../graphql/types/UserLoginInput';
 import Toast from 'react-native-toast-message';
-import UserData from '../types/UserData';
+import UserData from '../graphql/types/UserData';
 
 type LoginScreenProps = NativeStackScreenProps<AuthStackParamList, 'LoginScreen'>;
 

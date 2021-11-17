@@ -2,8 +2,8 @@ import React from 'react';
 import { FlatList, SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import LogCard from '../log_card/LogCard';
 import { useQuery } from '@apollo/client';
-import LogData from '../../../types/LogData';
-import GET_LOGS_BY_USER_ID from '../../../queries/GetLogsByUserId';
+import LogData from '../../../graphql/types/LogData';
+import GET_LOGS_BY_USER_ID from '../../../graphql/queries/GetLogsByUserId';
 import { useAuth } from '../../../contexts/Auth';
 import { ActivityIndicator } from 'react-native-paper';
 

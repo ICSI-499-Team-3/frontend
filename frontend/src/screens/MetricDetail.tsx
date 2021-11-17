@@ -5,11 +5,11 @@ import { VictoryLine, VictoryChart, VictoryTheme, VictoryAxis, VictoryLabel, Vic
 import { IconButton } from 'react-native-paper';
 import { AppStackParamList } from '../navigation/AppStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import GET_METRIC_BY_ID from '../queries/GetMetricById';
-import GetMetricByIdData from '../types/GetMetricByIdData';
-import DELETE_METRIC from '../mutations/DeleteMetric';
-import DeletMetricData from '../types/DeleteMetricData';
-import GET_METRICS_BY_USER_ID from '../queries/GetMetricsByUserId';
+import GET_METRIC_BY_ID from '../graphql/queries/GetMetricById';
+import GetMetricByIdData from '../graphql/types/GetMetricByIdData';
+import DELETE_METRIC from '../graphql/mutations/DeleteMetric';
+import DeletMetricData from '../graphql/types/DeleteMetricData';
+import GET_METRICS_BY_USER_ID from '../graphql/queries/GetMetricsByUserId';
 
 type MetricDetailProps = NativeStackScreenProps<AppStackParamList, 'MetricDetail'>;
 

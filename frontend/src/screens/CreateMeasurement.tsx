@@ -7,16 +7,16 @@ import DateTimePicker, { dateTimePickerModes } from '../components/atoms/date_ti
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../navigation/AppStack';
 import { Picker } from '@react-native-picker/picker';
-import GET_METRICS_BY_USER_ID from '../queries/GetMetricsByUserId';
-import GetMetricsByUserIdData from '../types/GetMetricsByUserIdData';
-import CreateMeasurementInput from '../types/CreateMeasurementInput';
-import CREATE_MEASUREMENT from '../mutations/CreateMeasurement';
-import GET_METRIC_BY_ID from '../queries/GetMetricById';
-import CreateMeasurementData from '../types/CreateMeasurementData';
-import Measurement from '../types/Measurement';
-import UpdateMeasurementInput from '../types/UpdateMeasurementInput';
-import UPDATE_MEASUREMENT from '../mutations/UpdateMeasurement';
-import UpdateMeasurementData from '../types/UpdateMeasurementData';
+import GET_METRICS_BY_USER_ID from '../graphql/queries/GetMetricsByUserId';
+import GetMetricsByUserIdData from '../graphql/types/GetMetricsByUserIdData';
+import CreateMeasurementInput from '../graphql/types/CreateMeasurementInput';
+import CREATE_MEASUREMENT from '../graphql/mutations/CreateMeasurement';
+import GET_METRIC_BY_ID from '../graphql/queries/GetMetricById';
+import CreateMeasurementData from '../graphql/types/CreateMeasurementData';
+import Measurement from '../graphql/types/Measurement';
+import UpdateMeasurementInput from '../graphql/types/UpdateMeasurementInput';
+import UPDATE_MEASUREMENT from '../graphql/mutations/UpdateMeasurement';
+import UpdateMeasurementData from '../graphql/types/UpdateMeasurementData';
 
 type CreateMeasurementProps = NativeStackScreenProps<AppStackParamList, 'CreateMeasurement'>;
 

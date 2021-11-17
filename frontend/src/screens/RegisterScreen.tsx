@@ -14,9 +14,9 @@ import { nameValidator } from '../helpers/nameValidator';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthStackParamList } from '../navigation/AuthStack';
 import { useMutation } from '@apollo/client';
-import User from '../types/User';
-import UserInput from '../types/UserInput';
-import CREATE_USER from '../mutations/CreateUser';
+import User from '../graphql/types/User';
+import UserInput from '../graphql/types/UserInput';
+import CREATE_USER from '../graphql/mutations/CreateUser';
 import Toast from 'react-native-toast-message';
 
 type RegiserScreenProps = NativeStackScreenProps<AuthStackParamList, 'RegisterScreen'>;
