@@ -165,7 +165,8 @@ const MetricDetail = ({ route, navigation }: MetricDetailProps) => {
             }
 
             return (
-                <View>
+                <View style={styles.container}>
+                    <Text style={styles.titleText}>{title}</Text>
                     <VictoryChart theme={VictoryTheme.material} domainPadding={20}>
                         <VictoryBar 
                             data={data}
