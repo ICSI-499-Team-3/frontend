@@ -79,7 +79,7 @@ const AppStack = () => {
 
 
                 { /* PROFILE SCREENS */}
-                <Stack.Group screenOptions={{ headerShown: false }}>
+                <Stack.Group>
                     <Stack.Screen name="UpdateUserName" component={UpdateUserName} />
                     <Stack.Screen name="UpdateUserEmail" component={UpdateUserEmail} />
                     <Stack.Screen name="UpdateUserPassword" component={UpdateUserPassword} />
