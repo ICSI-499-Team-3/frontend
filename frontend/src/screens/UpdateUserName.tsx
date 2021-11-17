@@ -11,12 +11,19 @@ import Button from "../components/atoms/login/Button";
 import { useMutation } from "@apollo/client";
 import User from "../types/User";
 import UPDATE_USER_NAME from "../mutations/UpdateUserName";
+import Toast from "react-native-toast-message";
 
 type UpdateUserNameProps = NativeStackScreenProps<AppStackParamList, 'UpdateUserName'>;
 
 const UpdateUserName = ({ route, navigation }: UpdateUserNameProps) => {
     const auth = useAuth();
     const [name, setName] = useState({ value: '', error: '' });
+
+    const successToast = () => {
+        Toast.show({
+            text1: 'Name Updated!',
+        });
+    };
 
     const [updateUserName] = useMutation<{ UpdateUserName: User; }, { id: String, name: String; }>(UPDATE_USER_NAME, {
         variables: {
@@ -28,6 +35,7 @@ const UpdateUserName = ({ route, navigation }: UpdateUserNameProps) => {
 
             await auth.updateAuthData(data.UpdateUserName);
             navigation.goBack();
+            successToast();
         },
         onError: (error) => console.log(`Error on CreateLog: ${error}`),
     });

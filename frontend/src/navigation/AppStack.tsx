@@ -16,6 +16,7 @@ import MeasurementsList, { MeasurementsListNavigationProps } from '../components
 import AddLabel from '../screens/AddLabel';
 import UpdateUserName from '../screens/UpdateUserName';
 import UpdateUserEmail from '../screens/UpdateUserEmail';
+import UpdateUserPassword from '../screens/UpdateUserPassword';
 
 export type AppStackParamList = {
     AddLabel: undefined;
@@ -41,6 +42,7 @@ export type AppStackParamList = {
     LogEdit: undefined;
     UpdateUserName: undefined;
     UpdateUserEmail: undefined;
+    UpdateUserPassword: undefined;
     ProfileScreen: undefined;
 };
 
@@ -78,6 +80,7 @@ const AppStack = () => {
                 <Stack.Group screenOptions={{ headerShown: false }}>
                     <Stack.Screen name="UpdateUserName" component={UpdateUserName} />
                     <Stack.Screen name="UpdateUserEmail" component={UpdateUserEmail} />
+                    <Stack.Screen name="UpdateUserPassword" component={UpdateUserPassword} />
                 </Stack.Group>
             </Stack.Group>
             <Stack.Group screenOptions={{ presentation: 'modal' }}>

@@ -12,12 +12,19 @@ import { useMutation } from "@apollo/client";
 import User from "../types/User";
 import { emailValidator } from "../helpers/emailValidator";
 import UPDATE_USER_EMAIL from "../mutations/UpdateUserEmail";
+import Toast from "react-native-toast-message";
 
 type UpdateUserEmailProps = NativeStackScreenProps<AppStackParamList, 'UpdateUserEmail'>;
 
 const UpdateUserEmail = ({ route, navigation }: UpdateUserEmailProps) => {
     const auth = useAuth();
     const [email, setEmail] = useState({ value: '', error: '' });
+
+    const successToast = () => {
+        Toast.show({
+            text1: 'Email Updated!',
+        });
+    };
 
     const [updateUserEmail] = useMutation<{ UpdateUserEmail: User; }, { id: String, name: String; }>(UPDATE_USER_EMAIL, {
         variables: {
@@ -29,6 +36,7 @@ const UpdateUserEmail = ({ route, navigation }: UpdateUserEmailProps) => {
 
             await auth.updateAuthData(data.UpdateUserEmail);
             navigation.goBack();
+            successToast();
         },
         onError: (error) => {
             console.log(`Error on CreateUser: ${error.message}`);

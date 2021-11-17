@@ -47,7 +47,7 @@ const ProfileScreen = () => {
                     </ListItem.Content>
                     <ListItem.Chevron />
                 </ListItem>
-                <ListItem containerStyle={styles.listItemContainer}>
+                <ListItem containerStyle={styles.listItemContainer} onPress={() => navigation.navigate("UpdateUserPassword")}>
                     <ListItem.Content>
                         <ListItem.Title style={styles.listItemTitle}>Update password</ListItem.Title>
                     </ListItem.Content>
