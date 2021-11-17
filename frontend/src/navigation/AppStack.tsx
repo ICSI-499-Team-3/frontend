@@ -80,10 +80,10 @@ const AppStack = () => {
 
                 { /* PROFILE SCREENS */}
                 <Stack.Group>
-                    <Stack.Screen name="UpdateUserName" component={UpdateUserName} />
-                    <Stack.Screen name="UpdateUserEmail" component={UpdateUserEmail} />
-                    <Stack.Screen name="UpdateUserPassword" component={UpdateUserPassword} />
-                    <Stack.Screen name="UpdateUserPreExistingConditions" component={UpdateUserPreExistingConditions} />
+                    <Stack.Screen name="UpdateUserName" component={UpdateUserName} options={{title:"Name"}}/>
+                    <Stack.Screen name="UpdateUserEmail" component={UpdateUserEmail} options={{title:"Email"}}/>
+                    <Stack.Screen name="UpdateUserPassword" component={UpdateUserPassword} options={{title:"Password"}}/>
+                    <Stack.Screen name="UpdateUserPreExistingConditions" component={UpdateUserPreExistingConditions} options={{title:"Pre-existing Conditions"}}/>
                 </Stack.Group>
             </Stack.Group>
             <Stack.Group screenOptions={{ presentation: 'modal' }}>
