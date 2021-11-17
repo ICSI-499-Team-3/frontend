@@ -1,47 +1,70 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import React from "react";
+import { Alert, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
-import Button from "../components/atoms/login/Button";
 import { useAuth } from "../contexts/Auth";
 import { theme } from "../core/theme";
-import { AuthData } from "../services/authService";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ListItem } from "react-native-elements";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { AppStackParamList } from "../navigation/AppStack";
+import { useNavigation } from "@react-navigation/native";
 
+type ProfileScreenProps = NativeStackNavigationProp<AppStackParamList, 'ProfileScreen'>;
 
 const ProfileScreen = () => {
     const auth = useAuth();
-
-    const [authData, setAuthData] = useState<AuthData>();
-
-    useEffect(() => {
-        loadAuthData();
-    });
-
-    async function loadAuthData() {
-        try {
-            const authDataSerialized = await AsyncStorage.getItem('@AuthData');
-            if (authDataSerialized) {
-                const _authData: AuthData = JSON.parse(authDataSerialized);
-                setAuthData(_authData);
-            }
-        } catch (error) {
-
-        }
-    }
+    const navigation = useNavigation<ProfileScreenProps>();
 
     const logOut = async () => {
         await auth.signOut();
     };
 
+    const logOutAlert = () => {
+        Alert.alert("Log out", "Are you sure you want to log out?",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                { text: "Yes", onPress: () => logOut() }
+            ]);
+    };
+
     return (
         <ScrollView style={styles.container}>
-            <View style={styles.topSection}>
-                <Text style={{ fontSize: 33, textAlign: 'center', paddingTop: 30 }}>Profile Screen under construction</Text>
-                <Text style={{ fontSize: 20, textAlign: 'center', paddingTop: 30 }}>Hello {authData?.email}!</Text>
-            </View>
-            <View style={styles.buttonList}>
-                <Button style={undefined} onPress={logOut}>Log Out</Button>
+            <Text style={styles.greeting}>Hello {auth.authData?.name}!</Text>
+            <View>
+                <ListItem containerStyle={styles.listItemContainer} onPress={() => navigation.navigate("UpdateUserName")}>
+                    <ListItem.Content>
+                        <ListItem.Title style={styles.listItemTitle}>Update name</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Chevron />
+                </ListItem>
+                <ListItem containerStyle={styles.listItemContainer} onPress={() => navigation.navigate("UpdateUserEmail")}>
+                    <ListItem.Content>
+                        <ListItem.Title style={styles.listItemTitle}>Update email</ListItem.Title>
+                        <ListItem.Subtitle>{auth.authData?.email}</ListItem.Subtitle>
+                    </ListItem.Content>
+                    <ListItem.Chevron />
+                </ListItem>
+                <ListItem containerStyle={styles.listItemContainer} onPress={() => navigation.navigate("UpdateUserPassword")}>
+                    <ListItem.Content>
+                        <ListItem.Title style={styles.listItemTitle}>Update password</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Chevron />
+                </ListItem>
+                <ListItem containerStyle={styles.listItemContainer}>
+                    <ListItem.Content>
+                        <ListItem.Title style={styles.listItemTitle}>Pre-existing conditions</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Chevron />
+                </ListItem>
+                <ListItem containerStyle={styles.listItemContainer} onPress={() => logOutAlert()}>
+                    <ListItem.Content>
+                        <ListItem.Title style={styles.listItemTitle}>Log out</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Chevron />
+                </ListItem>
             </View>
         </ScrollView>
     );
@@ -55,6 +78,12 @@ const styles = StyleSheet.create({
         backgroundColor: theme.colors.surface,
     },
 
+    greeting: {
+        fontSize: 30,
+        textAlign: "center",
+        padding: 30,
+    },
+
     topSection: {
         alignItems: 'center',
         flexDirection: 'column',
@@ -66,9 +95,13 @@ const styles = StyleSheet.create({
     },
 
     listItemContainer: {
-        height: 55,
-        borderWidth: 0.5,
+        height: 65,
+        borderWidth: .8,
         borderColor: '#ECECEC',
+    },
+
+    listItemTitle: {
+        fontSize: 18,
     },
 
     buttonList: {

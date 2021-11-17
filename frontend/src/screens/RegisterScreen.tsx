@@ -9,7 +9,7 @@ import TextInput from '../components/atoms/login/TextInput';
 import BackButton from '../components/atoms/login/BackButton';
 import { theme } from '../core/theme';
 import { emailValidator } from '../helpers/emailValidator';
-import { passwordValidator } from '../helpers/passwordValidator';
+import { doublePasswordValidator } from '../helpers/passwordValidator';
 import { nameValidator } from '../helpers/nameValidator';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthStackParamList } from '../navigation/AuthStack';
@@ -24,7 +24,8 @@ type RegiserScreenProps = NativeStackScreenProps<AuthStackParamList, 'RegisterSc
 export default function RegisterScreen({ navigation }: RegiserScreenProps) {
     const [name, setName] = useState({ value: '', error: '' });
     const [email, setEmail] = useState({ value: '', error: '' });
-    const [password, setPassword] = useState({ value: '', error: '' });
+    const [password1, setPassword1] = useState({ value: '', error: '' });
+    const [password2, setPassword2] = useState({ value: '', error: '' });
 
     const successToast = () => {
         Toast.show({
@@ -38,7 +39,7 @@ export default function RegisterScreen({ navigation }: RegiserScreenProps) {
             input: {
                 name: name.value,
                 email: email.value,
-                password: password.value,
+                password: password1.value,
             }
         },
         onCompleted: (data) => {
@@ -56,13 +57,18 @@ export default function RegisterScreen({ navigation }: RegiserScreenProps) {
     const onSignUpPressed = () => {
         const nameError = nameValidator(name.value);
         const emailError = emailValidator(email.value);
-        const passwordError = passwordValidator(password.value);
+        const passwordError = doublePasswordValidator(password1.value, password2.value);
         if (emailError || passwordError || nameError) {
             setName({ ...name, error: nameError });
             setEmail({ ...email, error: emailError });
-            setPassword({ ...password, error: passwordError });
+            setPassword1({ ...password1, error: passwordError });
+            setPassword2({ ...password2, error: passwordError });
             return;
         }
+
+        setPassword1({ ...password1, error: '' });
+        setPassword2({ ...password2, error: 'passwordError' });
+
 
         createUser();
     };
@@ -97,10 +103,20 @@ export default function RegisterScreen({ navigation }: RegiserScreenProps) {
             <TextInput
                 label="Password"
                 returnKeyType="done"
-                value={password.value}
-                onChangeText={(text: string) => setPassword({ value: text, error: '' })}
-                error={!!password.error}
-                errorText={password.error}
+                value={password1.value}
+                onChangeText={(text: string) => setPassword1({ value: text, error: '' })}
+                error={!!password1.error}
+                errorText={password1.error}
+                secureTextEntry
+                description=''
+            />
+            <TextInput
+                label="Re-enter Password"
+                returnKeyType="done"
+                value={password2.value}
+                onChangeText={(text: string) => setPassword2({ value: text, error: '' })}
+                error={!!password2.error}
+                errorText={password2.error}
                 secureTextEntry
                 description=''
             />
