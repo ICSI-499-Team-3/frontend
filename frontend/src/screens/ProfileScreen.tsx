@@ -40,7 +40,7 @@ const ProfileScreen = () => {
                     </ListItem.Content>
                     <ListItem.Chevron />
                 </ListItem>
-                <ListItem containerStyle={styles.listItemContainer}>
+                <ListItem containerStyle={styles.listItemContainer} onPress={() => navigation.navigate("UpdateUserEmail")}>
                     <ListItem.Content>
                         <ListItem.Title style={styles.listItemTitle}>Update email</ListItem.Title>
                         <ListItem.Subtitle>{auth.authData?.email}</ListItem.Subtitle>
