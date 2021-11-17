@@ -35,23 +35,14 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
 
     const { authData } = useAuth();
 
-    const [createLog] = useMutation<{ createLog: Log }, { input: LogInput }>(CREATE_LOG, {
-        variables: {
-            input: {
-                userId: authData!.id,
-                dateTimeOfActivity: selectedDateTime, 
-                notes: contentText, 
-                categories: Array.from(selectedCategories), 
-                mood: Array.from(selectedMoods),
-            }
-        },
+    const [createLog] = useMutation<{ CreateLog: Log; }, { input: LogInput; }>(CREATE_LOG, {
         onCompleted: (data) => {
             console.log(`completed CreateLog: ${data}`);
             navigation.goBack();
-        }, 
+        },
         onError: (error) => console.log(`Error on CreateLog: ${error}`),
         refetchQueries: [
-            GET_LOGS_BY_USER_ID, 
+            GET_LOGS_BY_USER_ID,
             'GetLogsByUserId',
         ],
     });
@@ -69,11 +60,11 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
 
         const y = new Date(
             selectedDate.getFullYear(),
-            selectedDate.getMonth(), 
-            selectedDate.getDate(), 
-            selectedTime.getHours(), 
-            selectedTime.getMinutes(), 
-            selectedTime.getSeconds(), 
+            selectedDate.getMonth(),
+            selectedDate.getDate(),
+            selectedTime.getHours(),
+            selectedTime.getMinutes(),
+            selectedTime.getSeconds(),
             selectedTime.getMilliseconds()
         );
         console.log(y.toString());
@@ -83,7 +74,17 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
         j.setUTCSeconds(epoch);
         console.log(j.toString());
 
-        createLog();
+        createLog({
+            variables: {
+                input: {
+                    userId: authData!.id,
+                    dateTimeOfActivity: selectedDateTime,
+                    notes: contentText,
+                    categories: Array.from(selectedCategories),
+                    mood: Array.from(selectedMoods),
+                }
+            }
+        });
     };
 
     const handlePickCategory = (category: string) => {
@@ -107,13 +108,13 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
     useLayoutEffect(() => {
         navigation.setOptions({
             headerLeft: () => (
-                <IconButton 
+                <IconButton
                     icon="close"
                     size={20}
-                    onPress={() => navigation.goBack()} hasTVPreferredFocus={undefined} tvParallaxProperties={undefined}                />
+                    onPress={() => navigation.goBack()} hasTVPreferredFocus={undefined} tvParallaxProperties={undefined} />
             ),
             headerRight: () => (
-                <Button 
+                <Button
                     onPress={handleCreate}
                     title="Create"
                     accessibilityLabel="Create log"
@@ -155,7 +156,7 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
                 }} />
                 <Text style={styles.dateText}>{`${selectedTime.toLocaleTimeString()}`}</Text>
             </View>
-            <DateTimePicker 
+            <DateTimePicker
                 selectedDate={selectedDate}
                 setSelectedDate={setSelectedDate}
                 selectedTime={selectedTime}
@@ -167,7 +168,7 @@ const CreateLog = ({ route, navigation }: CreateLogProps) => {
                 dateTimePickerMode={dateTimePickerMode}
                 setDateTimePickerMode={setDateTimePickerMode}
             />
-            <TextInput 
+            <TextInput
                 style={styles.contentInput}
                 multiline
                 placeholder="Add optional notes"
@@ -185,20 +186,20 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     header: {
-        display: 'flex', 
+        display: 'flex',
         flexDirection: 'row',
     },
     moodsContainer: {
         paddingTop: 10,
     },
     moodsGrid: {
-        display: 'flex', 
-        flexDirection: 'row', 
+        display: 'flex',
+        flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'center',
     },
     dateContainer: {
-        display: 'flex', 
+        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
     },
