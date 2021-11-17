@@ -7,6 +7,7 @@ const UPDATE_USER_PASSWORD = gql`
             name
             email
             authToken
+            preExistingConditions
         }
     }
 `;

@@ -7,6 +7,7 @@ const GET_USER_BY_EMAIL_AND_PASSWORD = gql`
       name
       email
       authToken
+      preExistingConditions
     }
   }
 `;

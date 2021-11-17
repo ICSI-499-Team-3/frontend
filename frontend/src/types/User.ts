@@ -3,6 +3,7 @@ interface User {
     name: string;
     email: string;
     authToken: string;
+    preExistingConditions: string;
 }
 
 export default User;

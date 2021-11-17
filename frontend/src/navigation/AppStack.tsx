@@ -17,6 +17,7 @@ import AddLabel from '../screens/AddLabel';
 import UpdateUserName from '../screens/UpdateUserName';
 import UpdateUserEmail from '../screens/UpdateUserEmail';
 import UpdateUserPassword from '../screens/UpdateUserPassword';
+import UpdateUserPreExistingConditions from '../screens/UpdateUserPreExistingConditions';
 
 export type AppStackParamList = {
     AddLabel: undefined;
@@ -43,6 +44,7 @@ export type AppStackParamList = {
     UpdateUserName: undefined;
     UpdateUserEmail: undefined;
     UpdateUserPassword: undefined;
+    UpdateUserPreExistingConditions: undefined;
     ProfileScreen: undefined;
 };
 
@@ -81,6 +83,7 @@ const AppStack = () => {
                     <Stack.Screen name="UpdateUserName" component={UpdateUserName} />
                     <Stack.Screen name="UpdateUserEmail" component={UpdateUserEmail} />
                     <Stack.Screen name="UpdateUserPassword" component={UpdateUserPassword} />
+                    <Stack.Screen name="UpdateUserPreExistingConditions" component={UpdateUserPreExistingConditions} />
                 </Stack.Group>
             </Stack.Group>
             <Stack.Group screenOptions={{ presentation: 'modal' }}>

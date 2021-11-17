@@ -53,7 +53,7 @@ const ProfileScreen = () => {
                     </ListItem.Content>
                     <ListItem.Chevron />
                 </ListItem>
-                <ListItem containerStyle={styles.listItemContainer}>
+                <ListItem containerStyle={styles.listItemContainer} onPress={() => navigation.navigate("UpdateUserPreExistingConditions")}>
                     <ListItem.Content>
                         <ListItem.Title style={styles.listItemTitle}>Pre-existing conditions</ListItem.Title>
                     </ListItem.Content>
