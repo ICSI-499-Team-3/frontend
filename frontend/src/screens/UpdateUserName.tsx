@@ -41,7 +41,7 @@ const UpdateUserName = ({ route, navigation }: UpdateUserNameProps) => {
     });
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} keyboardShouldPersistTaps='always'>
             <Text style={styles.heading}>Update Name</Text>
             <View>
                 <Text style={styles.currentName}>Current Name: {auth.authData?.name}</Text>

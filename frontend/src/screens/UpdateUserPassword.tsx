@@ -72,7 +72,7 @@ const UpdateUserPassword = ({ route, navigation }: UpdateUserPasswordProps) => {
     };
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} keyboardShouldPersistTaps='always'>
             <Text style={styles.heading}>Update Password</Text>
             <View>
                 <TextInput

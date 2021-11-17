@@ -41,7 +41,7 @@ const UpdateUserPreExistingConditions = ({ navigation }: UpdateUserConditionsPro
     });
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} keyboardShouldPersistTaps='always'>
             <Text style={styles.heading}>Update Pre-Existing Conditions</Text>
             <View>
                 <TextInput

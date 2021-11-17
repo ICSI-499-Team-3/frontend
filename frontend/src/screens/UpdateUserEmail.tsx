@@ -57,7 +57,7 @@ const UpdateUserEmail = ({ route, navigation }: UpdateUserEmailProps) => {
     };
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} keyboardShouldPersistTaps='always'>
             <Text style={styles.heading}>Update Email</Text>
             <View>
                 <Text style={styles.currentName}>Current Email: {auth.authData?.email}</Text>
