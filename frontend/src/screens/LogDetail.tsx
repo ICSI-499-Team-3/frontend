@@ -54,7 +54,7 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
                     ))}
                 </View>
                 <Text style={styles.MoodText}>Mood: </Text>
-                <Text style={styles.mood}>{mood}</Text>
+                <Text style={styles.mood}>{mood} </Text>
                 <Text style={styles.NotesText}>Notes: </Text>
                 <Text style={styles.notes}>{notes} </Text>
                
