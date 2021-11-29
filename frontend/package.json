@@ -26,6 +26,7 @@
     "react-native-elements": "^3.4.2",
     "react-native-emoji-board": "^1.2.1",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-health": "^1.11.0",
     "react-native-modal-datetime-picker": "^13.0.0",
     "react-native-pager-view": "^5.4.7",
     "react-native-paper": "^4.9.2",
