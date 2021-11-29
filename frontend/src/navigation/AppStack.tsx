@@ -9,7 +9,7 @@ import CreateMetric from '../screens/CreateMetric';
 import { RecCardProps } from '../components/molecules/Rec_Card/RecCard'; //emma
 import RecDetail from '../screens/RecDetail'; //emma
 import LogShare from '../screens/LogShare';
-import LogDelete from '../screens/LogDelete';
+import LogDelete, {  LogDeleteNavigationProps } from '../screens/LogDelete';
 import LogEdit from '../screens/LogEdit';
 import CreateMeasurement, { CreateMeasurementNavigationProps } from '../screens/CreateMeasurement';
 import MeasurementsList, { MeasurementsListNavigationProps } from '../components/molecules/measurements_list/MeasurementsList';
@@ -35,7 +35,7 @@ export type AppStackParamList = {
     RecommendationsView: undefined;
     RecCard: undefined;
     RecDetail: RecCardProps;
-    LogDelete: undefined;
+    LogDelete:  LogDeleteNavigationProps;
     LogEdit: undefined;
     
 };

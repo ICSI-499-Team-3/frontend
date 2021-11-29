@@ -9,7 +9,7 @@ import UserData from '../types/UserData';
 // documentation: https://reactnative.dev/docs/share
 
 const LogShare = () => {
-/*
+
   const { authData } = useAuth(); // function fron auth.tsx might need to create a 
                                   // different function at the bottom of the file for email
    
@@ -33,17 +33,6 @@ if (error) return (
 
 const usersEmails = data?.GetUserByEmail.map(x => x); // GetUserByEmail has to be user array to use map
 
-return (
-  <FlatList 
-      style={styles.container}
-      data={usersEmails} 
-      renderItem={({ item }) => (
-
-              email = {item.email}
-          
-      )}
-  />
-);
 
 }; // end of const LogShare
 
@@ -54,7 +43,7 @@ const styles = StyleSheet.create({
 });
 
 
-const LogShare = () => {
+/*const LogShare = () => {
   const onShare = async () => {
     
       const result = await Share.share({
@@ -104,9 +93,8 @@ const LogShare = () => {
     />
   );
 };
-*/
 
-}
+}*/
 
 export default LogShare;
 

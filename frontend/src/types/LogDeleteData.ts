@@ -1,7 +1,7 @@
 import Log from './Log';
 
-interface LogDelete {
+interface LogDeleteData {
     LogDelete: Log;
 }
 
-export default LogDelete;
+export default LogDeleteData;

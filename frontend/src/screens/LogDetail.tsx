@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useCallback, useLayoutEffect } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Alert } from 'react-native';
 import { AppStackParamList } from '../navigation/AppStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Text } from 'react-native-paper';
@@ -7,6 +7,11 @@ import { IconButton, Colors } from 'react-native-paper';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import LogDetailBottomSheet from '../components/atoms/log_detail/LogDetailBottomSheet';
 import CardIcons from '../components/atoms/card_icons/CardIcons';
+import { useMutation, useQuery } from '@apollo/client';
+import DELETE_LOG from '../mutations/DeleteLog';
+import GET_LOGS_BY_USER_ID from '../queries/GetLogsByUserId';
+import LogDeleteData from '../types/LogDeleteData';
+import GetLogByIdData from '../types/GetLogByIdData';
 
 
 type LogDetailProps = NativeStackScreenProps<AppStackParamList, 'LogDetail'>;
@@ -15,7 +20,7 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
 
     const { id, dateTimeOfActivity, notes, categories, mood} = route.params;
 
-    const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+    const bottomSheetModalRef = useRef<BottomSheetModal>(null); 
 
     const snapPoints = useMemo(() => ['25%', '50%'], []);
 
@@ -53,8 +58,15 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
                         key={category}>Activity: {category}     </Text>
                     ))}
                 </View>
+                <View style={styles.mood}>
+                    {mood?.map(category => (
+                        <Text 
+                        style={styles.MoodText}
+                        key={category}>Mood: {category}     </Text>
+                    ))}
+                </View>
                 <Text style={styles.MoodText}>Mood: </Text>
-                <Text style={styles.mood}>{mood} </Text>
+                <Text style={styles.mood}> {mood} </Text>
                 <Text style={styles.NotesText}>Notes: </Text>
                 <Text style={styles.notes}>{notes} </Text>
                
@@ -96,6 +108,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
         paddingTop: 10,
         paddingBottom: 10,
+        display: 'flex',
+        flexDirection: 'row',
     },
     notes: {
         fontSize: 20,

@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 const GET_USER_BY_EMAIL = gql`
-  query GetUserByEmailAndPassword($email: String!) { // 
-    GetUserByEmailAndPassword(email: $email) {
+  query GetUserByEmail($email: String!) { // 
+    GetUserByEmail(email: $email) {
       email
     }
   }
