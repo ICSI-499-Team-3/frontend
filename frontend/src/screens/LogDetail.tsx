@@ -65,8 +65,6 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
                         key={category}>Mood: {category}     </Text>
                     ))}
                 </View>
-                <Text style={styles.MoodText}>Mood: </Text>
-                <Text style={styles.mood}> {mood} </Text>
                 <Text style={styles.NotesText}>Notes: </Text>
                 <Text style={styles.notes}>{notes} </Text>
                

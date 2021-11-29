@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Button, TouchableOpacity} from 'react-native';
+import { View, Button, TouchableOpacity, Text} from 'react-native';
 import { Alert } from 'react-native'
 //import LogsList from '../components/molecules/logs_list/LogsList'
 import LogData from '../types/LogData';
@@ -7,7 +7,7 @@ import { useAuth } from '../contexts/Auth';
 import GET_LOGS_BY_USER_ID_DELETE from '../queries/GetLogsByUserIdDelete';
 import GET_ALL_LOGS from '../queries/GetAllLogs';
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../navigation/AppStack';
 import { useMutation, useQuery } from '@apollo/client';
 import LogDeleteData from '../types/LogDeleteData';
@@ -15,13 +15,83 @@ import DELETE_LOG from '../mutations/DeleteLog';
 import GET_LOGS_BY_USER_ID from '../queries/GetLogsByUserId';
 import GetLogByIdData from '../types/GetLogByIdData';
 
-type LogDeleteProps = NativeStackNavigationProp<AppStackParamList, 'Tabs'>;
+   /*Alert.alert(
+            'Deleted',
+            'This log has been deleted.'
+        );*/
 
-//export type LogDeleteNavigationProps = {
-//    userId: string;
-//};
+type LogDeleteProps = NativeStackScreenProps<AppStackParamList, 'LogDelete'>;
 
-const LogDelete = () => {
+export type LogDeleteNavigationProp = {
+    logId : string;
+};
+
+
+const LogDelete = ({ route, navigation }: LogDeleteProps) => {
+
+    const { logId } = route.params;
+
+    const [deleteLog] = useMutation<LogDeleteData, { logId: string; }> (DELETE_LOG, {
+        variables: {
+            logId: logId,
+        },
+        refetchQueries: [
+            GET_LOGS_BY_USER_ID, 
+            "GetLogsbyUserId",
+        ],
+        onCompleted: () => navigation.goBack(),
+    });
+
+    const { loading, error, data } = useQuery<GetLogByIdData, { logId: string; }>(GET_LOGS_BY_USER_ID, {
+        variables: {
+            logId: logId,
+        },
+    });
+
+    if (loading) {
+        return (
+            <Text>Loading...</Text>
+        );
+    }
+
+    if (error) {
+        return (
+            <Text>{`${error}`}</Text>
+        );
+    }
+
+
+    const deleteLogHandler = () => {
+        Alert.alert(
+            'Delete Log',
+            'Are you sure want to delete this log?',
+            [
+                {
+                    'text': "Cancel", 
+                    onPress: () => console.log('do nothing'), 
+                    style: 'cancel', 
+                },
+                {
+                    text: 'OK', 
+                    onPress: () => deleteLog()
+                },
+            ],
+        );
+    }
+
+
+    return (
+        <TouchableOpacity>
+            <View style={{ marginTop: 50 }}>
+                <Button 
+                onPress={deleteLogHandler} 
+                title="Delete Log"
+                />
+            </View>
+        </TouchableOpacity>
+      ); 
+
+
 /*const LogDelete = ({ route, navigation }: LogDeleteProps) => {
 
     const { userId } = route.params;
@@ -77,7 +147,7 @@ const LogDelete = () => {
    
 const { authData } = useAuth();
 
-    const [toDelete] = useMutation<LogData>(GET_LOGS_BY_USER_ID_DELETE,
+    /*const [toDelete] = useMutation<LogData>(GET_LOGS_BY_USER_ID_DELETE,
         {
             update(cache, {}) {
                 const existingLogs: any = cache.readQuery({ 
