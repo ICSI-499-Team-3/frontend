@@ -4,7 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import LogsView from './LogsView';
 import RecommendationsView from './RecommendationsView'; //emma
 import MetricView from './MetricView';
-import ProfileScreen from './ProfileScreen';
+import ProfileScreen from './profile/ProfileScreen';
 
 const TabView = () => {
 

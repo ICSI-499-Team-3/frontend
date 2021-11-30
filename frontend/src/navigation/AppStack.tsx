@@ -14,10 +14,10 @@ import LogEdit from '../screens/LogEdit';
 import CreateMeasurement, { CreateMeasurementNavigationProps } from '../screens/CreateMeasurement';
 import MeasurementsList, { MeasurementsListNavigationProps } from '../components/molecules/measurements_list/MeasurementsList';
 import AddLabel from '../screens/AddLabel';
-import UpdateUserName from '../screens/UpdateUserName';
-import UpdateUserEmail from '../screens/UpdateUserEmail';
-import UpdateUserPassword from '../screens/UpdateUserPassword';
-import UpdateUserPreExistingConditions from '../screens/UpdateUserPreExistingConditions';
+import UpdateUserName from '../screens/profile/UpdateUserName';
+import UpdateUserEmail from '../screens/profile/UpdateUserEmail';
+import UpdateUserPassword from '../screens/profile/UpdateUserPassword';
+import UpdateUserPreExistingConditions from '../screens/profile/UpdateUserPreExistingConditions';
 
 export type AppStackParamList = {
     AddLabel: undefined;
@@ -80,10 +80,10 @@ const AppStack = () => {
 
                 { /* PROFILE SCREENS */}
                 <Stack.Group>
-                    <Stack.Screen name="UpdateUserName" component={UpdateUserName} options={{title:"Name"}}/>
-                    <Stack.Screen name="UpdateUserEmail" component={UpdateUserEmail} options={{title:"Email"}}/>
-                    <Stack.Screen name="UpdateUserPassword" component={UpdateUserPassword} options={{title:"Password"}}/>
-                    <Stack.Screen name="UpdateUserPreExistingConditions" component={UpdateUserPreExistingConditions} options={{title:"Pre-existing Conditions"}}/>
+                    <Stack.Screen name="UpdateUserName" component={UpdateUserName} options={{ title: "Name" }} />
+                    <Stack.Screen name="UpdateUserEmail" component={UpdateUserEmail} options={{ title: "Email" }} />
+                    <Stack.Screen name="UpdateUserPassword" component={UpdateUserPassword} options={{ title: "Password" }} />
+                    <Stack.Screen name="UpdateUserPreExistingConditions" component={UpdateUserPreExistingConditions} options={{ title: "Pre-existing Conditions" }} />
                 </Stack.Group>
             </Stack.Group>
             <Stack.Group screenOptions={{ presentation: 'modal' }}>
