@@ -15,11 +15,13 @@ import notifee, { EventType } from '@notifee/react-native';
 
 // const LOCAL_SYSTEM_IP_ADDR = '192.168.1.112'; // Habib 
 const LOCAL_SYSTEM_IP_ADDR = '10.13.139.108' // Lauren
+// const LOCAL_SYSTEM_IP_ADDR = '169.226.38.113' // Lauren
 // const LOCAL_SYSTEM_IP_ADDR = '169.226.216.137'; // Emma
-// const LOCAL_SYSTEM_IP_ADDR = '192.168.1.160'; // Tony
+const LOCAL_SYSTEM_IP_ADDR = '192.168.1.160'; // Tony
 
 // const LOCAL_SYSTEM_IP_ADDR = '169.226.38.113' // Lauren
-const HOST = Platform.OS === 'ios' ? 'localhost' : LOCAL_SYSTEM_IP_ADDR;
+
+const HOST = LOCAL_SYSTEM_IP_ADDR;
 
 console.log(`http://${HOST}:8989/graphql`);
 
