@@ -67,8 +67,7 @@ export default function RegisterScreen({ navigation }: RegiserScreenProps) {
         }
 
         setPassword1({ ...password1, error: '' });
-        setPassword2({ ...password2, error: 'passwordError' });
-
+        setPassword2({ ...password2, error: '' });
 
         createUser();
     };
