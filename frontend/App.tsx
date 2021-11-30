@@ -9,16 +9,22 @@
  */
 
 import React from 'react';
+import { Platform } from 'react-native';
 import { Loading } from './src/components/atoms/login/Loading';
 import { useAuth } from './src/contexts/Auth';
 import AppStack from './src/navigation/AppStack';
 import AuthStack from './src/navigation/AuthStack';
 import Toast, { BaseToast, BaseToastProps } from 'react-native-toast-message';
 import { theme } from './src/core/theme';
+import { initAppleHealthKit } from './src/helpers/health-services/apple/HealthKitSetup';
 
 const App = () => {
 
   const { authData, loading } = useAuth();
+
+  if (Platform.OS === 'ios') {
+    initAppleHealthKit();
+  }
 
   const toastConfig = {
     success: (props: BaseToastProps) => (
