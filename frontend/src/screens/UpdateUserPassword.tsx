@@ -11,7 +11,7 @@ import Button from "../components/atoms/login/Button";
 import { useMutation } from "@apollo/client";
 import User from "../graphql/types/User";
 import UPDATE_USER_PASSWORD from "../graphql/mutations/UpdateUserPassword";
-import { doublePasswordValidator, singlePasswordValidator } from "../helpers/passwordValidator";
+import { passwordValidator } from "../helpers/passwordValidator";
 import Toast from "react-native-toast-message";
 
 type UpdateUserPasswordProps = NativeStackScreenProps<AppStackParamList, 'UpdateUserPassword'>;
@@ -50,17 +50,22 @@ const UpdateUserPassword = ({ route, navigation }: UpdateUserPasswordProps) => {
 
 
     const handleUpdatePassword = () => {
-        const currentPasswordError = singlePasswordValidator(currentPassword.value);
-        const newPasswordError = doublePasswordValidator(newPassword.value, confirmNewPassword.value);
-        
-        if(currentPasswordError){
+        const currentPasswordError = passwordValidator(currentPassword.value);
+        const newPasswordError = passwordValidator(newPassword.value);
+        const confirmNewPasswordError = passwordValidator(confirmNewPassword.value);
+
+        if (currentPasswordError) {
             setCurrentPassword({ ...currentPassword, error: currentPasswordError });
             return;
         }
-        
-        if (newPasswordError) {
+
+        if (newPasswordError || confirmNewPasswordError) {
             setNewPassword({ ...newPassword, error: newPasswordError });
-            setConfirmNewPassword({ ...confirmNewPassword, error: newPasswordError });
+            setConfirmNewPassword({ ...confirmNewPassword, error: confirmNewPasswordError });
+            return;
+        } else if (newPassword.value != confirmNewPassword.value) {
+            setNewPassword({ ...newPassword, error: 'Paswords do not match!' });
+            setConfirmNewPassword({ ...confirmNewPassword, error: 'Paswords do not match!' });
             return;
         }
 

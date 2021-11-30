@@ -11,7 +11,7 @@ import TextInput from '../components/atoms/login/TextInput';
 import BackButton from '../components/atoms/login/BackButton';
 import { theme } from '../core/theme';
 import { emailValidator } from '../helpers/emailValidator';
-import { singlePasswordValidator } from '../helpers/passwordValidator';
+import { passwordValidator } from '../helpers/passwordValidator';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthStackParamList } from '../navigation/AuthStack';
 import { useAuth } from '../contexts/Auth';
@@ -48,7 +48,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
 
     const onLoginPressed = async () => {
         const emailError = emailValidator(email.value);
-        const passwordError = singlePasswordValidator(password.value);
+        const passwordError = passwordValidator(password.value);
         if (emailError || passwordError) {
             setEmail({ ...email, error: emailError });
             setPassword({ ...password, error: passwordError });

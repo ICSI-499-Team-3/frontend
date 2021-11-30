@@ -9,7 +9,7 @@ import TextInput from '../components/atoms/login/TextInput';
 import BackButton from '../components/atoms/login/BackButton';
 import { theme } from '../core/theme';
 import { emailValidator } from '../helpers/emailValidator';
-import { doublePasswordValidator } from '../helpers/passwordValidator';
+import { passwordValidator } from '../helpers/passwordValidator';
 import { nameValidator } from '../helpers/nameValidator';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthStackParamList } from '../navigation/AuthStack';
@@ -57,12 +57,27 @@ export default function RegisterScreen({ navigation }: RegiserScreenProps) {
     const onSignUpPressed = () => {
         const nameError = nameValidator(name.value);
         const emailError = emailValidator(email.value);
-        const passwordError = doublePasswordValidator(password1.value, password2.value);
-        if (emailError || passwordError || nameError) {
+        const password1Error = passwordValidator(password1.value);
+        const password2Error = passwordValidator(password2.value);
+
+        if (emailError) {
             setName({ ...name, error: nameError });
+            return;
+        }
+        
+        if (nameError) {
             setEmail({ ...email, error: emailError });
-            setPassword1({ ...password1, error: passwordError });
-            setPassword2({ ...password2, error: passwordError });
+            return
+        }
+
+        if (password1Error || password2Error) {
+            setPassword1({ ...password1, error: password1Error });
+            setPassword2({ ...password2, error: password2Error });
+            return;
+        }
+        else if (password1.value != password2.value) {
+            setPassword1({ ...password1, error: 'Paswords do not match!' });
+            setPassword2({ ...password2, error: 'Paswords do not match!' });
             return;
         }
 
