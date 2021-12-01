@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { useAuth } from '../contexts/Auth';
 import { useNavigation } from '@react-navigation/core';
@@ -20,6 +20,7 @@ const SharedView = () => {
         variables: {
             id: authData!.id,
         },
+        fetchPolicy: 'cache-and-network',
     });
 
     if (loading) {
