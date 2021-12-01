@@ -61,7 +61,7 @@ const ProfileScreen = () => {
                 </ListItem>
                 <ListItem containerStyle={styles.listItemContainer} onPress={() => navigation.navigate("NotificationSettings")}>
                     <ListItem.Content>
-                        <ListItem.Title style={styles.listItemTitle}>Notification Settings</ListItem.Title>
+                        <ListItem.Title style={styles.listItemTitle}>Notifications</ListItem.Title>
                     </ListItem.Content>
                     <ListItem.Chevron />
                 </ListItem>
