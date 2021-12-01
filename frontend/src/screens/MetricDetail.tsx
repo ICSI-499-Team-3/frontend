@@ -38,6 +38,15 @@ const MetricDetail = ({ route, navigation }: MetricDetailProps) => {
         },
     });
 
+    const sharePressHandler = () => {
+        console.log('tehe that tickles');
+        if (data) {
+            navigation.navigate('ShareScreen', {
+                sharedData: data.GetMetricById,
+            });
+        }
+    };
+
     const deletePressHander = () => {
         Alert.alert(
             'Alert', 
@@ -64,13 +73,13 @@ const MetricDetail = ({ route, navigation }: MetricDetailProps) => {
         navigation.setOptions({
             headerRight: () => (
                 <MetricDetailOptions 
-                    sharePressHandler={() => {}}
+                    sharePressHandler={sharePressHandler}
                     deletePressHander={deletePressHander}
                     editPressHandler={editPressHandler}
                 />
             ),
         });
-    }, [navigation]);
+    }, [navigation, data]);
 
     if (loading) {
         return (
@@ -202,7 +211,7 @@ const MetricDetailOptions = ({ sharePressHandler, deletePressHander, editPressHa
             <IconButton 
                 icon="export-variant"
                 size={20}
-                onPress={() => console.log('clicked')}
+                onPress={sharePressHandler}
             />
             <IconButton 
                 icon="delete-outline"

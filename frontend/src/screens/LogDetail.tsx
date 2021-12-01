@@ -54,7 +54,7 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
             onPress: () => {
                 navigation.navigate('ShareScreen', {
                     sharedData: route.params,
-                })
+                });
                 console.log('pressed!');
             },
         },
