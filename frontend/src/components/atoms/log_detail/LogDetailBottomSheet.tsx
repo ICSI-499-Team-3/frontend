@@ -1,46 +1,16 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { AppStackParamList } from '../../../navigation/AppStack';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/core';
 
-type LogCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'LogShare'>;
+export type LogDetailBottomSheetProps = {
+    options: {
+        name: string;
+        onPress: () => void;
+    }[];
+};
 
-const LogDetailBottomSheet = () => {
+const LogDetailBottomSheet = ({ options }: LogDetailBottomSheetProps) => {
 
-const navigation = useNavigation<LogCardNavigationProp>();
-
-const options = [
-    {
-        name: "Delete",
-        onPress: () => {
-          navigation.navigate('LogDelete')
-          console.log('pressed!');
-        },
-    },
-    {
-        name: "Share", 
-        onPress: () => {
-            navigation.navigate('LogShare')
-            console.log('pressed!');
-        },
-    },
-    {
-        name: "Label",
-        onPress: () => {
-            navigation.navigate('AddLabel')
-            console.log('pressed!');
-        },
-    },
-    {
-        name: "Edit",
-        onPress: () => {
-            navigation.navigate('LogEdit')
-            console.log('pressed!');
-        },
-    },
-];
     return (
         <View>
             {options.map(option => (

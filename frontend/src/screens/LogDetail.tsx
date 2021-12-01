@@ -41,6 +41,39 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
         });
     }, [navigation]);
 
+    const bottomSheetOptions = [
+        {
+            name: "Delete",
+            onPress: () => {
+              navigation.navigate('LogDelete')
+              console.log('pressed!');
+            },
+        },
+        {
+            name: "Share", 
+            onPress: () => {
+                navigation.navigate('ShareScreen', {
+                    sharedData: route.params,
+                })
+                console.log('pressed!');
+            },
+        },
+        {
+            name: "Label",
+            onPress: () => {
+                navigation.navigate('AddLabel')
+                console.log('pressed!');
+            },
+        },
+        {
+            name: "Edit",
+            onPress: () => {
+                navigation.navigate('LogEdit')
+                console.log('pressed!');
+            },
+        },
+    ];
+
     return (
         <BottomSheetModalProvider>
             <ScrollView style={styles.container}>
@@ -70,7 +103,7 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
                 snapPoints={snapPoints}
                 onChange={handleSheetChanges}
             >
-                <LogDetailBottomSheet />
+                <LogDetailBottomSheet options={bottomSheetOptions} />
             </BottomSheetModal>
         </BottomSheetModalProvider>
     );
@@ -79,7 +112,6 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
 const styles = StyleSheet.create({
     container: {
         padding: 10,
-        backgroundColor: 'white',
     },
     title: {
         fontSize: 24,
