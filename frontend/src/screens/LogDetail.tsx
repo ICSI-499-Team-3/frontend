@@ -7,13 +7,15 @@ import { IconButton, Colors } from 'react-native-paper';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import LogDetailBottomSheet from '../components/atoms/log_detail/LogDetailBottomSheet';
 import CardIcons from '../components/atoms/card_icons/CardIcons';
-
+import { useAuth } from '../contexts/Auth';
 
 type LogDetailProps = NativeStackScreenProps<AppStackParamList, 'LogDetail'>;
 
 const LogDetail = ({ route, navigation }: LogDetailProps) => {
 
-    const { id, dateTimeOfActivity, notes, categories, mood} = route.params;
+    const { id, userId, dateTimeOfActivity, notes, categories, mood} = route.params;
+
+    const { authData } = useAuth();
 
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
@@ -31,14 +33,19 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
     }, []);
 
     useLayoutEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                <IconButton 
-                    icon="dots-vertical"
-                    size={20}
-                    onPress={handlePresentModalPress} hasTVPreferredFocus={undefined} tvParallaxProperties={undefined}                />
-            ),
-        });
+        if (userId === authData?.id) {
+            navigation.setOptions({
+                headerRight: () => (
+                    <IconButton 
+                        icon="dots-vertical"
+                        size={20}
+                        onPress={handlePresentModalPress} 
+                        hasTVPreferredFocus={undefined} 
+                        tvParallaxProperties={undefined}
+                    />
+                ),
+            });
+        }
     }, [navigation]);
 
     const bottomSheetOptions = [

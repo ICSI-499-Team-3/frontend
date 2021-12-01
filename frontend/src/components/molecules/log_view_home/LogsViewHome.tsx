@@ -5,6 +5,7 @@ import { FAB } from 'react-native-paper';
 import { AppStackParamList } from '../../../navigation/AppStack';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/core';
+import { useAuth } from '../../../contexts/Auth';
 
 type LogCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'LogsViewHome'>;
 
@@ -16,14 +17,17 @@ const LogsViewHome = ({ userId }: LogsViewHomeProps) => {
 
     const navigation = useNavigation<LogCardNavigationProp>();
 
+    const { authData } = useAuth();
+
     return (
         <View>
             <LogsList userId={userId} />
+            {authData?.id === userId && 
             <FAB
                 style={styles.fab}
                 icon="plus"
                 onPress={() => navigation.navigate('CreateLog')}
-            />
+            />}
         </View>
     );
 };

@@ -72,6 +72,7 @@ const LogsList = ({ userId }: LogsListProps) => {
                 <TouchableOpacity onLongPress={() => pressHandler()}>
                     <LogCard 
                         id={item.id}
+                        userId={item.userId}
                         dateTimeOfActivity={item.dateTimeOfActivity}
                         notes={item.notes}
                         categories={item.categories}
