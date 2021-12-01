@@ -5,6 +5,7 @@ import LogsView from './LogsView';
 import RecommendationsView from './RecommendationsView'; //emma
 import MetricView from './MetricView';
 import ProfileScreen from './profile/ProfileScreen';
+import SharedView from './SharedView';
 
 const TabView = () => {
 
@@ -13,6 +14,8 @@ const TabView = () => {
     const LogsRoute = () => <LogsView />;
 
     const MeasurementsRoute = () => <MetricView />;
+
+    const SharedRoute = () => <SharedView />;
   
     //emma
     const RecommendationsRoute = () => <RecommendationsView />;
@@ -38,6 +41,15 @@ const TabView = () => {
                 options={{
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons name="chart-line-variant" color={color} size={26} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="Shared"
+                component={SharedRoute}
+                options={{
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="account-group" color={color} size={26} />
                     ),
                 }}
             />

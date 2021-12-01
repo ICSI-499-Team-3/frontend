@@ -8,13 +8,17 @@ import { useNavigation } from '@react-navigation/core';
 
 type LogCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'LogsViewHome'>;
 
-const LogsViewHome = () => {
+type LogsViewHomeProps = {
+    userId: string;
+};
+
+const LogsViewHome = ({ userId }: LogsViewHomeProps) => {
 
     const navigation = useNavigation<LogCardNavigationProp>();
 
     return (
         <View>
-            <LogsList />
+            <LogsList userId={userId} />
             <FAB
                 style={styles.fab}
                 icon="plus"

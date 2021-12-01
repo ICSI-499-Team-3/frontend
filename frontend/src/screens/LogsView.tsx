@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import LogsViewHome from '../components/molecules/log_view_home/LogsViewHome';
+import { useAuth } from '../contexts/Auth';
 
 export type LogsViewProps = {
   data: { title: string; content: string; categories: string[] }[];
 };
 
 const LogsView = () => {
+
+  const { authData } = useAuth();
+
   return (
-    <LogsViewHome />
+    <LogsViewHome userId={authData!.id} />
   );
 };
 

@@ -1,20 +1,34 @@
 import React from 'react';
 import { FlatList, SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import LogCard from '../log_card/LogCard';
-import { useQuery } from '@apollo/client';
+import { useQuery, WatchQueryFetchPolicy } from '@apollo/client';
 import LogData from '../../../graphql/types/LogData';
 import GET_LOGS_BY_USER_ID from '../../../graphql/queries/GetLogsByUserId';
-import { useAuth } from '../../../contexts/Auth';
 import { ActivityIndicator } from 'react-native-paper';
+import { useAuth } from '../../../contexts/Auth';
+import GetLogsBySharerAndShareeIdData from '../../../graphql/types/GetLogsBySharerAndShareeIdData';
+import GET_LOGS_BY_SHARER_AND_SHAREE_ID from '../../../graphql/queries/GetLogsBySharerAndShareeId';
+import Log from '../../../graphql/types/Log';
 
-const LogsList = () => {
+type LogsListProps = {
+    userId: string;
+};
+
+const LogsList = ({ userId }: LogsListProps) => {
 
     const { authData } = useAuth();
 
-    const { loading, error, data } = useQuery<LogData>(GET_LOGS_BY_USER_ID, {
-        variables: {
-            userId: authData!.id,
+    const queryOptions = {
+        query: authData?.id === userId ? GET_LOGS_BY_USER_ID : GET_LOGS_BY_SHARER_AND_SHAREE_ID,
+        options: {
+            variables: authData?.id === userId ? { userId: userId } : { sharerId: userId, shareeId: authData?.id },
+            fetchPolicy: authData?.id === userId ? 'cache-first' : 'cache-and-network',
         },
+    };
+
+    const { loading, error, data } = useQuery<LogData | GetLogsBySharerAndShareeIdData>(queryOptions.query, {
+        variables: queryOptions.options.variables, 
+        fetchPolicy: queryOptions.options.fetchPolicy as WatchQueryFetchPolicy,
     });
 
 	if (loading) return (
@@ -29,7 +43,7 @@ const LogsList = () => {
 		</SafeAreaView>
 	);
 
-    if (data?.GetLogsByUserId.length === 0) {
+    if ((data as LogData).GetLogsByUserId && (data as LogData).GetLogsByUserId.length === 0) {
         return (
             <View style={styles.messageContainer}>
                 <Text style={styles.message}>No logs yet! Create one by tapping the floating action button.</Text>
@@ -38,7 +52,13 @@ const LogsList = () => {
     }
     
     // copy log list and reverse
-	const logs = data?.GetLogsByUserId.map(x => x).reverse();
+    let logs: Log[] = [];
+    if ((data as LogData).GetLogsByUserId) {
+        logs = (data as LogData).GetLogsByUserId.map(x => x).reverse();
+    }
+    if ((data as GetLogsBySharerAndShareeIdData).GetLogsBySharerAndShareeId) {
+        logs = (data as GetLogsBySharerAndShareeIdData).GetLogsBySharerAndShareeId.map(x => x).reverse();
+    }
 
     const pressHandler = () => {
         console.log("it do be workin");

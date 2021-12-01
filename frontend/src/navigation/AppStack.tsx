@@ -19,6 +19,7 @@ import UpdateUserEmail from '../screens/profile/UpdateUserEmail';
 import UpdateUserPassword from '../screens/profile/UpdateUserPassword';
 import UpdateUserPreExistingConditions from '../screens/profile/UpdateUserPreExistingConditions';
 import NotificationSettings from '../screens/profile/NotificationSettings';
+import SharedLogsView, { SharedLogsViewProps } from '../screens/SharedLogsView';
 
 export type AppStackParamList = {
     AddLabel: undefined;
@@ -48,6 +49,8 @@ export type AppStackParamList = {
     UpdateUserPreExistingConditions: undefined;
     ProfileScreen: undefined;
     NotificationSettings: undefined;
+    SharedView: undefined;
+    SharedLogsView: SharedLogsViewProps;
 };
 
 const AppStack = () => {
@@ -75,7 +78,10 @@ const AppStack = () => {
                 <Stack.Screen name="MetricDetail" component={MetricDetail} />
                 <Stack.Screen name="MeasurementsList" component={MeasurementsList} />
 
-                { /* RECOMMENDATIONS SCREENS */}
+                {/* SHARED SCREENS */}
+                <Stack.Screen name="SharedLogsView" component={SharedLogsView} />
+
+                { /* RECOMMENDATIONS SCREENS */ }
                 <Stack.Screen name="RecommendationsView" component={LogDetail} />
                 <Stack.Screen name="RecDetail" component={RecDetail} />
 
