@@ -11,6 +11,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { AuthProvider } from './src/contexts/Auth';
+import notifee, { EventType } from '@notifee/react-native';
 
 const LOCAL_SYSTEM_IP_ADDR = '192.168.1.112'; // Habib 
 //  const LOCAL_SYSTEM_IP_ADDR = '169.226.38.113' // Lauren
@@ -27,8 +28,11 @@ const client = new ApolloClient({
     cache: new InMemoryCache(),
 });
 
-export default function Main() {
+notifee.onBackgroundEvent(async ({ type, detail }) => {
+    // We can use this listener to perform specific actions based on what notification was pressed
+});
 
+export default function Main() {
     return (
         <ApolloProvider client={client}>
             <GestureHandlerRootView style={{ flex: 1 }}>

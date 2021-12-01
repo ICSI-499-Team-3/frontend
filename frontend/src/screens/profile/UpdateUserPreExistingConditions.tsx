@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
-import { useAuth } from "../contexts/Auth";
-import { theme } from "../core/theme";
+import { useAuth } from "../../contexts/Auth";
+import { theme } from "../../core/theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { AppStackParamList } from "../navigation/AppStack";
-import TextInput from "../components/atoms/login/TextInput";
-import Button from "../components/atoms/login/Button";
+import { AppStackParamList } from "../../navigation/AppStack";
+import TextInput from "../../components/atoms/login/TextInput";
+import Button from "../../components/atoms/login/Button";
 import { useMutation } from "@apollo/client";
-import User from "../graphql/types/User";
+import User from "../../graphql/types/User";
 import Toast from "react-native-toast-message";
-import UPDATE_USER_PRE_EXISTING_CONDITIONS from "../graphql/mutations/UpdateUserPreExistingConditions";
+import UPDATE_USER_PRE_EXISTING_CONDITIONS from "../../graphql/mutations/UpdateUserPreExistingConditions";
 
 type UpdateUserConditionsProps = NativeStackScreenProps<AppStackParamList, 'UpdateUserPreExistingConditions'>;
 

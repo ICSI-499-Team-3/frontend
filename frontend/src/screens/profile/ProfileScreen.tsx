@@ -2,11 +2,11 @@ import React from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
-import { useAuth } from "../contexts/Auth";
-import { theme } from "../core/theme";
+import { useAuth } from "../../contexts/Auth";
+import { theme } from "../../core/theme";
 import { ListItem } from "react-native-elements";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { AppStackParamList } from "../navigation/AppStack";
+import { AppStackParamList } from "../../navigation/AppStack";
 import { useNavigation } from "@react-navigation/native";
 
 type ProfileScreenProps = NativeStackNavigationProp<AppStackParamList, 'ProfileScreen'>;
@@ -56,6 +56,12 @@ const ProfileScreen = () => {
                 <ListItem containerStyle={styles.listItemContainer} onPress={() => navigation.navigate("UpdateUserPreExistingConditions")}>
                     <ListItem.Content>
                         <ListItem.Title style={styles.listItemTitle}>Pre-existing conditions</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Chevron />
+                </ListItem>
+                <ListItem containerStyle={styles.listItemContainer} onPress={() => navigation.navigate("NotificationSettings")}>
+                    <ListItem.Content>
+                        <ListItem.Title style={styles.listItemTitle}>Notification Settings</ListItem.Title>
                     </ListItem.Content>
                     <ListItem.Chevron />
                 </ListItem>

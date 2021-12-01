@@ -14,10 +14,11 @@ import LogEdit from '../screens/LogEdit';
 import CreateMeasurement, { CreateMeasurementNavigationProps } from '../screens/CreateMeasurement';
 import MeasurementsList, { MeasurementsListNavigationProps } from '../components/molecules/measurements_list/MeasurementsList';
 import AddLabel from '../screens/AddLabel';
-import UpdateUserName from '../screens/UpdateUserName';
-import UpdateUserEmail from '../screens/UpdateUserEmail';
-import UpdateUserPassword from '../screens/UpdateUserPassword';
-import UpdateUserPreExistingConditions from '../screens/UpdateUserPreExistingConditions';
+import UpdateUserName from '../screens/profile/UpdateUserName';
+import UpdateUserEmail from '../screens/profile/UpdateUserEmail';
+import UpdateUserPassword from '../screens/profile/UpdateUserPassword';
+import UpdateUserPreExistingConditions from '../screens/profile/UpdateUserPreExistingConditions';
+import NotificationSettings from '../screens/profile/NotificationSettings';
 
 export type AppStackParamList = {
     AddLabel: undefined;
@@ -46,6 +47,7 @@ export type AppStackParamList = {
     UpdateUserPassword: undefined;
     UpdateUserPreExistingConditions: undefined;
     ProfileScreen: undefined;
+    NotificationSettings: undefined;
 };
 
 const AppStack = () => {
@@ -80,10 +82,11 @@ const AppStack = () => {
 
                 { /* PROFILE SCREENS */}
                 <Stack.Group>
-                    <Stack.Screen name="UpdateUserName" component={UpdateUserName} options={{title:"Name"}}/>
-                    <Stack.Screen name="UpdateUserEmail" component={UpdateUserEmail} options={{title:"Email"}}/>
-                    <Stack.Screen name="UpdateUserPassword" component={UpdateUserPassword} options={{title:"Password"}}/>
-                    <Stack.Screen name="UpdateUserPreExistingConditions" component={UpdateUserPreExistingConditions} options={{title:"Pre-existing Conditions"}}/>
+                    <Stack.Screen name="UpdateUserName" component={UpdateUserName} options={{ title: "Name" }} />
+                    <Stack.Screen name="UpdateUserEmail" component={UpdateUserEmail} options={{ title: "Email" }} />
+                    <Stack.Screen name="UpdateUserPassword" component={UpdateUserPassword} options={{ title: "Password" }} />
+                    <Stack.Screen name="UpdateUserPreExistingConditions" component={UpdateUserPreExistingConditions} options={{ title: "Pre-existing Conditions" }} />
+                    <Stack.Screen name="NotificationSettings" component={NotificationSettings} options={{ title: "Notifications" }} />
                 </Stack.Group>
             </Stack.Group>
             <Stack.Group screenOptions={{ presentation: 'modal' }}>
