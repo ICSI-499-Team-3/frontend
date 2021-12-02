@@ -42,22 +42,20 @@ const SharedView = () => {
                 ? (<Text>No shared data yet!</Text>)
                 : (
                     data?.GetSharersByShareeId.map(sharer => (
-                        <View>
-                            <View style={styles.sharerContainer}>
-                                <Text style={styles.title}>{sharer.name}</Text>
-                                <Button
-                                    title="Logs"
-                                    onPress={() => navigation.navigate("SharedLogsView", {
-                                        userId: sharer.id,
-                                    })}
-                                />
-                                <Button
-                                    title="Metrics"
-                                    onPress={() => navigation.navigate("SharedMetricView", {
-                                        userId: sharer.id,
-                                    })}
-                                />
-                            </View>
+                        <View key={sharer.id} style={styles.sharerContainer}>
+                            <Text style={styles.title}>{sharer.name}</Text>
+                            <Button
+                                title="Logs"
+                                onPress={() => navigation.navigate("SharedLogsView", {
+                                    userId: sharer.id,
+                                })}
+                            />
+                            <Button
+                                title="Metrics"
+                                onPress={() => navigation.navigate("SharedMetricView", {
+                                    userId: sharer.id,
+                                })}
+                            />
                         </View>
                     ))
                 )
