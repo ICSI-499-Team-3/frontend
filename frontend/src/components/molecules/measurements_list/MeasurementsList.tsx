@@ -12,9 +12,11 @@ import { useNavigation } from '@react-navigation/core';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import DELETE_MEASUREMENT from '../../../graphql/mutations/DeleteMeasurement';
 import DeleteMeasurementData from '../../../graphql/types/DeleteMeasurementData';
+import { useAuth } from '../../../contexts/Auth';
 
 export type MeasurementsListNavigationProps = {
     metricId: string;
+    userId: string;
 };
 
 type MeasurementsListProps = NativeStackScreenProps<AppStackParamList, 'MeasurementsList'>;
@@ -28,6 +30,12 @@ const MeasurementsList = ({ route, navigation }: MeasurementsListProps) => {
     const [mode, setMode] = useState(MeasurementsListMode.Regular);
 
     const onSelect = (measurement: Measurement) => {
+
+        /* only perform logic if the user id of the metric is the same
+        as the currently logged in user */
+        if (authData?.id !== userId) {
+            return;
+        }
         if (selectedListItems.has(measurement.id)) {
             selectedListItems.delete(measurement.id);
         } else {
@@ -45,7 +53,9 @@ const MeasurementsList = ({ route, navigation }: MeasurementsListProps) => {
         }
     };
 
-    const { metricId } = route.params;
+    const { metricId, userId } = route.params;
+
+    const { authData } = useAuth();
 
     const handleDelete = () => {
         // console.log(`${[...selectedListItems]}`);
@@ -123,21 +133,27 @@ const MeasurementsList = ({ route, navigation }: MeasurementsListProps) => {
                         <MeasurementsListItem 
                             measurement={item}
                             metricId={metricId}
+                            userId={userId}
                             title={title}
                             onLongPress={onSelect}
                             mode={mode}
                         />
                     )}
                 />
-                <FAB
-                    style={styles.fab}
-                    icon="plus"
-                    onPress={() => navigation.navigate('CreateMeasurement', {
-                        metricId: metricId,
-                        title: title, 
-                        mode: CreateMeasurementMode.Create,
-                    })}
-                />
+                {
+                    /* only show fab if the user if of the metric is the 
+                    same as the currently logged in user */
+                    authData?.id === userId && 
+                    <FAB
+                        style={styles.fab}
+                        icon="plus"
+                        onPress={() => navigation.navigate('CreateMeasurement', {
+                            metricId: metricId,
+                            title: title, 
+                            mode: CreateMeasurementMode.Create,
+                        })}
+                    />
+                }
             </View>
         );
     }
@@ -150,6 +166,7 @@ enum MeasurementsListMode {
 type MeasurementsListItemProps = {
     measurement: Measurement;
     metricId: string;
+    userId: string;
     title: string;
     onLongPress: Function;
     mode: MeasurementsListMode;
@@ -157,9 +174,11 @@ type MeasurementsListItemProps = {
 
 type MeasurementsListItemNavigationProp = NativeStackNavigationProp<AppStackParamList, 'MeasurementsListItem'>;
 
-const MeasurementsListItem = ({ measurement, metricId, title, onLongPress, mode }: MeasurementsListItemProps) => {
+const MeasurementsListItem = ({ measurement, metricId, userId, title, onLongPress, mode }: MeasurementsListItemProps) => {
 
     const navigation = useNavigation<MeasurementsListItemNavigationProp>();
+
+    const { authData } = useAuth();
 
     const [selected, setSelected] = useState(false);
 
@@ -182,19 +201,27 @@ const MeasurementsListItem = ({ measurement, metricId, title, onLongPress, mode 
     };
 
     const handleSelect = () => {
+        /* only perform logic if the user id of the metric is the same
+        as the currently logged in user */
+        if (authData?.id !== userId) {
+            return;
+        }
         setSelected(!selected);
         onLongPress(measurement);
     };
 
+    const handleOnPress = () => {
+        mode === MeasurementsListMode.Delete 
+        ? handleSelect()
+        : navigate();
+    };
+
     return (
         <TouchableOpacity
+            disabled={authData?.id !== userId}
             style={selected ? styles.selectedListItem : {}}
             onLongPress={handleSelect}
-            onPress={() => {
-                mode === MeasurementsListMode.Delete 
-                ? handleSelect()
-                : navigate();
-            }}
+            onPress={handleOnPress}
         >
             <View style={styles.measurementItem}>
                 <Text>{formattedDate}</Text>

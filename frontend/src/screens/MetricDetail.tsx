@@ -10,16 +10,18 @@ import GetMetricByIdData from '../graphql/types/GetMetricByIdData';
 import DELETE_METRIC from '../graphql/mutations/DeleteMetric';
 import DeletMetricData from '../graphql/types/DeleteMetricData';
 import GET_METRICS_BY_USER_ID from '../graphql/queries/GetMetricsByUserId';
+import { useAuth } from '../contexts/Auth';
 
 type MetricDetailProps = NativeStackScreenProps<AppStackParamList, 'MetricDetail'>;
 
 export type MetricDetailNavigationProps = {
     metricId: string;
+    userId: string;
 };
 
 const MetricDetail = ({ route, navigation }: MetricDetailProps) => {
 
-    const { metricId } = route.params;
+    const { metricId, userId } = route.params;
 
     const [deleteMetric] = useMutation<DeletMetricData, { metricId: string; }>(DELETE_METRIC, {
         variables: {
@@ -76,10 +78,12 @@ const MetricDetail = ({ route, navigation }: MetricDetailProps) => {
                     sharePressHandler={sharePressHandler}
                     deletePressHander={deletePressHander}
                     editPressHandler={editPressHandler}
+                    userId={userId}
                 />
             ),
         });
-    }, [navigation, data]);
+    }, [navigation, data]); 
+    // ^^^ need to add data as a dependency for share button to work properly
 
     if (loading) {
         return (
@@ -202,22 +206,31 @@ type MetricDetailOptionsProps = {
     sharePressHandler: () => void;
     deletePressHander: () => void;
     editPressHandler: () => void;
+    userId: string;
 };
 
-const MetricDetailOptions = ({ sharePressHandler, deletePressHander, editPressHandler }: MetricDetailOptionsProps) => {
+const MetricDetailOptions = ({ sharePressHandler, deletePressHander, editPressHandler, userId }: MetricDetailOptionsProps) => {
+
+    const { authData } = useAuth();
 
     return (
         <View style={styles.optionsContainer}>
-            <IconButton 
-                icon="export-variant"
-                size={20}
-                onPress={sharePressHandler}
-            />
-            <IconButton 
-                icon="delete-outline"
-                size={20}
-                onPress={deletePressHander}
-            />
+            {
+                authData?.id === userId && 
+                <IconButton 
+                    icon="export-variant"
+                    size={20}
+                    onPress={sharePressHandler}
+                />
+            }
+            {
+                authData?.id === userId && 
+                <IconButton 
+                    icon="delete-outline"
+                    size={20}
+                    onPress={deletePressHander}
+                />
+            }
             <IconButton 
                 icon="pencil-outline"
                 size={20}

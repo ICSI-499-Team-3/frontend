@@ -53,6 +53,9 @@ const SharedView = () => {
                                 />
                                 <Button
                                     title="Metrics"
+                                    onPress={() => navigation.navigate("SharedMetricView", {
+                                        userId: sharer.id,
+                                    })}
                                 />
                             </View>
                         </View>
