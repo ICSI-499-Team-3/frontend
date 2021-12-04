@@ -89,15 +89,15 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
                 <View style={styles.categoriesContainer}>
                     {categories?.map(category => (
                         <Text 
-                        style={styles.MoodText}
-                        key={category}>Activity: {category}     </Text>
+                        style={styles.ActivityText}
+                        key={category}>Activity: {category} </Text>
                     ))}
                 </View>
                 <View style={styles.mood}>
                     {mood?.map(category => (
                         <Text 
                         style={styles.MoodText}
-                        key={category}>Mood: {category}     </Text>
+                        key={category}>Mood: {category} </Text>
                     ))}
                 </View>
                 <Text style={styles.NotesText}>Notes: </Text>
@@ -154,10 +154,12 @@ const styles = StyleSheet.create({
         fontSize: 15,
         paddingTop: 15,
         fontWeight: 'bold',
+        flex: 1,
     },
     ActivityText:{
         fontSize: 15,
         fontWeight: 'bold',
+        flex: 1,
     },
 
 });
