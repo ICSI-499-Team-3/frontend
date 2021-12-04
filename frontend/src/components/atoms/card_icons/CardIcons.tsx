@@ -10,6 +10,7 @@ type CardIconsProps = {
 
     const activitiesToIcons = new Map()
     activitiesToIcons.set('running', 'run') 
+    activitiesToIcons.set('yoga', 'yoga') 
     activitiesToIcons.set('eating', 'food') 
     activitiesToIcons.set('going out', 'party-popper') 
     activitiesToIcons.set('spending time with friends', 'human-male-female')
