@@ -17,9 +17,9 @@ type CreateLogProps = NativeStackScreenProps<AppStackParamList, 'CreateLog'>;
 
 const CreateLog = ({ route, navigation }: CreateLogProps) => {
 
-    const categories = ['running', 'yoga', 'going out', 'physical therapy', 'therapy', 'eating', 'spending time with friends'];
+    const categories = ['Running', 'Yoga', 'Going out', 'Physical therapy', 'Therapy', 'Eating', 'Spending time with friends'];
 
-    const moods = ['happy', 'sad', 'angry', 'stressed', 'anxious', 'goofy', 'spontaneous', 'excited'];
+    const moods = ['Happy', 'Sad', 'Angry', 'Stressed', 'Anxious', 'Goofy', 'Spontaneous', 'Excited'];
 
     const [selectedCategories, setSelectedCategories] = useState(new Set<string>());
 
