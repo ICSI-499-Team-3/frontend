@@ -1,13 +1,14 @@
 import React, { useMemo, useRef, useCallback, useLayoutEffect } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Button } from 'react-native';
 import { AppStackParamList } from '../navigation/AppStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Text } from 'react-native-paper';
+import { Chip, Text } from 'react-native-paper';
 import { IconButton, Colors } from 'react-native-paper';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import LogDetailBottomSheet from '../components/atoms/log_detail/LogDetailBottomSheet';
 import CardIcons from '../components/atoms/card_icons/CardIcons';
 import { useAuth } from '../contexts/Auth';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type LogDetailProps = NativeStackScreenProps<AppStackParamList, 'LogDetail'>;
 
@@ -81,6 +82,15 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
         },
     ];
 
+    const activitiesToIcons = new Map()
+    activitiesToIcons.set('running', 'run') 
+    activitiesToIcons.set('yoga', 'yoga') 
+    activitiesToIcons.set('eating', 'food') 
+    activitiesToIcons.set('going out', 'party-popper') 
+    activitiesToIcons.set('spending time with friends', 'human-male-female')
+    activitiesToIcons.set('physical therapy', 'doctor')
+    activitiesToIcons.set('therapy', 'account-heart')
+
     return (
         <BottomSheetModalProvider>
             <ScrollView style={styles.container}>
@@ -90,7 +100,8 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
                     {categories?.map(category => (
                         <Text 
                         style={styles.ActivityText}
-                        key={category}>Activity: {category}     </Text>
+                        key={category}><Icon key={category} name={activitiesToIcons.get(category)} size={20} />{category} 
+                        </Text>
                     ))}
                 </View>
                 <View style={styles.mood}>
