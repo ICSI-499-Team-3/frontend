@@ -91,16 +91,24 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
     activitiesToIcons.set('physical therapy', 'doctor')
     activitiesToIcons.set('therapy', 'account-heart')
 
+
+    //converting militray time to regular time
+    var hours = date.getHours();
+    var AmOrPm = hours >= 12 ? 'pm' : 'am';
+    hours = (hours % 12) || 12;
+    var finalTime = "Time - " + hours + ":" + (date.getMinutes()<10?'0':'') + date.getMinutes() + " " + AmOrPm; 
+
     return (
         <BottomSheetModalProvider>
             <ScrollView style={styles.container}>
                 <Text style={styles.createdAt}>{date.toDateString()}</Text>
-                <Text>Time - {date.getHours()}:{date.getMinutes()}</Text>
+                <Text style={styles.time}> {finalTime}</Text>
                 <View style={styles.categoriesContainer}>
                     {categories?.map(category => (
                         <Text 
                         style={styles.ActivityText}
-                        key={category}><Icon key={category} name={activitiesToIcons.get(category)} size={20} />{category} 
+                        key={category}>
+                        <Icon key={category} name={activitiesToIcons.get(category)} size={20} />    {category} 
                         </Text>
                     ))}
                 </View>
@@ -136,8 +144,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         paddingBottom: 10,
     },
+    time: {
+        fontSize: 15,
+    },
     createdAt: {
-        fontSize: 24,
+        fontSize: 40,
         fontWeight: 'bold',
         paddingBottom: 5,
     },
@@ -171,6 +182,12 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',
         flex: 1,
+        borderWidth: 3,
+        borderColor: 'black',
+        padding : 2,
+        textAlign: 'center',
+        margin: 4,
+        backgroundColor: '#fff' //white
     },
 
 });
