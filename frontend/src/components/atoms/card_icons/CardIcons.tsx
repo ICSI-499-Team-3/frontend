@@ -19,7 +19,7 @@ type CardIconsProps = {
 
     return (
     <View style={[styles.categoriesContainer]}>
-        {categories.slice(0, 4).map(category => <Icon key={category} name={activitiesToIcons.get(category)} size={20} />)}
+        {categories.slice(0, 3).map(category => <Icon key={category} name={activitiesToIcons.get(category)} size={20} />)}
     </View>
     );
 };
