@@ -45,6 +45,10 @@ const MetricView = () => {
             }
 
             if (results.length === 0) {
+                Toast.show({
+                    type: 'error',
+                    text1: `Currently no ${title} data to sync`,
+                });
                 return;
             }
 
@@ -100,6 +104,12 @@ const MetricView = () => {
 
         if (Platform.OS === 'ios') {
             syncIos();
+        } else {
+            Toast.show({
+                type: 'error',
+                text1: 'Sync Failed',
+                text2: 'Syncing currently unsupported for your device',
+            });
         }
     };
  
