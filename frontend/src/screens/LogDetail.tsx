@@ -91,18 +91,11 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
     activitiesToIcons.set('physical therapy', 'doctor')
     activitiesToIcons.set('therapy', 'account-heart')
 
-
-    //converting militray time to regular time
-    var hours = date.getHours();
-    var AmOrPm = hours >= 12 ? 'pm' : 'am';
-    hours = (hours % 12) || 12;
-    var finalTime = "Time - " + hours + ":" + (date.getMinutes()<10?'0':'') + date.getMinutes() + " " + AmOrPm; 
-
     return (
         <BottomSheetModalProvider>
             <ScrollView style={styles.container}>
                 <Text style={styles.createdAt}>{date.toDateString()}</Text>
-                <Text style={styles.time}> {finalTime}</Text>
+                <Text style={styles.time}>{date.toLocaleTimeString([], { hour12: true, hour: '2-digit', minute: '2-digit' })}</Text>
                 <View style={styles.categoriesContainer}>
                     {categories?.map(category => (
                         <Text 
