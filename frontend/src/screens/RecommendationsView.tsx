@@ -1,47 +1,154 @@
-//Emma
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import RecList from '../components/molecules/Rec_List/RecList';
+import { useQuery } from '@apollo/client';
 import { AppStackParamList } from '../navigation/AppStack';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/core';
+import GET_LOGS_AND_METRICS_BY_USER_ID from '../graphql/queries/GetLogsAndMetricsByUserId';
+import GetLogsAndMetricsByUserIdData from '../graphql/types/GetLogsAndMetricsByUserIdData';
+import { useAuth } from '../contexts/Auth';
 
 type LogCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'RecommendationsView'>;
 
 const RecommendationsView = () => {
 
-    const navigation = useNavigation<LogCardNavigationProp>();
+    const { authData } = useAuth();
+
+    const { loading, error, data } = useQuery<GetLogsAndMetricsByUserIdData, { userId: string; }>(GET_LOGS_AND_METRICS_BY_USER_ID, {
+        variables: {
+            userId: authData?.id ?? '',
+        },
+    });
+
+    if (loading) {
+        return (
+            <View style={styles.messageWrapper}>
+                <Text style={styles.message}>Loading...</Text>
+            </View>
+        )
+    }
+
+    if (error) {
+        return (
+            <View style={styles.messageWrapper}>
+                <Text style={styles.message}>{`${error}`}</Text>
+            </View>
+        );
+    }
+
+    // create frequency list 
+    const buckets: {[key: string]: {[key: string]: number}} = {
+        happy: {}, 
+        sad: {}, 
+        angry: {}, 
+        stressed: {}, 
+        anxious: {}, 
+        goofy: {}, 
+        spontaneous: {}, 
+        excited: {},
+    };
+
+    // process frequency list
+    data?.GetLogsByUserId.map(log => {
+        log.mood?.map(mood => {
+            log.categories?.map(category => {
+                if (mood.toLowerCase() in buckets) {
+                    if (category in buckets[mood.toLowerCase()]) {
+                        buckets[mood.toLowerCase()][category] += 1;
+                    } else {
+                        buckets[mood.toLowerCase()][category] = 1;
+                    }
+                }
+            });
+        });
+    });
+    const bestCategories: {[key: string]: string} = {};
+    Object.keys(buckets).map(mood => {
+        const bestCategory = Object.keys(buckets[mood]).reduce((previousCategory, currentCategory) => buckets[mood][previousCategory] > buckets[mood][currentCategory] ? previousCategory : currentCategory, '');
+        bestCategories[mood] = bestCategory;
+    });
+
+    let shouldRenderInsufficientDataMessage = true;
+    Object.keys(bestCategories).forEach(mood => {
+        const category = bestCategories[mood];
+        if (buckets[mood][category] > 4) {
+            shouldRenderInsufficientDataMessage = false;
+        }
+    });
+
+    // console.log(bestCategories);
+
+    if (data?.GetLogsByUserId.length === 0 || shouldRenderInsufficientDataMessage) {
+        return (
+            <View style={styles.messageWrapper}>
+                <Text style={styles.message}>Not enough data to perform an analysis yet! As you select categories and moods when you log, insights will appear here.</Text>
+            </View>
+        );
+    }
 
     return (
-        <View style={[styles.container]}>
-            <Text style={styles.title}>Recommendations</Text>
-            <RecList />
+        <View style={styles.container}>
+            <View style={styles.headerWrapper}>
+                <Text style={styles.header}>Insights</Text>
+                <Text style={styles.subHeader}>I've noticed that...</Text>
+            </View>
+            <View style={styles.container}>
+                {
+                    Object.entries(bestCategories).map(entry => {
+                        const mood = entry[0];
+                        const category = entry[1].toLowerCase();
+                        if (category === '' || buckets[mood][category] < 5) return;
+                        return (
+                            <View key={`${mood}-${category}`} style={styles.insightWrapper}>
+                                <Text style={[styles.insight]}>You are most </Text>
+                                <Text style={[styles.insight, styles.insightBold]}>{mood}</Text>
+                                <Text style={[styles.insight]}> when you are </Text>
+                                <Text style={[styles.insight, styles.insightBold]}>{category}</Text>
+                            </View>
+                        );
+                    })
+                }
+            </View>
         </View>
     );
 };
 
-
 const styles = StyleSheet.create({
-
-    //***** change this ****
     container: {
-        flex: 1,
-        padding: 24, //keeps it under the time/wifi/battery symbols
-        backgroundColor: "#eaeaea" //white background color of app
-      },
-      title: {
-        marginTop: 16,
-        paddingVertical: 8,
-        borderWidth: 5,
-        borderColor: "#61dafb",
-        borderRadius: 1,
-        backgroundColor: "#20232a", //color of background behind letters
-        color: "#ffffff",  //color of letters
-        textAlign: "center",
+        padding: 10,
+    },
+    headerWrapper: {
+        borderBottomWidth: 1, 
+        borderColor: 'black',
+    },
+    header: {
+        fontSize: 32, 
+        fontWeight: 'bold',
+    },
+    subHeader: {
         fontSize: 20,
-        fontWeight: "bold"
-      }
-
+    },
+    messageWrapper: {
+        display: 'flex',
+        padding: 20,
+        flex: 1,
+        justifyContent: 'center',
+    },
+    message: {
+        fontSize: 20,
+        textAlign: 'center',
+    },
+    insightWrapper: {
+        display: 'flex',
+        flexDirection: 'row',
+        paddingBottom: 10,
+        flexWrap: 'wrap'
+    },
+    insight: {
+        fontSize: 18,
+    },
+    insightBold: {
+        fontWeight: 'bold',
+    },
 });
 
 export default RecommendationsView;
