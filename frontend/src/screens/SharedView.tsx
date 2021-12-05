@@ -35,31 +35,33 @@ const SharedView = () => {
         );
     }
 
+    if (data?.GetSharersByShareeId.length === 0) {
+        return (
+            <View style={styles.messageWrapper}>
+                <Text style={styles.message}>Nothing to see here yet! This screen will populate as other users share their data with you.</Text>
+            </View>
+        )
+    }
+
     return (
         <View style={styles.container}>
-            {
-                data?.GetSharersByShareeId.length === 0
-                ? (<Text>No shared data yet!</Text>)
-                : (
-                    data?.GetSharersByShareeId.map(sharer => (
-                        <View key={sharer.id} style={styles.sharerContainer}>
-                            <Text style={styles.title}>{sharer.name}</Text>
-                            <Button
-                                title="Logs"
-                                onPress={() => navigation.navigate("SharedLogsView", {
-                                    userId: sharer.id,
-                                })}
-                            />
-                            <Button
-                                title="Metrics"
-                                onPress={() => navigation.navigate("SharedMetricView", {
-                                    userId: sharer.id,
-                                })}
-                            />
-                        </View>
-                    ))
-                )
-            }
+            {data?.GetSharersByShareeId.map(sharer => (
+                <View key={sharer.id} style={styles.sharerContainer}>
+                    <Text style={styles.title}>{sharer.name}</Text>
+                    <Button
+                        title="Logs"
+                        onPress={() => navigation.navigate("SharedLogsView", {
+                            userId: sharer.id,
+                        })}
+                    />
+                    <Button
+                        title="Metrics"
+                        onPress={() => navigation.navigate("SharedMetricView", {
+                            userId: sharer.id,
+                        })}
+                    />
+                </View>
+            ))}
         </View>
     );
 };
@@ -83,6 +85,16 @@ const styles = StyleSheet.create({
         borderWidth: 1, 
         borderRadius: 30,
         padding: 10,
+    },
+    messageWrapper: {
+        display: 'flex',
+        padding: 20,
+        flex: 1,
+        justifyContent: 'center',
+    },
+    message: {
+        fontSize: 20,
+        textAlign: 'center',
     },
   });
 
