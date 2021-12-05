@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMutation } from '@apollo/client';
-import { View, StyleSheet } from 'react-native';
+import { Platform, View, StyleSheet } from 'react-native';
 import { ActivityIndicator, FAB } from 'react-native-paper';
 import MetricList from "../components/molecules/metric_list/MetricList";
 import { AppStackParamList } from '../navigation/AppStack';
@@ -33,9 +33,7 @@ const MetricView = () => {
         ]
     });
 
-    const syncMetrics = () => {
-        console.log('syncing...');
-
+    const syncIos = () => {
         const startDate = new Date();
         startDate.setMonth(startDate.getMonth() - 3);
 
@@ -95,6 +93,14 @@ const MetricView = () => {
                 });
             });
         }, startDate);
+    };
+
+    const syncMetrics = () => {
+        console.log('syncing...');
+
+        if (Platform.OS === 'ios') {
+            syncIos();
+        }
     };
  
     return (
