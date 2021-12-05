@@ -9,7 +9,6 @@ import User from '../graphql/types/User';
 
 type AuthContextData = {
     authData?: User;
-    authUData?: UserData; // added for share to users screen
     loading: boolean;
     updateAuthData(userData: User): Promise<void>;
     signOut(): void;
