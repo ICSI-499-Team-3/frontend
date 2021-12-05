@@ -57,6 +57,7 @@ const MetricCard = ({ id, userId, title, xUnits, yUnits, data }: MetricCardProps
                 >
                     <VictoryLine data={processedData} />
                     <VictoryAxis style={{
+                        grid: { strokeWidth: 0 },
                         axis: { stroke: 'transparent' }, 
                         ticks: { stroke: 'transparent' }, 
                         tickLabels: { fill: 'transparent' },
