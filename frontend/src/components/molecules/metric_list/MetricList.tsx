@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { FlatList } from "react-native";
 import MetricCard from "../metric_card/MetricCard";
 import { useAuth } from '../../../contexts/Auth';
@@ -41,15 +41,15 @@ const SharedContentMetricList = ({ sharerId, shareeId }: SharedContentMetricList
     });
 
 	if (loading) return (
-        <SafeAreaView>
-			<Text>{'Loading...'}</Text>
-		</SafeAreaView>
+        <View style={styles.messageWrapper}>
+			<Text style={styles.message}>Loading...</Text>
+		</View>
     );
 
 	if (error) return (
-		<SafeAreaView>
-			<Text>{`${error}\n\n\n\n\n\n\n`}</Text>
-		</SafeAreaView>
+		<View style={styles.messageWrapper}>
+			<Text style={styles.message}>{`${error}`}</Text>
+		</View>
 	);
 
     return (
@@ -70,16 +70,24 @@ const CurrentUserMetricList = ({ userId}: CurrentUserMetricListProps) => {
     });
 
 	if (loading) return (
-        <SafeAreaView>
-			<Text>{'Loading...'}</Text>
-		</SafeAreaView>
+        <View style={styles.messageWrapper}>
+			<Text style={styles.message}>Loading...</Text>
+		</View>
     );
 
 	if (error) return (
-		<SafeAreaView>
-			<Text>{`${error}\n\n\n\n\n\n\n`}</Text>
-		</SafeAreaView>
+		<View style={styles.messageWrapper}>
+			<Text style={styles.message}>{`${error}`}</Text>
+		</View>
 	);
+
+    if (data?.GetMetricsByUserId.length === 0) {
+        return (
+            <View style={styles.messageWrapper}>
+                <Text style={styles.message}>No data yet! Add data by clicking the sync button or creating a new metric!</Text>
+            </View>
+        );
+    }
 
     return (
         <MetricCardList data={data?.GetMetricsByUserId ?? []} />
@@ -113,6 +121,14 @@ const MetricCardList = ({ data }: MetricCardListProps) => {
 const styles = StyleSheet.create({
     container: {
         height: '100%',
+    },
+    messageWrapper: {
+        justifyContent: 'center',
+        height: '100%',
+    },
+    message: {
+        fontSize: 20,
+        textAlign: 'center',
     },
 });
 
