@@ -22,6 +22,7 @@ const NotificationSettings = ({ route, navigation }: NotificationSettingsProps) 
     const [notification, setNotification] = useState<NotificationData>({ on: false, time: new Date() });
     const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
     const NOTIFICATION_ID = 'daily-log-reminder';
+    const NOTIFICATION_CHANNEL = 'log-reminder';
 
     useEffect(() => {
         // Load notification data each time the page is opened
@@ -72,7 +73,7 @@ const NotificationSettings = ({ route, navigation }: NotificationSettingsProps) 
         // It's safe to assume the channel is not created when the app is launched.
         // Rerunning this line simply upadted the channel if it already exists
         await notifee.createChannel({
-            id: 'log-reminder',
+            id: NOTIFICATION_CHANNEL,
             name: 'Log Reminder',
             lights: false,
             vibration: true,
@@ -102,7 +103,7 @@ const NotificationSettings = ({ route, navigation }: NotificationSettingsProps) 
                 title: 'Log Reminder',
                 body: 'Don\'t forget to log your activities today!',
                 android: {
-                    channelId: 'log-reminder',
+                    channelId: NOTIFICATION_CHANNEL,
                     pressAction: {
                         id: 'default',
                     }
