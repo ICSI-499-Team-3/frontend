@@ -17,6 +17,8 @@ import SyncMeasurementInput from '../graphql/types/SyncMeasurementInput';
 import SYNC from '../graphql/mutations/Sync';
 import Toast from 'react-native-toast-message';
 import GET_METRICS_BY_USER_ID from '../graphql/queries/GetMetricsByUserId';
+import readAllGoogleFitData from '../helpers/health-services/google/ReadAllGoogleFitData';
+import { isBloodPressureResponse } from '../helpers/health-services/google/TestGoogleFitTypes';
 
 type MetricViewNavigationProp = NativeStackNavigationProp<AppStackParamList, 'MetricView'>;
 
@@ -30,7 +32,7 @@ const MetricView = () => {
         refetchQueries: [
             GET_METRICS_BY_USER_ID, 
             'GetMetricsByUserId',
-        ]
+        ],
     });
 
     const syncIos = () => {
@@ -99,16 +101,96 @@ const MetricView = () => {
         }, startDate);
     };
 
+    const syncAndroid = async () => {
+        const startDate = new Date();
+        startDate.setMonth(startDate.getMonth() - 1);
+
+        const endDate = new Date();
+
+        try {
+            const results = await readAllGoogleFitData(startDate, endDate);
+            const metrics = results.map(({ samples, title }) => {
+                const measurements: SyncMeasurementInput[] = samples.map(sample => {
+                    const date = new Date(sample.startDate).getTime() / 1000;
+                    if (isBloodPressureResponse(sample)) {
+                        return ({
+                            x: date.toString(), 
+                            y: `${sample.systolic} / ${sample.diastolic}`,
+                            dateTimeMeasured: date,
+                        });
+                    } else {
+                        return ({
+                            x: date.toString(),
+                            y: sample.value.toString(),  
+                            dateTimeMeasured: date,
+                        });
+                    }
+                });
+                const metric: SyncMetricInput = {
+                    userId: authData?.id ?? '',
+                    title: title, 
+                    xUnits: 'Time', 
+                    yUnits: '',
+                    data: measurements,
+                };
+                return metric;
+            });
+
+            const emptyMetrics = metrics.filter(metric => metric.data.length === 0);
+            emptyMetrics.forEach(metric => {
+                metrics.splice(metrics.findIndex(currentValue => metric.title === currentValue.title));
+            });
+
+            if (metrics.length === 0) {
+                Toast.show({
+                    type: 'error', 
+                    text1: 'Sync failed', 
+                    text2: 'Insufficient data in Google Fit to sync with',
+                });
+                return;
+            } 
+            
+            if (metrics.length > 0 && emptyMetrics.length > 0) {
+                Toast.show({
+                    type: 'error', 
+                    text1: 'Unable to sync all data', 
+                    text2: `Unable to sync ${emptyMetrics.map(metric => metric.title).join(',')}`,
+                });
+            }
+            
+            const input: SyncInput = {
+                userId: authData?.id ?? '', 
+                metrics: metrics,
+            };
+
+            sync({
+                variables: {
+                    input: input, 
+                }
+            }).then(() => {
+                Toast.show({
+                    type: 'success', 
+                    text1: 'Finished syncing', 
+                    text2: `Synced ${metrics.map(metric => metric.title).join(',')}`,
+                });
+            });
+        } catch (error) {
+            console.warn(error);
+        }
+    };
+
     const syncMetrics = () => {
         console.log('syncing...');
 
         if (Platform.OS === 'ios') {
             syncIos();
+        } else if (Platform.OS === 'android') {
+            syncAndroid();
         } else {
             Toast.show({
                 type: 'error',
                 text1: 'Sync Failed',
-                text2: 'Syncing currently unsupported for your device',
+                text2: 'Syncing is currently unsupported for your device',
             });
         }
     };
