@@ -21,6 +21,7 @@ type NotificationData = {
 const NotificationSettings = ({ route, navigation }: NotificationSettingsProps) => {
     const [notification, setNotification] = useState<NotificationData>({ on: false, time: new Date() });
     const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
+    const NOTIFICATION_ID = 'daily-log-reminder';
 
     useEffect(() => {
         // Load notification data each time the page is opened
@@ -42,19 +43,23 @@ const NotificationSettings = ({ route, navigation }: NotificationSettingsProps) 
     }
 
     const handleSave = async () => {
-
-        // must request permission on iOS before the app is allowed to send notifications
-        // this should also be fine on Android but only gonna do it if it's iOS
-        if (Platform.OS === 'ios') {
-            await requestUserPermission();
-        }
-
         await AsyncStorage.setItem('@NotificationData', JSON.stringify(notification));
-        
-        createTriggerNotification()
-            .catch(error => {
-                console.warn(error);
-            });
+
+        if (notification.on) {
+            // must request permission on iOS before the app is allowed to send notifications
+            // this should also be fine on Android but only gonna do it if it's iOS
+            if (Platform.OS === 'ios') {
+                await requestUserPermission();
+            }
+
+            createTriggerNotification()
+                .catch(error => {
+                    console.warn(error);
+                });
+        }
+        else {
+            await notifee.cancelNotification(NOTIFICATION_ID);
+        }
 
         Toast.show({
             text1: 'Notification Preferences Saved!',
@@ -77,6 +82,12 @@ const NotificationSettings = ({ route, navigation }: NotificationSettingsProps) 
         const timestamp = notification.time;
         timestamp.setSeconds(0);
 
+        // We can only creae a notification in the future, if the user selects a time in the past,
+        // increment the day by 1 so the notification triggers the next day.
+        if (timestamp.getTime() < Date.now()) {
+            timestamp.setDate(timestamp.getDate() + 1);
+        }
+
         // Create a time-based trigger
         const trigger: TimestampTrigger = {
             type: TriggerType.TIMESTAMP,
@@ -87,6 +98,7 @@ const NotificationSettings = ({ route, navigation }: NotificationSettingsProps) 
         // Create a trigger notification
         await notifee.createTriggerNotification(
             {
+                id: NOTIFICATION_ID,
                 title: 'Log Reminder',
                 body: 'Don\'t forget to log your activities today!',
                 android: {
