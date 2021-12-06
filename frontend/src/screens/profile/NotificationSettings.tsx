@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { Switch, Text } from "react-native-paper";
 import { theme } from "../../core/theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AppStackParamList } from "../../navigation/AppStack";
 import Button from "../../components/atoms/login/Button";
 import Toast from "react-native-toast-message";
-import notifee, { AndroidImportance, RepeatFrequency, TimestampTrigger, TriggerType } from '@notifee/react-native';
+import notifee, { AndroidImportance, IOSAuthorizationStatus, RepeatFrequency, TimestampTrigger, TriggerType } from '@notifee/react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ListItem } from "react-native-elements";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -42,8 +42,19 @@ const NotificationSettings = ({ route, navigation }: NotificationSettingsProps) 
     }
 
     const handleSave = async () => {
+
+        // must request permission on iOS before the app is allowed to send notifications
+        // this should also be fine on Android but only gonna do it if it's iOS
+        if (Platform.OS === 'ios') {
+            await requestUserPermission();
+        }
+
         await AsyncStorage.setItem('@NotificationData', JSON.stringify(notification));
-        createTriggerNotification();
+        
+        createTriggerNotification()
+            .catch(error => {
+                console.warn(error);
+            });
 
         Toast.show({
             text1: 'Notification Preferences Saved!',
@@ -88,6 +99,16 @@ const NotificationSettings = ({ route, navigation }: NotificationSettingsProps) 
             trigger,
         );
     }
+
+    const requestUserPermission = async () => {
+        const settings = await notifee.requestPermission();
+
+        if (settings.authorizationStatus >= IOSAuthorizationStatus.AUTHORIZED) {
+            console.log('Permission settings:', settings);
+        } else {
+            console.log('User declined permissions');
+        }
+    };
 
     return (
         <View style={styles.container}>
