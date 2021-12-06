@@ -1,12 +1,17 @@
+import { useMutation, useQuery } from '@apollo/client';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 import { IconButton, Text } from 'react-native-paper';
 import Share from 'react-native-share';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LogDetailBottomSheet from '../components/atoms/log_detail/LogDetailBottomSheet';
 import { useAuth } from '../contexts/Auth';
+import DELETE_LOG from '../graphql/mutations/DeleteLog';
+import GET_LOGS_BY_USER_ID from '../graphql/queries/GetLogsByUserId';
+import LogData from '../graphql/types/LogData';
+import LogDeleteData from '../graphql/types/LogDeleteData';
 import { AppStackParamList } from '../navigation/AppStack';
 
 type LogDetailProps = NativeStackScreenProps<AppStackParamList, 'LogDetail'>;
@@ -71,13 +76,57 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
         }
     }, [navigation]);
 
+    const [toDelete] = useMutation<LogData, { id: string; }>(DELETE_LOG, {
+        variables: {
+            id: id,
+        },
+        refetchQueries: [
+            GET_LOGS_BY_USER_ID,
+            "GetLogsByUserId",
+        ],
+        onCompleted: () => navigation.goBack(),
+    });
+
+    const { loading, error } = useQuery<LogDeleteData, { userId: string; }>(GET_LOGS_BY_USER_ID, {
+        variables: {
+            userId: userId,
+        },
+    });
+
+    if (loading) {
+        return (
+            <Text>Loading...</Text>
+        );
+    }
+   
+    if (error) {
+        return (
+            <Text>{`${error}`}</Text>
+        );
+    }
+
+    const deletePressHandler = () => {
+        Alert.alert(
+            'Delete Log',
+            'Are you sure you\'d like to delete this log?',
+            [
+                {
+                    'text': "Cancel",
+                    onPress: () => console.log('Do nothing'),
+                    style: 'cancel',
+                },
+                {
+                    text: 'Delete',
+                    onPress: () => toDelete(),
+                },
+            ],
+        );
+    };
+
     const bottomSheetOptions = [
         {
             name: "Delete",
-            onPress: () => {
-                navigation.navigate('LogDelete');
-                console.log('pressed!');
-            },
+            onPress: () => deletePressHandler()
         },
         {
             name: "Share to User",
@@ -205,7 +254,7 @@ const styles = StyleSheet.create({
         padding: 2,
         textAlign: 'center',
         margin: 4,
-        backgroundColor: '#fff' //white
+        backgroundColor: '#fff' // white
     },
 });
 
