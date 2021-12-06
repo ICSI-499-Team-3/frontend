@@ -1,4 +1,4 @@
-package com.frontend;
+package com.icsi499frontend_dyevo;
 
 import com.facebook.react.ReactActivity;
 
