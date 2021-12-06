@@ -136,7 +136,7 @@ const NotificationSettings = ({ route, navigation }: NotificationSettingsProps) 
                 <>
                     <ListItem containerStyle={styles.listItemContainer} onPress={() => setIsDatePickerVisible(true)}>
                         <ListItem.Content style={{ alignItems: 'center' }}>
-                            <ListItem.Title style={styles.listItemTime}>{notification.time.toLocaleTimeString()}</ListItem.Title>
+                            <ListItem.Title style={styles.listItemTime}>{notification.time.toLocaleTimeString([], { hour12: true, hour: '2-digit', minute: '2-digit' })}</ListItem.Title>
                         </ListItem.Content>
                     </ListItem>
                     <DateTimePickerModal
