@@ -1,6 +1,7 @@
 import GoogleFit, { Scopes } from 'react-native-google-fit'
+import { Alert } from 'react-native';
 
-export function initGoogleFit() {
+export async function initGoogleFit(onAlreadyAuthorized: () => void, onAuthorizeSuccess: () => void, onAccessDenied: (authResult: string) => void, onAuthorizeError: () => void) {
     const options = {
         scopes: [
             Scopes.FITNESS_ACTIVITY_READ,
@@ -16,15 +17,37 @@ export function initGoogleFit() {
         ],
     };
 
-      GoogleFit.authorize(options)
-        .then(authResult => {
-            if (authResult.success) {
-                console.log("AUTH_SUCCESS");
-            } else {
-                console.log("AUTH_DENIED", authResult.message);
-            }
-        })
-        .catch(() => {
-            console.log("AUTH_ERROR");
-        });
+    // check if user already gave access
+    await GoogleFit.checkIsAuthorized();
+    if (GoogleFit.isAuthorized) {
+        onAlreadyAuthorized();
+        return;
+    }
+
+    Alert.alert(
+        "Google Fit Alert", 
+        'The app needs access to your Google Fit account in order to sync data. Would you like to grant access?', 
+        [
+            {
+                text: 'Cancel', 
+                style: 'cancel',
+            },
+            {
+                text: 'Yes', 
+                onPress: () => {
+                    GoogleFit.authorize(options)
+                        .then(authResult => {
+                            if (authResult.success) {
+                                onAuthorizeSuccess();
+                            } else {
+                                onAccessDenied(authResult.message);
+                            }
+                        })
+                        .catch(() => {
+                            onAuthorizeError();
+                        });
+                },
+            },
+        ],
+    );
 }

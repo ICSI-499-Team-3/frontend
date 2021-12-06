@@ -8,29 +8,17 @@
  * @format
  */
 
-import React, { useEffect } from 'react';
-import { Platform } from 'react-native';
+import React from 'react';
 import { Loading } from './src/components/atoms/login/Loading';
 import { useAuth } from './src/contexts/Auth';
 import AppStack from './src/navigation/AppStack';
 import AuthStack from './src/navigation/AuthStack';
 import Toast, { BaseToast, BaseToastProps } from 'react-native-toast-message';
 import { theme } from './src/core/theme';
-import { initAppleHealthKit } from './src/helpers/health-services/apple/HealthKitSetup';
-import { initGoogleFit } from './src/helpers/health-services/google/GoogleFitSetup';
 
 const App = () => {
 
   const { authData, loading } = useAuth();
-
-  if (Platform.OS === 'ios') {
-    initAppleHealthKit();
-  }
-  if (Platform.OS === 'android') {
-    useEffect(() => {
-      initGoogleFit();
-    }, []);
-  }
 
   const toastConfig = {
     success: (props: BaseToastProps) => (

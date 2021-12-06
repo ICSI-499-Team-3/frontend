@@ -19,6 +19,8 @@ import Toast from 'react-native-toast-message';
 import GET_METRICS_BY_USER_ID from '../graphql/queries/GetMetricsByUserId';
 import readAllGoogleFitData from '../helpers/health-services/google/ReadAllGoogleFitData';
 import { isBloodPressureResponse } from '../helpers/health-services/google/TestGoogleFitTypes';
+import { initAppleHealthKit } from '../helpers/health-services/apple/HealthKitSetup';
+import { initGoogleFit } from '../helpers/health-services/google/GoogleFitSetup';
 
 type MetricViewNavigationProp = NativeStackNavigationProp<AppStackParamList, 'MetricView'>;
 
@@ -35,7 +37,13 @@ const MetricView = () => {
         ],
     });
 
-    const syncIos = () => {
+    const healthKitInitCallback = () => {
+
+        // there is no way in health kit to check if user 
+        // has given permission to app to read health data
+        // due to privacy concerns, so just auth and read
+        // and present error empty array returned for certain samples
+
         const startDate = new Date();
         startDate.setMonth(startDate.getMonth() - 3);
 
@@ -50,6 +58,7 @@ const MetricView = () => {
                 Toast.show({
                     type: 'error',
                     text1: `Currently no ${title} data to sync`,
+                    text2: 'Either permission was not granted or there is no data',
                 });
                 return;
             }
@@ -99,9 +108,20 @@ const MetricView = () => {
                 });
             });
         }, startDate);
+        
+    }
+
+    const syncIos = () => {
+
+        // will request user permission the first time this is called
+        // will be silent if user denies or accepts
+        initAppleHealthKit(healthKitInitCallback);
     };
 
-    const syncAndroid = async () => {
+    // if already authorized, read data
+    const googleFitOnAlreadyAuthorized = async () => {
+        console.log('syncing...');
+
         const startDate = new Date();
         startDate.setMonth(startDate.getMonth() - 1);
 
@@ -145,7 +165,7 @@ const MetricView = () => {
                 Toast.show({
                     type: 'error', 
                     text1: 'Sync failed', 
-                    text2: 'Insufficient data in Google Fit to sync with',
+                    text2: 'No data in Google Fit to sync with',
                 });
                 return;
             } 
@@ -179,9 +199,31 @@ const MetricView = () => {
         }
     };
 
-    const syncMetrics = () => {
-        console.log('syncing...');
+    // read data after auth success
+    const googleFitOnAuthorizeSuccess = () => {
+        console.log("AUTH_SUCCESS");
+        googleFitOnAlreadyAuthorized();
+    };
 
+    const googleFitOnAccessDenied = (message: string) => {
+        console.log('AUTH_DENIED', message);
+    };
+
+    const googleFitOnAuthorizeError = () => {
+        console.log("AUTH_ERROR");
+    };
+
+    const syncAndroid = () => {
+
+        initGoogleFit(
+            googleFitOnAlreadyAuthorized, 
+            googleFitOnAuthorizeSuccess, 
+            googleFitOnAccessDenied,
+            googleFitOnAuthorizeError
+        );
+    };
+
+    const syncMetrics = () => {
         if (Platform.OS === 'ios') {
             syncIos();
         } else if (Platform.OS === 'android') {

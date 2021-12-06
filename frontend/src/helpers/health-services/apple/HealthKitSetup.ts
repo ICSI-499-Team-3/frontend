@@ -2,7 +2,7 @@ import AppleHealthKit, {
     HealthKitPermissions,
 } from 'react-native-health';
 
-export function initAppleHealthKit() {
+export function initAppleHealthKit(callback?: () => void) {
 
     const permissions = {
         permissions: {
@@ -21,6 +21,10 @@ export function initAppleHealthKit() {
     
         if (error) {
             console.log('Error: Cannot grant permissions');
+        }
+
+        if (callback) {
+            callback();
         }
     });
 }
