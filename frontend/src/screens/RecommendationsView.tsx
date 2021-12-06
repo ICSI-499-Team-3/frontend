@@ -38,10 +38,6 @@ const RecommendationsView = () => {
     // create frequency list 
     const buckets: {[key: string]: {[key: string]: number}} = {
         happy: {}, 
-        sad: {}, 
-        angry: {}, 
-        stressed: {}, 
-        anxious: {}, 
         goofy: {}, 
         spontaneous: {}, 
         excited: {},
