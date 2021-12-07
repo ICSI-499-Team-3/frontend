@@ -1,33 +1,38 @@
-import React, { useState } from 'react';
-import Background from '../components/atoms/login/Background';
-import BackButton from '../components/atoms/login/BackButton';
-import Logo from '../components/atoms/login/Logo';
-import Header from '../components/atoms/login/Header';
-import TextInput from '../components/atoms/login/TextInput';
-import Button from '../components/atoms/login/Button';
-import { emailValidator } from '../helpers/emailValidator';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { AppStackParamList } from '../navigation/AppStack';
+import React, { useState } from 'react';
+import BackButton from '../components/atoms/login/BackButton';
+import Background from '../components/atoms/login/Background';
+import Button from '../components/atoms/login/Button';
+import Header from '../components/atoms/login/Header';
+import Logo from '../components/atoms/login/Logo';
+import TextInput from '../components/atoms/login/TextInput';
+import { emailValidator } from '../helpers/emailValidator';
+import { AuthStackParamList } from '../navigation/AuthStack';
 
-type ResetPasswordScreenProps = NativeStackScreenProps<AppStackParamList, 'ResetPasswordScreen'>;
+type ForgotPasswordScreenProps = NativeStackScreenProps<AuthStackParamList, 'ForgotPasswordScreen'>;
 
-export default function ResetPasswordScreen({ navigation }: ResetPasswordScreenProps) {
+export default function ForgotPasswordScreen({ navigation }: ForgotPasswordScreenProps) {
     const [email, setEmail] = useState({ value: '', error: '' });
 
-    const sendResetPasswordEmail = () => {
+    const continueToCodeScreen = (sendEmail: boolean) => {
         const emailError = emailValidator(email.value);
         if (emailError) {
             setEmail({ ...email, error: emailError });
             return;
         }
-        navigation.navigate('LoginScreen');
+
+        if(sendEmail) {
+            // Email sending logic
+        }
+
+        navigation.navigate('ForgotPasswordCodeScreen', { email: email.value });
     };
 
     return (
         <Background>
             <BackButton goBack={navigation.goBack} />
             <Logo />
-            <Header>Restore Password</Header>
+            <Header>Forgot Password</Header>
             <TextInput
                 label="E-mail address"
                 returnKeyType="done"
@@ -39,12 +44,17 @@ export default function ResetPasswordScreen({ navigation }: ResetPasswordScreenP
                 autoCompleteType="email"
                 textContentType="emailAddress"
                 keyboardType="email-address"
-                description="You will receive email with password reset link."
+                description="You will receive email with a password reset code."
             />
             <Button
-                onPress={sendResetPasswordEmail}
+                onPress={continueToCodeScreen}
                 style={{ marginTop: 16 }}>
-                Send Instructions
+                Send Code
+            </Button>
+            <Button
+                onPress={continueToCodeScreen}
+                style={{ marginTop: 16 }}>
+                I Already Have a Code
             </Button>
         </Background>
     );

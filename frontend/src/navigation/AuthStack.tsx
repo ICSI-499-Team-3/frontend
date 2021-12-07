@@ -1,15 +1,17 @@
-import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import StartScreen from '../screens/StartScreen';
+import React from 'react';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
-import ResetPasswordScreen from '../screens/ResetPasswordScreen';
+import ForgotPasswordCodeScreen, { ForgotPasswordCodeProps } from '../screens/ForgotPasswordCodeScreen';
+import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
+import StartScreen from '../screens/StartScreen';
 
 export type AuthStackParamList = {
-    StartScreen: undefined;
     LoginScreen: undefined;
     RegisterScreen: undefined;
-    ResetPasswordScreen: undefined;
+    ForgotPasswordCodeScreen: ForgotPasswordCodeProps
+    ForgotPasswordScreen: undefined;
+    StartScreen: undefined;
 };
 
 const AuthStack = () => {
@@ -22,7 +24,8 @@ const AuthStack = () => {
                 <Stack.Screen name="StartScreen" component={StartScreen} />
                 <Stack.Screen name="LoginScreen" component={LoginScreen} />
                 <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-                <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} />
+                <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
+                <Stack.Screen name="ForgotPasswordCodeScreen" component={ForgotPasswordCodeScreen} />
             </Stack.Group>
         </Stack.Navigator>
     );
