@@ -156,12 +156,17 @@ const MetricView = () => {
                 return metric;
             });
 
-            const emptyMetrics = metrics.filter(metric => metric.data.length === 0);
-            emptyMetrics.forEach(metric => {
-                metrics.splice(metrics.findIndex(currentValue => metric.title === currentValue.title));
-            });
+            const metricsWithoutData: SyncMetricInput[] = [];
+            const metricsWithData: SyncMetricInput[] = [];
+            for (const metric of metrics) {
+                if (metric.data.length === 0) {
+                    metricsWithoutData.push(metric);
+                } else {
+                    metricsWithData.push(metric);
+                }
+            }
 
-            if (metrics.length === 0) {
+            if (metricsWithData.length === 0) {
                 Toast.show({
                     type: 'error', 
                     text1: 'Sync failed', 
@@ -170,17 +175,17 @@ const MetricView = () => {
                 return;
             } 
             
-            if (metrics.length > 0 && emptyMetrics.length > 0) {
-                Toast.show({
-                    type: 'error', 
-                    text1: 'Unable to sync all data', 
-                    text2: `Unable to sync ${emptyMetrics.map(metric => metric.title).join(',')}`,
-                });
-            }
+            // if (metricsWithData.length > 0 && metricsWithoutData.length > 0) {
+            //     Toast.show({
+            //         type: 'error', 
+            //         text1: 'Unable to sync all data', 
+            //         text2: `Unable to sync ${metricsWithoutData.map(metric => metric.title).join(',')}`,
+            //     });
+            // }
             
             const input: SyncInput = {
                 userId: authData?.id ?? '', 
-                metrics: metrics,
+                metrics: metricsWithData,
             };
 
             sync({
@@ -188,10 +193,16 @@ const MetricView = () => {
                     input: input, 
                 }
             }).then(() => {
+                let text2: string;
+                if (metricsWithData.length > 0 && metricsWithoutData.length > 0) {
+                    text2 = `Synced ${metricsWithData.map(metric => metric.title).join(',')}, unable to sync ${metricsWithoutData.map(metric => metric.title).join(',')}`;
+                } else {
+                    text2 = `Synced ${metricsWithData.map(metric => metric.title).join(',')}`;
+                }
                 Toast.show({
                     type: 'success', 
                     text1: 'Finished syncing', 
-                    text2: `Synced ${metrics.map(metric => metric.title).join(',')}`,
+                    text2: text2,
                 });
             });
         } catch (error) {
