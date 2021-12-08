@@ -1,11 +1,8 @@
 // Auth template from https://github.com/LucasGarcez/react-native-auth-flow
 
-import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import UserData from '../graphql/types/UserData';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import User from '../graphql/types/User';
-//import Log from '../types/Log';
 
 type AuthContextData = {
     authData?: User;

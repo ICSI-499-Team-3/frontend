@@ -1,58 +1,58 @@
-import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
 import { LogCardProps } from '../components/molecules/log_card/LogCard';
-import LogDetail from '../screens/LogDetail';
-import TabView from '../screens/TabView';
-import CreateLog from '../screens/CreateLog';
-import MetricDetail, { MetricDetailNavigationProps } from '../screens/MetricDetail';
-import CreateMetric from '../screens/CreateMetric';
-import { RecCardProps } from '../components/molecules/Rec_Card/RecCard'; //emma
-import RecDetail from '../screens/RecDetail'; //emma
-import ShareScreen, { ShareScreenNavigationProps } from '../screens/ShareScreen';
-import LogDelete from '../screens/LogDelete';
-import LogEdit from '../screens/LogEdit';
-import CreateMeasurement, { CreateMeasurementNavigationProps } from '../screens/CreateMeasurement';
 import MeasurementsList, { MeasurementsListNavigationProps } from '../components/molecules/measurements_list/MeasurementsList';
+import { RecCardProps } from '../components/molecules/Rec_Card/RecCard'; //emma
 import AddLabel from '../screens/AddLabel';
-import UpdateUserName from '../screens/profile/UpdateUserName';
+import CreateLog from '../screens/CreateLog';
+import CreateMeasurement, { CreateMeasurementNavigationProps } from '../screens/CreateMeasurement';
+import CreateMetric from '../screens/CreateMetric';
+import LogDelete from '../screens/LogDelete';
+import LogDetail from '../screens/LogDetail';
+import LogEdit from '../screens/LogEdit';
+import MetricDetail, { MetricDetailNavigationProps } from '../screens/MetricDetail';
+import NotificationSettings from '../screens/profile/NotificationSettings';
 import UpdateUserEmail from '../screens/profile/UpdateUserEmail';
+import UpdateUserName from '../screens/profile/UpdateUserName';
 import UpdateUserPassword from '../screens/profile/UpdateUserPassword';
 import UpdateUserPreExistingConditions from '../screens/profile/UpdateUserPreExistingConditions';
-import NotificationSettings from '../screens/profile/NotificationSettings';
+import RecDetail from '../screens/RecDetail'; //emma
 import SharedLogsView, { SharedLogsViewProps } from '../screens/SharedLogsView';
 import SharedMetricView, { SharedMetricViewProps } from '../screens/SharedMetricView';
+import ShareScreen, { ShareScreenNavigationProps } from '../screens/ShareScreen';
+import TabView from '../screens/TabView';
 
 export type AppStackParamList = {
     AddLabel: undefined;
     CreateLog: undefined;
-    CreateMetric: undefined;
     CreateMeasurement: CreateMeasurementNavigationProps;
-    LogsViewHome: undefined;
-    LogDetail: LogCardProps;
+    CreateMetric: undefined;
     LogCard: undefined;
-    MetricView: undefined;
+    LogDelete: undefined;
+    LogDetail: LogCardProps;
+    LogEdit: undefined;
+    LogsView: undefined;
+    LogsViewHome: undefined;
+    MeasurementsList: MeasurementsListNavigationProps;
+    MeasurementsListItem: undefined;
     MetricCard: undefined;
     MetricDetail: MetricDetailNavigationProps;
     MetricDetailOptions: undefined;
-    MeasurementsList: MeasurementsListNavigationProps;
-    MeasurementsListItem: undefined;
-    Tabs: undefined;
-    ShareScreen: ShareScreenNavigationProps;
-    LogsView: undefined;
-    RecommendationsView: undefined;
+    MetricView: undefined;
+    NotificationSettings: undefined;
+    ProfileScreen: undefined;
     RecCard: undefined;
     RecDetail: RecCardProps;
-    LogDelete: undefined;
-    LogEdit: undefined;
-    UpdateUserName: undefined;
-    UpdateUserEmail: undefined;
-    UpdateUserPassword: undefined;
-    UpdateUserPreExistingConditions: undefined;
-    ProfileScreen: undefined;
-    NotificationSettings: undefined;
-    SharedView: undefined;
+    RecommendationsView: undefined;
     SharedLogsView: SharedLogsViewProps;
     SharedMetricView: SharedMetricViewProps;
+    SharedView: undefined;
+    ShareScreen: ShareScreenNavigationProps;
+    Tabs: undefined;
+    UpdateUserEmail: undefined;
+    UpdateUserName: undefined;
+    UpdateUserPassword: undefined;
+    UpdateUserPreExistingConditions: undefined;
 };
 
 const AppStack = () => {

@@ -32,14 +32,14 @@ const UpdateUserEmail = ({ route, navigation }: UpdateUserEmailProps) => {
             email: email.value,
         },
         onCompleted: async (data) => {
-            console.log(`completed usernameupdate: ${data.UpdateUserEmail}`);
+            console.log(`completed updateUserEmail: ${data.UpdateUserEmail}`);
 
             await auth.updateAuthData(data.UpdateUserEmail);
             navigation.goBack();
             successToast();
         },
         onError: (error) => {
-            console.log(`Error on CreateUser: ${error.message}`);
+            console.log(`Error on updateUserEmail: ${error.message}`);
             const errorMessage = error.message.split(':')[1];
             setEmail({ ...email, error: errorMessage });
         },
