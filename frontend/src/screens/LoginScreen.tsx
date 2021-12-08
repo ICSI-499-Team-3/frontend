@@ -1,60 +1,62 @@
 // Template from https://github.com/venits/react-native-login-template
 
+import { useLazyQuery } from '@apollo/client';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
-import { TouchableOpacity, StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ActivityIndicator, Text } from 'react-native-paper';
-import Background from '../components/atoms/login/Background';
-import Logo from '../components/atoms/login/Logo';
-import Header from '../components/atoms/login/Header';
-import Button from '../components/atoms/login/Button';
-import TextInput from '../components/atoms/login/TextInput';
+import Toast from 'react-native-toast-message';
 import BackButton from '../components/atoms/login/BackButton';
+import Background from '../components/atoms/login/Background';
+import Button from '../components/atoms/login/Button';
+import Header from '../components/atoms/login/Header';
+import Logo from '../components/atoms/login/Logo';
+import TextInput from '../components/atoms/login/TextInput';
+import { useAuth } from '../contexts/Auth';
 import { theme } from '../core/theme';
+import GET_USER_BY_EMAIL_AND_PASSWORD from '../graphql/queries/GetUserByEmailAndPassword';
+import User from '../graphql/types/User';
+import UserLoginInput from '../graphql/types/UserLoginInput';
 import { emailValidator } from '../helpers/emailValidator';
 import { passwordValidator } from '../helpers/passwordValidator';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthStackParamList } from '../navigation/AuthStack';
-import { useAuth } from '../contexts/Auth';
-import User from '../graphql/types/User';
-import GET_USER_BY_EMAIL_AND_PASSWORD from '../graphql/queries/GetUserByEmailAndPassword';
-import { useLazyQuery } from '@apollo/client';
-import UserLoginInput from '../graphql/types/UserLoginInput';
-import Toast from 'react-native-toast-message';
-import UserData from '../graphql/types/UserData';
 
 type LoginScreenProps = NativeStackScreenProps<AuthStackParamList, 'LoginScreen'>;
 
 export default function LoginScreen({ navigation }: LoginScreenProps) {
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
-    const [loginPressed, setLoginPressed] = useState(false);
 
     const auth = useAuth();
 
-    const [getUser, { loading: queryLoading, error, data }] = useLazyQuery<UserData, { input: UserLoginInput; }>(
+    const [getUser, { loading: queryLoading }] = useLazyQuery<{ GetUserByEmailAndPassword: User; }, { input: UserLoginInput; }>(
         GET_USER_BY_EMAIL_AND_PASSWORD, {
         fetchPolicy: "network-only",
+        onCompleted: (data) => {
+            if (data.GetUserByEmailAndPassword !== null) {
+                auth.updateAuthData(data.GetUserByEmailAndPassword);
+            }
+            else {
+                Toast.show({
+                    text1: "Incorrect email or password!",
+                    text2: "Please try again"
+                });
+            }
+        },
+        onError: (error) => {
+            console.log(error);
+        }
     });
-
-    const errorToast = () => {
-        setLoginPressed(false);
-        Toast.show({
-            text1: 'Incorrect email or password!',
-            text2: "Please try again"
-        });
-    };
-
 
     const onLoginPressed = async () => {
         const emailError = emailValidator(email.value);
         const passwordError = passwordValidator(password.value);
+        
         if (emailError || passwordError) {
             setEmail({ ...email, error: emailError });
             setPassword({ ...password, error: passwordError });
             return;
         }
-
-        setLoginPressed(true);
 
         getUser({
             variables: {
@@ -65,25 +67,6 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
             }
         });
     };
-
-    if (data) {
-        const userData: User = data?.GetUserByEmailAndPassword;
-
-        if (loginPressed && userData === null) {
-            console.log("loginPressed before: ", loginPressed);
-            setLoginPressed(false);
-            errorToast();
-            console.log("loginPressed after: ", loginPressed);
-        }
-        else if (userData !== null) {
-            auth.updateAuthData(userData);
-        }
-    }
-
-    // TODO: This needs to be caught
-    if (error) {
-        console.log(error)
-    }
 
     return (
         <Background>
@@ -122,7 +105,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
                         <Text style={styles.forgot}>Forgot your password?</Text>
                     </TouchableOpacity>
                 </View>
-                <Button onPress={onLoginPressed} style={{}}>
+                <Button onPress={() => onLoginPressed()} style={{}}>
                     Login
                 </Button>
                 <View style={styles.row}>
