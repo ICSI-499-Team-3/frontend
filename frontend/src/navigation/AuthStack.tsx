@@ -1,11 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import VerifyPasswordCodeScreen, { VerifyPasswordCodeProps } from '../screens/VerifyPasswordCodeScreen';
-import ForgotPasswordScreen, { ForgotPasswordScreenProps } from '../screens/ForgotPasswordScreen';
-import LoginScreen from '../screens/LoginScreen';
-import RegisterScreen from '../screens/RegisterScreen';
-import ResetPasswordScreen, { ResetPasswordProps } from '../screens/ResetPasswordScreen';
-import StartScreen from '../screens/StartScreen';
+import VerifyPasswordCodeScreen, { VerifyPasswordCodeProps } from '../screens/authStack/VerifyPasswordCodeScreen';
+import ForgotPasswordScreen, { ForgotPasswordScreenProps } from '../screens/authStack/ForgotPasswordScreen';
+import LoginScreen from '../screens/authStack/LoginScreen';
+import RegisterScreen from '../screens/authStack/RegisterScreen';
+import ResetPasswordScreen, { ResetPasswordProps } from '../screens/authStack/ResetPasswordScreen';
+import StartScreen from '../screens/authStack/StartScreen';
 
 export type AuthStackParamList = {
     ForgotPasswordScreen: ForgotPasswordScreenProps;

@@ -3,15 +3,15 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { ActivityIndicator } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
-import BackButton from '../components/atoms/login/BackButton';
-import Background from '../components/atoms/login/Background';
-import Button from '../components/atoms/login/Button';
-import Header from '../components/atoms/login/Header';
-import Logo from '../components/atoms/login/Logo';
-import TextInput from '../components/atoms/login/TextInput';
-import SEND_PASSWORD_RESET_CODE from '../graphql/queries/SendPasswordResetCode';
-import { emailValidator } from '../helpers/emailValidator';
-import { AuthStackParamList } from '../navigation/AuthStack';
+import BackButton from '../../components/atoms/login/BackButton';
+import Background from '../../components/atoms/login/Background';
+import Button from '../../components/atoms/login/Button';
+import Header from '../../components/atoms/login/Header';
+import Logo from '../../components/atoms/login/Logo';
+import TextInput from '../../components/atoms/login/TextInput';
+import SEND_PASSWORD_RESET_CODE from '../../graphql/queries/SendPasswordResetCode';
+import { emailValidator } from '../../helpers/emailValidator';
+import { AuthStackParamList } from '../../navigation/AuthStack';
 
 type ForgotPasswordScreenNavigationProps = NativeStackScreenProps<AuthStackParamList, 'ForgotPasswordScreen'>;
 

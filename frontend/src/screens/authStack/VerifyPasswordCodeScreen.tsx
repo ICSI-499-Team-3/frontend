@@ -2,14 +2,14 @@ import { useLazyQuery } from '@apollo/client';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { ActivityIndicator } from 'react-native-paper';
-import BackButton from '../components/atoms/login/BackButton';
-import Background from '../components/atoms/login/Background';
-import Button from '../components/atoms/login/Button';
-import Header from '../components/atoms/login/Header';
-import Logo from '../components/atoms/login/Logo';
-import TextInput from '../components/atoms/login/TextInput';
-import VERIFY_PASSWORD_RESET_CODE from '../graphql/queries/VerifyPasswordResetCode';
-import { AuthStackParamList } from '../navigation/AuthStack';
+import BackButton from '../../components/atoms/login/BackButton';
+import Background from '../../components/atoms/login/Background';
+import Button from '../../components/atoms/login/Button';
+import Header from '../../components/atoms/login/Header';
+import Logo from '../../components/atoms/login/Logo';
+import TextInput from '../../components/atoms/login/TextInput';
+import VERIFY_PASSWORD_RESET_CODE from '../../graphql/queries/VerifyPasswordResetCode';
+import { AuthStackParamList } from '../../navigation/AuthStack';
 
 type VerifyPasswordCodeNavigationProps = NativeStackScreenProps<AuthStackParamList, 'VerifyPasswordCodeScreen'>;
 

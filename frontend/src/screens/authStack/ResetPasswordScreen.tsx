@@ -3,16 +3,16 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import Toast from 'react-native-toast-message';
-import BackButton from '../components/atoms/login/BackButton';
-import Background from '../components/atoms/login/Background';
-import Button from '../components/atoms/login/Button';
-import Header from '../components/atoms/login/Header';
-import Logo from '../components/atoms/login/Logo';
-import TextInput from '../components/atoms/login/TextInput';
-import { theme } from '../core/theme';
-import RESET_USER_PASSWORD from '../graphql/mutations/ResetUserPassword';
-import { passwordValidator } from '../helpers/passwordValidator';
-import { AuthStackParamList } from '../navigation/AuthStack';
+import BackButton from '../../components/atoms/login/BackButton';
+import Background from '../../components/atoms/login/Background';
+import Button from '../../components/atoms/login/Button';
+import Header from '../../components/atoms/login/Header';
+import Logo from '../../components/atoms/login/Logo';
+import TextInput from '../../components/atoms/login/TextInput';
+import { theme } from '../../core/theme';
+import RESET_USER_PASSWORD from '../../graphql/mutations/ResetUserPassword';
+import { passwordValidator } from '../../helpers/passwordValidator';
+import { AuthStackParamList } from '../../navigation/AuthStack';
 
 type ResetPasswordNavigationProps = NativeStackScreenProps<AuthStackParamList, 'ResetPasswordScreen'>;
 
