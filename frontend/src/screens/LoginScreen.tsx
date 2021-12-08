@@ -34,7 +34,6 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     const [getUser, { loading: queryLoading, error, data }] = useLazyQuery<UserData, { input: UserLoginInput; }>(
         GET_USER_BY_EMAIL_AND_PASSWORD, {
         fetchPolicy: "network-only",
-        pollInterval: 0
     });
 
     const errorToast = () => {
@@ -119,7 +118,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
                 />
                 <View style={styles.forgotPassword}>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('ForgotPasswordScreen')}>
+                        onPress={() => navigation.navigate('ForgotPasswordScreen', { email: email.value })}>
                         <Text style={styles.forgot}>Forgot your password?</Text>
                     </TouchableOpacity>
                 </View>
