@@ -16,6 +16,9 @@ import Toast from "react-native-toast-message";
 
 type UpdateUserEmailProps = NativeStackScreenProps<AppStackParamList, 'UpdateUserEmail'>;
 
+/**
+ * @author Habib Affnnih
+ */
 const UpdateUserEmail = ({ route, navigation }: UpdateUserEmailProps) => {
     const auth = useAuth();
     const [email, setEmail] = useState({ value: '', error: '' });

@@ -11,6 +11,9 @@ import { useNavigation } from "@react-navigation/native";
 
 type ProfileScreenProps = NativeStackNavigationProp<AppStackParamList, 'ProfileScreen'>;
 
+/**
+ * @author Habib Affinnih
+ */
 const ProfileScreen = () => {
     const auth = useAuth();
     const navigation = useNavigation<ProfileScreenProps>();

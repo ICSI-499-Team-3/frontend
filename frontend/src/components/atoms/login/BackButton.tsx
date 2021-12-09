@@ -4,6 +4,9 @@ import React from 'react';
 import { TouchableOpacity, Image, StyleSheet, GestureResponderEvent } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
+/**
+ * @author Habib Affinnih
+ */
 export default function BackButton({ goBack }: { goBack: (event: GestureResponderEvent) => void; }) {
     return (
         <TouchableOpacity onPress={goBack} style={styles.container}>

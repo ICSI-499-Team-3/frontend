@@ -19,6 +19,9 @@ export type ForgotPasswordScreenProps = {
     email: string;
 };
 
+/**
+ * @author Habib Affinnih
+ */
 export default function ForgotPasswordScreen({ route, navigation }: ForgotPasswordScreenNavigationProps) {
     const [email, setEmail] = useState({ value: route.params.email, error: '' });
 

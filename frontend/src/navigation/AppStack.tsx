@@ -55,6 +55,9 @@ export type AppStackParamList = {
     UpdateUserPreExistingConditions: undefined;
 };
 
+/**
+ * @author Tony Comanzo, Habib Affinnih, Lauren Velez, Emma Wirth
+ */
 const AppStack = () => {
 
     const Stack = createNativeStackNavigator<AppStackParamList>();

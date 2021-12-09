@@ -11,6 +11,9 @@ const handlerLongClick = () => {
 };
 
 
+/**
+ * @author Lauren Velez, Emma Wirth 
+ */
 const AddLabel = ({...props }) => {
 
   return (

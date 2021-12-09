@@ -1,5 +1,8 @@
 import { gql } from '@apollo/client';
 
+/**
+ * @author Habib Affinnih
+ */
 const UPDATE_USER_EMAIL = gql`
     mutation UpdateUserEmail($id: String!, $email: String!) {
         UpdateUserEmail(id: $id, email: $email) {

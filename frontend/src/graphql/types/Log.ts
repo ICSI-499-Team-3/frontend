@@ -1,3 +1,6 @@
+/**
+ * @author Tony Comanzo 
+ */
 interface Log {
     id: string;
     userId: string;

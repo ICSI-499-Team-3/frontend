@@ -6,7 +6,10 @@ type CardIconsProps = {
     categories: string[];
 };
 
- const CardIcons = ({ categories }: CardIconsProps) => {
+/**
+ * @author Emma Wirth, Lauren Velez
+ */
+const CardIcons = ({ categories }: CardIconsProps) => {
 
     const activitiesToIcons = new Map()
     activitiesToIcons.set('running', 'run') 

@@ -6,6 +6,9 @@ type ChipProps = {
     onPress: Function;
 };
 
+/**
+ * @author Tony Comanzo 
+ */
 const Chip = ({ text, onPress }: ChipProps) => {
 
     const [selected, setSelected] = useState(false);

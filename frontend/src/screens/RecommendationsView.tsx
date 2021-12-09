@@ -9,6 +9,9 @@ import { useAuth } from '../contexts/Auth';
 
 type LogCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'RecommendationsView'>;
 
+/**
+ * @author Tony Comanzo, Emma Wirth
+ */
 const RecommendationsView = () => {
 
     const { authData } = useAuth();
@@ -66,6 +69,8 @@ const RecommendationsView = () => {
     let shouldRenderInsufficientDataMessage = true;
     Object.keys(bestCategories).forEach(mood => {
         const category = bestCategories[mood];
+
+        // if any mood has a category associated with more than 4 times, don't show insufficient data message
         if (buckets[mood][category] > 4) {
             shouldRenderInsufficientDataMessage = false;
         }

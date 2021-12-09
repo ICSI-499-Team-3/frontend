@@ -1,3 +1,6 @@
+/**
+ * @author Habib Affinnih
+ */
 interface UserInput {
     name: string;
     email: string;

@@ -9,6 +9,9 @@ import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet
 
 type RecDetailProps = NativeStackScreenProps<AppStackParamList, 'RecDetail'>;
 
+/**
+ * @author Emma Wirth 
+ */
 const RecDetail = ({ route, navigation }: RecDetailProps) => {
 
     const { title, content } = route.params;

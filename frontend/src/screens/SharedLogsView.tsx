@@ -9,7 +9,10 @@ export type SharedLogsViewProps = {
     userId: string;
 };
 
-const SharedLogsView = ({ route, navigation }: SharedLogsViewNavigationProps) => {
+/**
+ * @author Tony Comanzo 
+ */
+const SharedLogsView = ({ route }: SharedLogsViewNavigationProps) => {
 
     const { userId } = route.params;
     

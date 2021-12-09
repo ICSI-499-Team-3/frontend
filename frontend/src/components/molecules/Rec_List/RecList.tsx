@@ -4,6 +4,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatList } from 'react-native';
 import RecCard from '../Rec_Card/RecCard';
 
+/**
+ * @author Emma Wirth
+ */
 const RecList = () => {
 
     const data = [

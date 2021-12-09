@@ -9,6 +9,9 @@ export type LogDetailBottomSheetProps = {
     }[];
 };
 
+/**
+ * @author Tony Comanzo, Lauren Velex, Emma Wirth 
+ */
 const LogDetailBottomSheet = ({ options }: LogDetailBottomSheetProps) => {
 
     return (

@@ -15,6 +15,9 @@ import UPDATE_USER_PRE_EXISTING_CONDITIONS from "../../graphql/mutations/UpdateU
 
 type UpdateUserConditionsProps = NativeStackScreenProps<AppStackParamList, 'UpdateUserPreExistingConditions'>;
 
+/**
+ * @author Habib Affinnih
+ */
 const UpdateUserPreExistingConditions = ({ navigation }: UpdateUserConditionsProps) => {
     const auth = useAuth();
     const [conditions, setConditions] = useState({ value: auth.authData?.preExistingConditions, error: '' });

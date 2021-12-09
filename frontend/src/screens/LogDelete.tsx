@@ -13,6 +13,9 @@ import { AppStackParamList } from '../navigation/AppStack';
 
 type LogCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'Tabs'>;
 
+/**
+ * @author Emma Wirth, Lauren Velez
+ */
 const LogDelete = () => {
 
     const navigation = useNavigation<LogCardNavigationProp>();

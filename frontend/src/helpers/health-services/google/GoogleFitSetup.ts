@@ -1,6 +1,9 @@
 import GoogleFit, { Scopes } from 'react-native-google-fit'
 import { Alert } from 'react-native';
 
+/**
+ * @author Tony Comanzo 
+ */
 export async function initGoogleFit(onAlreadyAuthorized: () => void, onAuthorizeSuccess: () => void, onAccessDenied: (authResult: string) => void, onAuthorizeError: () => void) {
     const options = {
         scopes: [

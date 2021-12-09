@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 export enum dateTimePickerModes {
@@ -22,6 +22,9 @@ type DateTimePickerProps = {
     onConfirm?: Function; // for checking if selectedDateTime is different than dateTimeMeasured in update mode for CreateMeasurement
 };
 
+/**
+ * @author Tony Comanzo 
+ */
 const DateTimePicker = (props: DateTimePickerProps) => {
 
     const handleDateConfirmed = (date: Date) => {

@@ -15,6 +15,9 @@ import { useAuth } from '../contexts/Auth';
 
 type CreateLogProps = NativeStackScreenProps<AppStackParamList, 'CreateLog'>;
 
+/**
+ * @author Tony Comanzo 
+ */
 const CreateLog = ({ route, navigation }: CreateLogProps) => {
 
     const categories = ['Running', 'Yoga', 'Going out', 'Physical therapy', 'Therapy', 'Eating', 'Spending time with friends'];

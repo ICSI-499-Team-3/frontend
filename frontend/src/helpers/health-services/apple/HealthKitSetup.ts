@@ -2,6 +2,9 @@ import AppleHealthKit, {
     HealthKitPermissions,
 } from 'react-native-health';
 
+/**
+ * @author Tony Comanzo 
+ */
 export function initAppleHealthKit(callback?: () => void) {
 
     const permissions = {

@@ -3,6 +3,9 @@ import AppleHealthKit, {
     BloodPressureSampleValue 
 } from 'react-native-health';
 
+/**
+ * @author Tony Comanzo 
+ */
 export function syncHealthKitData(callback: (callbackError: string, metricTitle: string, results: HealthValue[] | BloodPressureSampleValue[]) => void, startDate: Date, endDate?: Date) {
     
     const operations = [

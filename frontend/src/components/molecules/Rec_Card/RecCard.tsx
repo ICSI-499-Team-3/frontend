@@ -12,34 +12,36 @@ export type RecCardProps = {
     content: string;
   };
 
-  type RecCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'RecCard'>;
+type RecCardNavigationProp = NativeStackNavigationProp<AppStackParamList, 'RecCard'>;
 
-  const RecCard = ({ title, content }: RecCardProps) => {
+/**
+ * @author Emma Wirth
+ */
+const RecCard = ({ title, content }: RecCardProps) => {
 
-    const navigation = useNavigation<RecCardNavigationProp>();
+  const navigation = useNavigation<RecCardNavigationProp>();
 
-    const handlerLongClick = () => {
-      Alert.alert("Long Press");
-    };
+  const handlerLongClick = () => {
+    Alert.alert("Long Press");
+  };
 
-    return (
-      <TouchableOpacity 
-      style={[styles.paper]}
-      onPress={() => {
-        navigation.navigate("RecDetail", {
-          title: title, 
-          content: content
-        });
-      }}
-      onLongPress={handlerLongClick}
-    >
-      <View style={[styles.titleContainer]}>
-        <Text style={[styles.titleText]}>{title.length > 20 ? `${title.substring(0, 20)}...` : title}</Text>
-      </View>
-      <Text style={[styles.contentText]}>{content.length > 150 ? `${content.substring(0, 150)}...` : content}</Text>
-    </TouchableOpacity>
-    );
-
+  return (
+    <TouchableOpacity 
+    style={[styles.paper]}
+    onPress={() => {
+      navigation.navigate("RecDetail", {
+        title: title, 
+        content: content
+      });
+    }}
+    onLongPress={handlerLongClick}
+  >
+    <View style={[styles.titleContainer]}>
+      <Text style={[styles.titleText]}>{title.length > 20 ? `${title.substring(0, 20)}...` : title}</Text>
+    </View>
+    <Text style={[styles.contentText]}>{content.length > 150 ? `${content.substring(0, 150)}...` : content}</Text>
+  </TouchableOpacity>
+  );
 };  
 
 const styles = StyleSheet.create({

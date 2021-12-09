@@ -1,5 +1,8 @@
 // Template from https://github.com/venits/react-native-login-template
 
+/**
+ * @author Habib Affinnih
+ */
 export function emailValidator(email: string) {
     const re = /\S+@\S+\.\S+/;
     if (!email) {

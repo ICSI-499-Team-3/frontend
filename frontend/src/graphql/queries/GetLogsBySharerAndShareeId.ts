@@ -1,5 +1,8 @@
 import { gql } from '@apollo/client';
 
+/**
+ * @author Tony Comanzo 
+ */
 const GET_LOGS_BY_SHARER_AND_SHAREE_ID = gql`
     query GetLogsBySharerAndShareeId($sharerId: String!, $shareeId: String!) {
         GetLogsBySharerAndShareeId(sharerId: $sharerId, shareeId: $shareeId) {

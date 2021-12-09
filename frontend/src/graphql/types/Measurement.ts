@@ -1,3 +1,6 @@
+/**
+ * @author Tony Comanzo 
+ */
 interface Measurement {
     id: string;
     x: string;

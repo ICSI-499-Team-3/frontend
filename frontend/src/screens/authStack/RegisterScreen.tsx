@@ -21,6 +21,9 @@ import Toast from 'react-native-toast-message';
 
 type RegiserScreenProps = NativeStackScreenProps<AuthStackParamList, 'RegisterScreen'>;
 
+/**
+ * @author Habib Affinnih
+ */
 export default function RegisterScreen({ navigation }: RegiserScreenProps) {
     const [name, setName] = useState({ value: '', error: '' });
     const [email, setEmail] = useState({ value: '', error: '' });

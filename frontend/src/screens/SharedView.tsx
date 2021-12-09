@@ -10,6 +10,9 @@ import GET_SHARERS_BY_SHAREE_ID from '../graphql/queries/GetSharersByShareeId';
 
 type SharedViewNavigationProps = NativeStackNavigationProp<AppStackParamList, 'SharedView'>;
 
+/**
+ * @author Tony Comanzo 
+ */
 const SharedView = () => {
 
     const navigation = useNavigation<SharedViewNavigationProps>();

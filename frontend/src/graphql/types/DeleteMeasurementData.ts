@@ -1,5 +1,8 @@
 import Measurement from './Measurement';
 
+/**
+ * @author Tony Comanzo 
+ */
 interface DeleteMeasurementData {
     DeleteMeasurement: Measurement[];
 }

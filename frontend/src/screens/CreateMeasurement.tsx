@@ -33,6 +33,9 @@ export type CreateMeasurementNavigationProps = {
     measurementData?: Measurement;
 };
 
+/**
+ * @author Tony Comanzo 
+ */
 const CreateMeasurement = ({ route, navigation }: CreateMeasurementProps) => {
 
     const { metricId, mode, title, measurementData } = route.params;
@@ -297,6 +300,9 @@ type ConditionalPickerProps = {
     mode: CreateMeasurementMode;
 };
 
+/**
+ * @author Tony Comanzo 
+ */
 const ConditionalPicker = ({ selectedCategory, setSelectedCategory, data, mode }: ConditionalPickerProps) => {
     if (mode === CreateMeasurementMode.Create) {
         return (

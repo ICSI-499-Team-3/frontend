@@ -3,6 +3,9 @@
 import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
 
+/**
+ * @author Habib Affinnih
+ */
 export const Loading = () => {
   return (
     <View

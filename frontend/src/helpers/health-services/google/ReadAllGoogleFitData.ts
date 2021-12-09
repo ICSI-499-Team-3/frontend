@@ -1,5 +1,8 @@
 import GoogleFit, { BucketUnit } from 'react-native-google-fit'
 
+/**
+ * @author Tony Comanzo 
+ */
 async function readAllGoogleFitData(startDate: Date, endDate: Date, bucketUnit?: BucketUnit, bucketInterval?: number) {
 
     const options = {

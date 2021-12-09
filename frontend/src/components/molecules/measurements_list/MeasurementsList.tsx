@@ -21,6 +21,9 @@ export type MeasurementsListNavigationProps = {
 
 type MeasurementsListProps = NativeStackScreenProps<AppStackParamList, 'MeasurementsList'>;
 
+/**
+ * @author Tony Comanzo 
+ */
 const MeasurementsList = ({ route, navigation }: MeasurementsListProps) => {
 
     const [selectedListItems, setSelectedListItems] = useState(new Set<string>());
@@ -174,6 +177,9 @@ type MeasurementsListItemProps = {
 
 type MeasurementsListItemNavigationProp = NativeStackNavigationProp<AppStackParamList, 'MeasurementsListItem'>;
 
+/**
+ * @author Tony Comanzo 
+ */
 const MeasurementsListItem = ({ measurement, metricId, userId, title, onLongPress, mode }: MeasurementsListItemProps) => {
 
     const navigation = useNavigation<MeasurementsListItemNavigationProp>();

@@ -16,6 +16,9 @@ export type AuthStackParamList = {
     VerifyPasswordCodeScreen: VerifyPasswordCodeProps
 };
 
+/**
+ * @author Habib Affinnih
+ */
 const AuthStack = () => {
 
     const Stack = createNativeStackNavigator<AuthStackParamList>();

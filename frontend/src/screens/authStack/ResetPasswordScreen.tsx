@@ -20,6 +20,9 @@ export type ResetPasswordProps = {
     email: string;
 };
 
+/**
+ * @author Habib Affinnih
+ */
 export default function ResetPasswordScreen({ route, navigation }: ResetPasswordNavigationProps) {
     const { email } = route.params;
     const [password1, setPassword1] = useState({ value: '', error: '' });

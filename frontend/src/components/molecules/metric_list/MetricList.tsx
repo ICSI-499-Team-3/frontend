@@ -14,6 +14,9 @@ type MetricListProps = {
     userId: string;
 };
 
+/**
+ * @author Tony Comanzo 
+ */
 const MetricList = ({ userId }: MetricListProps) => {
 
     const { authData } = useAuth();
@@ -30,6 +33,9 @@ type SharedContentMetricListProps = {
     shareeId: string;
 };
 
+/**
+ * @author Tony Comanzo 
+ */
 const SharedContentMetricList = ({ sharerId, shareeId }: SharedContentMetricListProps) => {
 
     const { loading, error, data } = useQuery<GetMetricsBySharerAndShareeIdData, { sharerId: string; shareeId: string; }>(GET_METRICS_BY_SHARER_AND_SHAREE_ID, {
@@ -61,6 +67,9 @@ type CurrentUserMetricListProps = {
     userId: string;
 };
 
+/**
+ * @author Tony Comanzo 
+ */
 const CurrentUserMetricList = ({ userId}: CurrentUserMetricListProps) => {
 
     const { loading, error, data } = useQuery<GetMetricsByUserIdData, { userId: string; }>(GET_METRICS_BY_USER_ID, {
@@ -98,6 +107,9 @@ type MetricCardListProps = {
     data: Metric[];
 };
 
+/**
+ * @author Tony Comanzo 
+ */
 const MetricCardList = ({ data }: MetricCardListProps) => {
     return (
         <FlatList

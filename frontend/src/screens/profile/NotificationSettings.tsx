@@ -18,6 +18,9 @@ type NotificationData = {
     time: Date;
 };
 
+/**
+ * @author Habib Affinnih, Tony Comanzo 
+ */
 const NotificationSettings = ({ route, navigation }: NotificationSettingsProps) => {
     const [notification, setNotification] = useState<NotificationData>({ on: false, time: new Date() });
     const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);

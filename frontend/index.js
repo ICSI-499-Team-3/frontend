@@ -4,7 +4,7 @@
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import React from 'react';
-import { AppRegistry, Platform } from 'react-native';
+import { AppRegistry } from 'react-native';
 import App from './App';
 import { name as appName } from './app.json';
 import { Provider as PaperProvider } from 'react-native-paper';
@@ -14,10 +14,10 @@ import { AuthProvider } from './src/contexts/Auth';
 import notifee, { EventType } from '@notifee/react-native';
 
 // const LOCAL_SYSTEM_IP_ADDR = '192.168.1.112'; // Habib 
-const LOCAL_SYSTEM_IP_ADDR = '10.13.139.108' // Lauren
+// const LOCAL_SYSTEM_IP_ADDR = '10.13.139.108' // Lauren
 // const LOCAL_SYSTEM_IP_ADDR = '169.226.38.113' // Lauren
 // const LOCAL_SYSTEM_IP_ADDR = '169.226.216.137'; // Emma
-// const LOCAL_SYSTEM_IP_ADDR = '192.168.1.160'; // Tony
+const LOCAL_SYSTEM_IP_ADDR = '192.168.1.160'; // Tony
 
 // const LOCAL_SYSTEM_IP_ADDR = '169.226.38.113' // Lauren
 
@@ -34,6 +34,10 @@ notifee.onBackgroundEvent(async ({ type, detail }) => {
     // We can use this listener to perform specific actions based on what notification was pressed
 });
 
+/**
+ * @author Tony Comanzo, Habib Affinnih
+ * @returns 
+ */
 export default function Main() {
     return (
         <ApolloProvider client={client}>

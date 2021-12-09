@@ -15,6 +15,9 @@ type AuthContextData = {
 //and a empty object
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
+/**
+ * @author Habib Affinnih
+ */
 const AuthProvider: React.FC = ({ children }) => {
     const [authData, setAuthData] = useState<User>();
 

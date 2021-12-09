@@ -14,6 +14,9 @@ type LogsListProps = {
     userId: string;
 };
 
+/**
+ * @author Tony Comanzo, Emma Wirth, Lauren Velez, Habib Affinnih
+ */
 const LogsList = ({ userId }: LogsListProps) => {
 
     const { authData } = useAuth();

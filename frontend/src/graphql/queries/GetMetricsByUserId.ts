@@ -1,5 +1,8 @@
 import { gql } from '@apollo/client';
 
+/**
+ * @author Tony Comanzo 
+ */
 const GET_METRICS_BY_USER_ID = gql`
     query GetMetricsByUserId($userId: String!) {
         GetMetricsByUserId(userId: $userId) {

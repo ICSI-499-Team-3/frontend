@@ -1,5 +1,8 @@
 import { gql } from '@apollo/client';
 
+/**
+ * @author Tony Comanzo 
+ */
 const GET_LOGS_BY_USER_ID = gql`
     query GetLogsByUserId($userId: String!) {
         GetLogsByUserId(userId: $userId) {

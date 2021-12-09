@@ -3,6 +3,10 @@
  * Usage: <MaterialCommunityIcons name="icon-name" size={20} color="#4F8EF7" />
  */
 
+/**
+ * @author Emma Wirth
+ */
+
  import createIconSet from './lib/create-icon-set';
  import glyphMap from './glyphmaps/MaterialCommunityIcons.json';
  

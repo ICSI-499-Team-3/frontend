@@ -10,6 +10,9 @@ import Toast from 'react-native-toast-message'
 
 type StartScreenProps = NativeStackScreenProps<AuthStackParamList, 'StartScreen'>;
 
+/**
+ * @author Habib Affinnih
+ */
 export default function StartScreen({ navigation }: StartScreenProps) {
     return (
         <Background>

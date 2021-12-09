@@ -3,6 +3,9 @@
 import React from 'react';
 import {Image, StyleSheet} from 'react-native';
 
+/**
+ * @author Habib Affinnih
+ */
 export default function Logo() {
     return (
         <Image source={require('../../../assets/logo_no_text.png')} style={styles.image}/>

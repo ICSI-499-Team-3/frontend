@@ -1,3 +1,6 @@
+/**
+ * @author Tony Comanzo 
+ */
 interface SyncMeasurementInput {
     x: string;
     y: string;

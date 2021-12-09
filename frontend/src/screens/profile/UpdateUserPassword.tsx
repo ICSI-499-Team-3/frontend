@@ -16,6 +16,9 @@ import Toast from "react-native-toast-message";
 
 type UpdateUserPasswordProps = NativeStackScreenProps<AppStackParamList, 'UpdateUserPassword'>;
 
+/**
+ * @author Habib Affinnih
+ */
 const UpdateUserPassword = ({ route, navigation }: UpdateUserPasswordProps) => {
     const auth = useAuth();
     const [currentPassword, setCurrentPassword] = useState({ value: '', error: '' });

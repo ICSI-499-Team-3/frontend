@@ -19,6 +19,9 @@ export type MetricDetailNavigationProps = {
     userId: string;
 };
 
+/**
+ * @author Tony Comanzo 
+ */
 const MetricDetail = ({ route, navigation }: MetricDetailProps) => {
 
     const { metricId, userId } = route.params;
@@ -209,6 +212,9 @@ type MetricDetailOptionsProps = {
     userId: string;
 };
 
+/**
+ * @author Tony Comanzo 
+ */
 const MetricDetailOptions = ({ sharePressHandler, deletePressHander, editPressHandler, userId }: MetricDetailOptionsProps) => {
 
     const { authData } = useAuth();

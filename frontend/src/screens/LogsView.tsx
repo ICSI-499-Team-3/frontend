@@ -6,6 +6,9 @@ export type LogsViewProps = {
   data: { title: string; content: string; categories: string[] }[];
 };
 
+/**
+ * @author Tony Comanzo 
+ */
 const LogsView = () => {
 
   const { authData } = useAuth();

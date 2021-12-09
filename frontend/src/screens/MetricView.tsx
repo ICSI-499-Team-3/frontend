@@ -24,6 +24,9 @@ import { initGoogleFit } from '../helpers/health-services/google/GoogleFitSetup'
 
 type MetricViewNavigationProp = NativeStackNavigationProp<AppStackParamList, 'MetricView'>;
 
+/**
+ * @author Tony Comanzo 
+ */
 const MetricView = () => {
 
     const navigation = useNavigation<MetricViewNavigationProp>();

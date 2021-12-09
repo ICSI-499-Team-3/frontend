@@ -1,5 +1,8 @@
 import Measurement from './Measurement';
 
+/**
+ * @author Tony Comanzo 
+ */
 interface Metric {
     id: string;
     userId: string;

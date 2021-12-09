@@ -16,6 +16,9 @@ import { AppStackParamList } from '../navigation/AppStack';
 
 type LogDetailProps = NativeStackScreenProps<AppStackParamList, 'LogDetail'>;
 
+/**
+ * @author Tony Comanzo, Emma Wirth, Habib Affinnih, Lauren Velez
+ */
 const LogDetail = ({ route, navigation }: LogDetailProps) => {
 
     const { id, userId, dateTimeOfActivity, notes, categories, mood } = route.params;

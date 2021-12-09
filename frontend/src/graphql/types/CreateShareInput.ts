@@ -1,3 +1,6 @@
+/**
+ * @author Tony Comanzo 
+ */
 interface CreateShareInput {
     sharerId: string;
     shareeEmail: string;

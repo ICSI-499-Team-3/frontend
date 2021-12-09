@@ -9,6 +9,9 @@ export type SharedMetricViewProps = {
     userId: string;
 };
 
+/**
+ * @author Tony Comanzo 
+ */
 const SharedMetricView = ({ route }: SharedMetricViewNavigationProps) => {
 
     const { userId } = route.params;

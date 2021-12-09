@@ -1,3 +1,6 @@
+/**
+ * @author Tony Comanzo 
+ */
 interface UpdateMeasurementInput {
     id: string;
     metricId: string;

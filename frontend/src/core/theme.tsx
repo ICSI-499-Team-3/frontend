@@ -2,6 +2,9 @@
 
 import { DefaultTheme } from 'react-native-paper';
 
+/**
+ * @author Habib Affinnih
+ */
 export const theme = {
     ...DefaultTheme,
     colors: {

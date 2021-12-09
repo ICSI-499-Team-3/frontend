@@ -6,7 +6,10 @@ import { Button as PaperButton } from 'react-native-paper';
 import { theme } from '../../../core/theme';
 
 
-// { style, ...props }:{style: StyleProp<ViewStyle>; children: React.ReactNode}
+// { style, ...props }:{style: StyleProp<ViewStyle>; children: React.ReactNode
+/**
+ * @author Habib Affinnih
+ */
 export default function Button({ style, ...props }) {
     return (
         <PaperButton

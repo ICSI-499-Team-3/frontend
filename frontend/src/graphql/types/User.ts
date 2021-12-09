@@ -1,3 +1,6 @@
+/**
+ * @author Habib Affinnih
+ */
 interface User {
     id: string;
     name: string;

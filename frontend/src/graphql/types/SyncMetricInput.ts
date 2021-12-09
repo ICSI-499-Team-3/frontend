@@ -1,5 +1,8 @@
 import SyncMeasurementInput from './SyncMeasurementInput';
 
+/**
+ * @author Tony Comanzo 
+ */
 interface SyncMetricInput {
     userId: string;
     title: string;

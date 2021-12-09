@@ -1,5 +1,8 @@
 import { gql } from '@apollo/client';
 
+/**
+ * @author Tony Comanzo 
+ */
 const SYNC = gql`
     mutation Sync($input: SyncInput!) {
         Sync(input: $input) {

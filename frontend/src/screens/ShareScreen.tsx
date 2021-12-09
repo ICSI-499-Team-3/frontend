@@ -23,6 +23,9 @@ export type ShareScreenNavigationProps = {
   sharedData: Log | Metric;
 };
 
+/**
+ * @author Tony Comanzo 
+ */
 const ShareScreen = ({ route, navigation }: ShareScreenProps) => {
 
   const { authData } = useAuth();

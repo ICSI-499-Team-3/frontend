@@ -1,3 +1,6 @@
+/**
+ * @author Tony Comanzo 
+ */
 interface Share {
     id: string;
     sharerId: string;

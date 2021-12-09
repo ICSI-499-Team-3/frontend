@@ -23,6 +23,9 @@ import { AuthStackParamList } from '../../navigation/AuthStack';
 
 type LoginScreenProps = NativeStackScreenProps<AuthStackParamList, 'LoginScreen'>;
 
+/**
+ * @author Habib Affinnih
+ */
 export default function LoginScreen({ navigation }: LoginScreenProps) {
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });

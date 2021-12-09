@@ -16,6 +16,10 @@ import AuthStack from './src/navigation/AuthStack';
 import Toast, { BaseToast, BaseToastProps } from 'react-native-toast-message';
 import { theme } from './src/core/theme';
 
+/**
+ * @author Tony Comanzo, Habib Affinnih
+ * @returns
+ */
 const App = () => {
 
   const { authData, loading } = useAuth();

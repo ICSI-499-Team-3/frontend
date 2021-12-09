@@ -12,7 +12,10 @@ import MetricInput from '../graphql/types/MetricInput';
 
 type CreateMetricProps = NativeStackScreenProps<AppStackParamList, 'CreateMetric'>;
 
-const CreateMetric = ({ route, navigation }: CreateMetricProps) => {
+/**
+ * @author Tony Comanzo 
+ */
+const CreateMetric = ({ navigation }: CreateMetricProps) => {
 
     const defaultXUnits = 'Time';
 

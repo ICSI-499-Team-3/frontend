@@ -9,7 +9,9 @@ import GET_LOGS_BY_USER_ID from '../graphql/queries/GetLogsByUserId';
 import NotesInput from '../graphql/types/NotesInput';
 import LOG_EDIT from '../graphql/mutations/LogEdit';
 
-
+/**
+ * @author Emma Wirth, Lauren Velez
+ */
 const LogEdit = () => {
 
     const [contentText, setContentText] = useState('');

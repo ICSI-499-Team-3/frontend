@@ -13,6 +13,9 @@ type LogsViewHomeProps = {
     userId: string;
 };
 
+/**
+ * @author Tony Comanzo 
+ */
 const LogsViewHome = ({ userId }: LogsViewHomeProps) => {
 
     const navigation = useNavigation<LogCardNavigationProp>();

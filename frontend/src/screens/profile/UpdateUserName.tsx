@@ -15,6 +15,9 @@ import Toast from "react-native-toast-message";
 
 type UpdateUserNameProps = NativeStackScreenProps<AppStackParamList, 'UpdateUserName'>;
 
+/**
+ * @author Habib Affinnih
+ */
 const UpdateUserName = ({ route, navigation }: UpdateUserNameProps) => {
     const auth = useAuth();
     const [name, setName] = useState({ value: '', error: '' });

@@ -4,6 +4,9 @@ import React, { FC } from 'react';
 import { StyleSheet, KeyboardAvoidingView, View } from 'react-native';
 import { theme } from '../../../core/theme';
 
+/**
+ * @author Habib Affinnih
+ */
 export default function Background({ children }: { children: JSX.Element[]; }) {
     return (
         <View style={styles.background}>

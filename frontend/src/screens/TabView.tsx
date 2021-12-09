@@ -7,6 +7,9 @@ import MetricView from './MetricView';
 import ProfileScreen from './profile/ProfileScreen';
 import SharedView from './SharedView';
 
+/**
+ * @author Tony Comanzo, Habib Affinnih, Emma Wirth, Lauren Velez
+ */
 const TabView = () => {
 
     const Tab = createMaterialBottomTabNavigator();

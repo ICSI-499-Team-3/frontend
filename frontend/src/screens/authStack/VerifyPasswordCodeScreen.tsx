@@ -17,6 +17,9 @@ export type VerifyPasswordCodeProps = {
     email: string;
 };
 
+/**
+ * @author Habib Affinnih 
+ */
 export default function VerifyPasswordCodeScreen({ route, navigation }: VerifyPasswordCodeNavigationProps) {
     const [email, setEmail] = useState({ value: route.params.email, error: '' });
     const [code, setCode] = useState({ value: '', error: '' });

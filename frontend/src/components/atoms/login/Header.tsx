@@ -5,6 +5,9 @@ import {StyleSheet} from 'react-native';
 import {Text} from 'react-native-paper';
 import {theme} from '../../../core/theme';
 
+/**
+ * @author Habib Affinnih
+ */
 export default function Header(props: { children?: React.ReactNode; }) {
     return <Text style={styles.header} {...props} />;
 }
