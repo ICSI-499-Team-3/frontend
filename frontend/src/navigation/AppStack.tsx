@@ -3,7 +3,7 @@ import React from 'react';
 import { LogCardProps } from '../components/molecules/log_card/LogCard';
 import MeasurementsList, { MeasurementsListNavigationProps } from '../components/molecules/measurements_list/MeasurementsList';
 import { RecCardProps } from '../components/molecules/Rec_Card/RecCard'; //emma
-import AddLabel from '../screens/AddLabel';
+import AddLabel, { LabelNavigationProps } from '../screens/AddLabel';
 import CreateLog from '../screens/CreateLog';
 import CreateMeasurement, { CreateMeasurementNavigationProps } from '../screens/CreateMeasurement';
 import CreateMetric from '../screens/CreateMetric';
@@ -23,7 +23,7 @@ import ShareScreen, { ShareScreenNavigationProps } from '../screens/ShareScreen'
 import TabView from '../screens/TabView';
 
 export type AppStackParamList = {
-    AddLabel: undefined;
+    AddLabel: LabelNavigationProps;
     CreateLog: undefined;
     CreateMeasurement: CreateMeasurementNavigationProps;
     CreateMetric: undefined;

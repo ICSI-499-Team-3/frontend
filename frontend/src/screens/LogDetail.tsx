@@ -147,7 +147,7 @@ const LogDetail = ({ route, navigation }: LogDetailProps) => {
         {
             name: "Label",
             onPress: () => {
-                navigation.navigate('AddLabel');
+                navigation.navigate('AddLabel')
                 console.log('pressed!');
             },
         },

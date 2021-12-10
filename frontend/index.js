@@ -16,8 +16,8 @@ import notifee, { EventType } from '@notifee/react-native';
 // const LOCAL_SYSTEM_IP_ADDR = '192.168.1.112'; // Habib 
 // const LOCAL_SYSTEM_IP_ADDR = '10.13.139.108' // Lauren
 // const LOCAL_SYSTEM_IP_ADDR = '169.226.38.113' // Lauren
-// const LOCAL_SYSTEM_IP_ADDR = '169.226.216.137'; // Emma
-const LOCAL_SYSTEM_IP_ADDR = '192.168.1.160'; // Tony
+ const LOCAL_SYSTEM_IP_ADDR = '10.13.204.84'; // Emma
+//const LOCAL_SYSTEM_IP_ADDR = '192.168.1.160'; // Tony
 
 // const LOCAL_SYSTEM_IP_ADDR = '169.226.38.113' // Lauren
 
